@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">201527710402-epeq8m4952k6samd6q48lfmimj0s3qk8.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">201527710402</string>
+    <string name="google_api_key" translatable="false">AIzaSyB7KtuC2VhUBU5BgnKSKzypxCebnIDtskc</string>
+    <string name="google_app_id" translatable="false">1:201527710402:android:e243635504ddff4402215b</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB7KtuC2VhUBU5BgnKSKzypxCebnIDtskc</string>
+    <string name="google_storage_bucket" translatable="false">foodistaan-fa10d.appspot.com</string>
+    <string name="project_id" translatable="false">foodistaan-fa10d</string>
+</resources>
