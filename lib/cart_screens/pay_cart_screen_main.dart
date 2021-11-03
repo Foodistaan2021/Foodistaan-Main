@@ -22,9 +22,10 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
       body: Column(
         children: [
           Container(
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.grey))),
-            height: MediaQuery.of(context).size.height * 0.22,
+            height: MediaQuery.of(context).size.height * 0.25,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +45,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         child: Row(
                           children: [
                             Image.asset('assets/images/green_sign.png'),
@@ -59,7 +60,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         child: Column(
                           children: [
                             Row(
@@ -78,7 +79,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.56,
                         child: Row(
                           children: [
                             Image.asset('assets/images/red_sign.png'),
@@ -93,7 +94,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         child: Column(
                           children: [
                             Row(
@@ -114,8 +115,10 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
             ),
           ),
           Container(
-            decoration: BoxDecoration(),
-            height: MediaQuery.of(context).size.height * 0.22,
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.grey))),
+            height: MediaQuery.of(context).size.height * 0.25,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -126,8 +129,8 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                       Image.asset('assets/images/reviewer.png'),
                       Column(
                         children: [
-                          Text("Duriyodhan ka dhaba"),
-                          Text("Vikaspuri, Delhi"),
+                          Text("Anna’s hut "),
+                          Text("Rohini, Delhi"),
                         ],
                       )
                     ],
@@ -135,14 +138,14 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         child: Row(
                           children: [
                             Image.asset('assets/images/green_sign.png'),
                             Column(
                               children: [
-                                Text("Butter Special Pav Bhaji"),
-                                Text("Salad, extra butter, 3 bread"),
+                                Text("Garlic mix munchao Noodles"),
+                                Text("vegies, less spice, 3 mayo"),
                                 Text("Customize"),
                               ],
                             )
@@ -150,7 +153,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         child: Column(
                           children: [
                             Row(
@@ -160,7 +163,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                                 TextButton(onPressed: null, child: Text("+")),
                               ],
                             ),
-                            Text("₹180")
+                            Text("₹120")
                           ],
                         ),
                       ),
@@ -169,14 +172,14 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.56,
                         child: Row(
                           children: [
                             Image.asset('assets/images/red_sign.png'),
                             Column(
                               children: [
-                                Text("Masala Mast Paneer Bhatoore"),
-                                Text("Salad,  2 green chutney"),
+                                Text("Chicken tandoori Momos (4 ps)"),
+                                Text("2 mayos, 3 red chillie sauce"),
                                 Text("Customize"),
                               ],
                             )
@@ -184,7 +187,7 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         child: Column(
                           children: [
                             Row(
@@ -215,17 +218,16 @@ class _CartScreenMainPayState extends State<CartScreenMainPay> {
               ],
             ),
           ),
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              color: Color.fromRGBO(247, 193, 43, 1),
-              child: TextButton(
-                onPressed: null,
-                child: Text("Proceed to Pay"),
-              ),
-            ),
-          ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        width: MediaQuery.of(context).size.width * 0.7,
+        height: MediaQuery.of(context).size.height * 0.07,
+        color: Color.fromRGBO(247, 193, 43, 1),
+        child: TextButton(
+          onPressed: null,
+          child: Text("Proceed to Pay"),
+        ),
       ),
     );
   }
