@@ -27,8 +27,7 @@ class _UserProfileState extends State<UserProfile> {
   fetchData() async {
     final _firestore = FirebaseFirestore.instance;
 
-    
-   String? user_number;
+    String? user_number;
     if (FirebaseAuth.instance.currentUser!.phoneNumber != null) {
       user_number = FirebaseAuth.instance.currentUser!.phoneNumber;
     }
@@ -64,35 +63,16 @@ class _UserProfileState extends State<UserProfile> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          // title: const Icon(
-          //   Icons.notifications,
-          //   color: Colors.black,
-          //   size: 27,
+
+          // leading: const IconButton(
+          //   onPressed: null,
+          //   icon: Icon(
+          //     Icons.arrow_back_ios,
+          //     color: Colors.black,
+          //     size: 25,
+          //   ),
           // ),
-          leading: const IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 25,
-            ),
-          ),
-          actions: const [
-            IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-            IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.share,
-                color: Colors.black,
-              ),
-            ),
-          ],
+          actions: const [],
         ),
         body: Stack(
           children: [
