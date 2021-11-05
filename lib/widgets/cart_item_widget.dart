@@ -47,9 +47,7 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
     return menu_item.isNotEmpty
         ? Container(
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey))),
-            height: MediaQuery.of(context).size.height * 0.22,
+            // height: MediaQuery.of(context).size.height * 0.22,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -58,20 +56,25 @@ class _CartItemState extends State<CartItem> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         child: Row(
                           children: [
-                            Image.asset('assets/images/green_sign.png'),
+                            menu_item['veg'] == 'true'
+                                ? Image.asset('assets/images/green_sign.png')
+                                : Image.asset('assets/images/red_sign.png'),
                             Column(
                               children: [
-                                Text(menu_item['title']),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(menu_item['title']),
+                                ),
                               ],
                             )
                           ],
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         child: Column(
                           children: [
                             Row(

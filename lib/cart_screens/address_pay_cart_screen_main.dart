@@ -22,10 +22,9 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.grey))),
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: MediaQuery.of(context).size.height * 0.22,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +44,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.55,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Row(
                           children: [
                             Image.asset('assets/images/green_sign.png'),
@@ -60,7 +59,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Column(
                           children: [
                             Row(
@@ -79,7 +78,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.56,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Row(
                           children: [
                             Image.asset('assets/images/red_sign.png'),
@@ -94,7 +93,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Column(
                           children: [
                             Row(
@@ -115,10 +114,8 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey))),
-            height: MediaQuery.of(context).size.height * 0.25,
+            decoration: BoxDecoration(),
+            height: MediaQuery.of(context).size.height * 0.22,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -129,8 +126,8 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                       Image.asset('assets/images/reviewer.png'),
                       Column(
                         children: [
-                          Text("Anna’s hut "),
-                          Text("Rohini, Delhi"),
+                          Text("Duriyodhan ka dhaba"),
+                          Text("Vikaspuri, Delhi"),
                         ],
                       )
                     ],
@@ -138,14 +135,14 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.55,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Row(
                           children: [
                             Image.asset('assets/images/green_sign.png'),
                             Column(
                               children: [
-                                Text("Garlic mix munchao Noodles"),
-                                Text("vegies, less spice, 3 mayo"),
+                                Text("Butter Special Pav Bhaji"),
+                                Text("Salad, extra butter, 3 bread"),
                                 Text("Customize"),
                               ],
                             )
@@ -153,7 +150,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Column(
                           children: [
                             Row(
@@ -163,7 +160,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                                 TextButton(onPressed: null, child: Text("+")),
                               ],
                             ),
-                            Text("₹120")
+                            Text("₹180")
                           ],
                         ),
                       ),
@@ -172,14 +169,14 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.56,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Row(
                           children: [
                             Image.asset('assets/images/red_sign.png'),
                             Column(
                               children: [
-                                Text("Chicken tandoori Momos (4 ps)"),
-                                Text("2 mayos, 3 red chillie sauce"),
+                                Text("Masala Mast Paneer Bhatoore"),
+                                Text("Salad,  2 green chutney"),
                                 Text("Customize"),
                               ],
                             )
@@ -187,7 +184,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Column(
                           children: [
                             Row(
@@ -218,16 +215,17 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               ],
             ),
           ),
+          Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              color: Color.fromRGBO(247, 193, 43, 1),
+              child: TextButton(
+                onPressed: null,
+                child: Text("Add new address"),
+              ),
+            ),
+          ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: MediaQuery.of(context).size.height * 0.07,
-        color: Color.fromRGBO(247, 193, 43, 1),
-        child: TextButton(
-          onPressed: null,
-          child: Text("Add Address"),
-        ),
       ),
     );
   }
