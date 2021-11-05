@@ -25,8 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showLoading = false;
   String currentText = "";
 
-  
-
   void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
     setState(() {
@@ -56,171 +54,200 @@ class _LoginScreenState extends State<LoginScreen> {
   MobileVerificationState currentState =
       MobileVerificationState.SHOW_MOBILE_FORM_STATE;
   getMobileFormWidget(context) {
-    return ListView(
-      children: [
-        Container(
-            height: 300,
-            child:
-                Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
-        SizedBox(
-          height: 30,
-        ),
-        Container(
-          child: Image.asset('Images/pic4.png'),
-        ),
-        SizedBox(
-          height: 40,
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 1,
+      width: MediaQuery.of(context).size.width * 1,
+      child: Column(
+        children: [
+          Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child:
+                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
+          Container(
+            width: MediaQuery.of(context).size.width * 1,
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: Image.asset('Images/pic4.png'),
+          ),
 
-        Container(
-          width: 200,
-          height: 100,
-          child: TextField(
-            controller: phoneController,
-            //keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              focusColor: Colors.yellow,
-              hintText: 'Phone Number',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+          Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.05,
+            ),
+            width: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              controller: phoneController,
+              //keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                focusColor: Colors.yellow,
+                hintText: 'Phone Number (Please enter +91)',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 319,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: () async {
-              setState(() {
-                showLoading = true;
-              });
-              await _auth.verifyPhoneNumber(
-                phoneNumber: phoneController.text,
-                verificationCompleted: (phoneAuthCredential) async {
-                  setState(() {
-                    showLoading = false;
-                  });
-                  //signInWithPhoneAuthCredential
-                },
-                verificationFailed: (verificationFailed) async {
-                  setState(() {
-                    showLoading = false;
-                  });
-                  // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(verificationFailed.message!),));
-                },
-                codeSent: (verificationId, resendingToken) async {
-                  setState(() {
-                    showLoading = false;
-                    currentState = MobileVerificationState.SHOW_OTP_FORM_STATE;
-                    this.verificationId = verificationId;
-                  });
-                },
-                codeAutoRetrievalTimeout: (verificationId) async {},
-              );
-            },
-            child: Text(
-              'Send OTP',
-              style: TextStyle(
-                color: Colors.white,
+          Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.04,
+            ),
+            width: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  showLoading = true;
+                });
+                await _auth.verifyPhoneNumber(
+                  phoneNumber: phoneController.text,
+                  verificationCompleted: (phoneAuthCredential) async {
+                    setState(() {
+                      showLoading = false;
+                    });
+                    //signInWithPhoneAuthCredential
+                  },
+                  verificationFailed: (verificationFailed) async {
+                    setState(() {
+                      showLoading = false;
+                    });
+                    // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(verificationFailed.message!),));
+                  },
+                  codeSent: (verificationId, resendingToken) async {
+                    setState(() {
+                      showLoading = false;
+                      currentState =
+                          MobileVerificationState.SHOW_OTP_FORM_STATE;
+                      this.verificationId = verificationId;
+                    });
+                  },
+                  codeAutoRetrievalTimeout: (verificationId) async {},
+                );
+              },
+              child: Text(
+                'Send OTP',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFFF7C12B),
+                fixedSize: Size(100, 48),
               ),
             ),
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFFF7C12B),
-              fixedSize: Size(100, 48),
-            ),
           ),
-        ),
-        //   ],
-        // ),
+          //   ],
+          // ),
 
-        Container(
-            height: 300,
-            child: Image.asset('Images/bottom.jpeg',
-                height: 20, fit: BoxFit.fill)),
-      ],
+          Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Image.asset('Images/bottom.jpeg',
+                  height: 20, fit: BoxFit.fill)),
+        ],
+      ),
     );
   }
 
   getOtpFormWidget(context) {
-    return ListView(
-      children: [
-        Container(
-            height: 300,
-            child:
-                Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
-        SizedBox(
-          height: 30,
-        ),
-        Container(
-          child: Image.asset('Images/pic4.png'),
-        ),
-        SizedBox(
-          height: 40,
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 1,
+      width: MediaQuery.of(context).size.width * 1,
+      child: Column(
+        children: [
+          Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child:
+                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
+          Container(
+            width: MediaQuery.of(context).size.width * 1,
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: Image.asset('Images/pic4.png'),
+          ),
 
-        Container(
-          width: 200,
-          height: 100,
-          child: TextField(
-            controller: otpController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              focusColor: Colors.yellow,
-              hintText: 'Enter OTP',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+          Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.05,
+            ),
+            width: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              controller: otpController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                focusColor: Colors.yellow,
+                hintText: 'Enter OTP',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                ),
               ),
             ),
           ),
-        ),
 
-        // Container(
-        //   child: OTPTextField(
-        //     length: 6,
-        //     width: MediaQuery.of(context).size.width,
-        //     fieldWidth: 40,
-        //     style: TextStyle(
-        //         fontSize: 17
-        //     ),
-        //     textFieldAlignment: MainAxisAlignment.spaceAround,
-        //     fieldStyle: FieldStyle.underline,
-        //     onCompleted: (pin) {
-        //       print("Completed: " + pin);
-        //     },
-        //   ),
-        // ),
-        Container(
-          width: 319,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: () async {
-              PhoneAuthCredential phoneAuthCredential =
-                  PhoneAuthProvider.credential(
-                      verificationId: verificationId!,
-                      smsCode: otpController.text);
-              signInWithPhoneAuthCredential(phoneAuthCredential);
-            },
-            child: Text(
-              'Verify OTP',
-              style: TextStyle(
-                color: Colors.white,
+          // Container(
+          //   child: OTPTextField(
+          //     length: 6,
+          //     width: MediaQuery.of(context).size.width,
+          //     fieldWidth: 40,
+          //     style: TextStyle(
+          //         fontSize: 17
+          //     ),
+          //     textFieldAlignment: MainAxisAlignment.spaceAround,
+          //     fieldStyle: FieldStyle.underline,
+          //     onCompleted: (pin) {
+          //       print("Completed: " + pin);
+          //     },
+          //   ),
+          // ),
+          Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.04,
+            ),
+            width: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: ElevatedButton(
+              onPressed: () async {
+                PhoneAuthCredential phoneAuthCredential =
+                    PhoneAuthProvider.credential(
+                        verificationId: verificationId!,
+                        smsCode: otpController.text);
+                signInWithPhoneAuthCredential(phoneAuthCredential);
+              },
+              child: Text(
+                'Verify OTP',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFFF7C12B),
+                fixedSize: Size(100, 48),
               ),
             ),
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFFF7C12B),
-              fixedSize: Size(100, 48),
-            ),
           ),
-        ),
-        //   ],
-        // ),
+          //   ],
+          // ),
 
-        Container(
-            height: 300,
-            child: Image.asset('Images/bottom.jpeg',
-                height: 20, fit: BoxFit.fill)),
-      ],
+          Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Image.asset('Images/bottom.jpeg',
+                  height: 20, fit: BoxFit.fill)),
+        ],
+      ),
     );
   }
 
@@ -229,6 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: Container(
         child: showLoading
