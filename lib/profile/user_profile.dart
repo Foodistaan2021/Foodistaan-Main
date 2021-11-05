@@ -60,29 +60,113 @@ class _UserProfileState extends State<UserProfile> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-
-          // leading: const IconButton(
-          //   onPressed: null,
-          //   icon: Icon(
-          //     Icons.arrow_back_ios,
-          //     color: Colors.black,
-          //     size: 25,
-          //   ),
-          // ),
-          actions: const [],
-        ),
         body: Stack(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'Images/profilepage.png',
-                  width: double.infinity,
+            Opacity(
+                  opacity: 0.7,
+                  child: Image.asset(
+                    'Images/profilepage.png',
+                    width: double.infinity,
+                  ),
+                ),
+                const SizedBox(
+                  height: 2.5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'All Rights Reserved',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const Text('  |  ',style: TextStyle(
+                      color: Colors.grey,
+                    ),),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Contact Us',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const Text('  |  ',style: TextStyle(
+                      color: Colors.grey,
+                    ),),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Terms of Service',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 2.5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const Text('  |  ',style: TextStyle(
+                      color: Colors.grey,
+                    ),),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Rate Us',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const Text('  |  ',style: TextStyle(
+                      color: Colors.grey,
+                    ),),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 2.5,
                 ),
               ],
             ),
