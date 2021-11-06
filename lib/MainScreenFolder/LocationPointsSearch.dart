@@ -18,8 +18,10 @@ class _LocationState extends State<Location> {
             Icon(
               Icons.location_on,
               color: Color(0xFFFAB84C),
+              size: 10,
             ),
-            Text("Location", style: TextStyle(color: Color(0xFF0E1829))),
+            Text("Location",
+                style: TextStyle(color: Color(0xFF0E1829), fontSize: 5)),
           ],
         ),
       ),
@@ -42,10 +44,15 @@ class _PointsState extends State<Points> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Points", style: TextStyle(color: Color(0xFF0E1829))),
+            Text("Points",
+                style: TextStyle(
+                  fontSize: 5,
+                  color: Color(0xFF0E1829),
+                )),
             Icon(
               Icons.money,
               color: Color(0xFFFAB84C),
+              size: 12,
             ),
           ],
         ),
@@ -72,15 +79,14 @@ class _SearchState extends State<Search> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: Color(0xFFFCE19E),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Color(0xFFFCE19E),
         ),
-        height: h1/15,
-        width: 12*w1/13,
+        height: h1 / 15,
+        width: 12 * w1 / 13,
         alignment: Alignment.centerLeft,
-
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             SearchTask();
           },
           child: FittedBox(
@@ -93,7 +99,9 @@ class _SearchState extends State<Search> {
                     Icons.search,
                     color: Color(0xFF6B6B6B),
                   ),
-                  SizedBox(width: w1/30,),
+                  SizedBox(
+                    width: w1 / 30,
+                  ),
                   Text(
                     "Search Cuisines",
                     style: TextStyle(
@@ -109,4 +117,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-
