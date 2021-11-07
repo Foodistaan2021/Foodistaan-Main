@@ -64,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
           ? PreferredSize(
               preferredSize:
                   Size.fromHeight(h1 / 6.8), // here the desired height
-              child: MainScreenAppBar(),
+              child: SafeArea(child: MainScreenAppBar(),),
             )
           : null,
       backgroundColor: Colors.white,

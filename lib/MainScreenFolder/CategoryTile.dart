@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'ListingsFile.dart';
 
-class FoodCategories extends StatefulWidget {
+
+class FoodCategories extends StatelessWidget {
   String ImagePath = "";
   String Caption = "";
-  FoodCategories({required this.ImagePath, required this.Caption});
+  bool isSelected;
+  FoodCategories({required this.ImagePath, required this.Caption,this.isSelected=true,});
   @override
-  _FoodCategoriesState createState() =>
-      _FoodCategoriesState(ImagePath: ImagePath, Caption: Caption);
-}
-
-class _FoodCategoriesState extends State<FoodCategories> {
-  String ImagePath = "";
-  String Caption = "";
-  _FoodCategoriesState({required this.ImagePath, required this.Caption});
-  @override
-
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
@@ -27,7 +18,7 @@ class _FoodCategoriesState extends State<FoodCategories> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Colors.black, // red as border color
+          color: isSelected?Color(0xffFAB84C):Colors.black, // red as border color
           width: 2,
         ),
       ),
@@ -50,3 +41,5 @@ class _FoodCategoriesState extends State<FoodCategories> {
     );
   }
 }
+
+

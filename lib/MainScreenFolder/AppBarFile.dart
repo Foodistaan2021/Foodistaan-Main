@@ -29,19 +29,21 @@ class MainScreenAppBar extends StatelessWidget {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Column(children: [
-      Container(
-        height: h1 * 0.03,
-        color: Color(0xFFFAB84C),
-      ),
       Padding(
         padding: const EdgeInsets.only(top: 6),
         child: Container(
-          height: h1 / 20,
+          height: h1 / 25,
           width: w1,
           child: Row(
             children: [
-              Expanded(flex: 3, child: Location()),
-              Expanded(flex: 1, child: Points()),
+              Expanded(flex: 3, child: Padding(
+                padding: EdgeInsets.fromLTRB(w1/40,0,0,0),
+                child: Location(),
+              )),
+              Expanded(flex: 1, child: Padding(
+                padding: EdgeInsets.fromLTRB(0,0,w1/40,0),
+                child: Points(),
+              )),
             ],
           ),
         ),

@@ -17,7 +17,8 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
      MaterialApp(
-    initialRoute: FirebaseAuth.instance.currentUser !=null ? 'H' : 'L',
+       initialRoute:'H',
+    //initialRoute: FirebaseAuth.instance.currentUser !=null ? 'H' : 'L',
     routes: {
       'B': (context) => BufferScreen(),
       'L': (context) => LoginScreen(),
