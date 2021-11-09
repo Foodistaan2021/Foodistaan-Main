@@ -45,19 +45,17 @@ class _RestuarantDeliveryMenuState extends State<RestuarantDeliveryMenu> {
   @override
   Widget build(BuildContext context) {
     var itemWidth = MediaQuery.of(context).size.width * 0.4;
-    var itemHeight = MediaQuery.of(context).size.height * 0.32;
+    var itemHeight = MediaQuery.of(context).size.height * 0.33;
 
     return Scaffold(
       body: Column(
         children: [
-        
-
           Container(
               child: menu_items.isEmpty
                   ? CircularProgressIndicator()
                   : GridView.count(
                       padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       childAspectRatio: (itemWidth / itemHeight),
                       crossAxisSpacing: 5,
@@ -65,7 +63,8 @@ class _RestuarantDeliveryMenuState extends State<RestuarantDeliveryMenu> {
                       mainAxisSpacing: 10,
                       children: List.generate(menu_items.length, (index) {
                         return MyFoodItemWidget(
-                          menu_item: menu_items[index],vendor_id : widget.vendor_id,
+                          menu_item: menu_items[index],
+                          vendor_id: widget.vendor_id,
                         );
                       }),
                     )),

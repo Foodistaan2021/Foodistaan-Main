@@ -58,9 +58,8 @@ class Cuisines extends StatelessWidget {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Container(
-      //height:85,
-      //height: h1/12,
-      width: w1/5,
+
+      width: 2*w1/9,
       decoration: BoxDecoration(
           color: BgColor,
           borderRadius: BorderRadius.circular(10.0),
@@ -79,14 +78,14 @@ class Cuisines extends StatelessWidget {
                 Text1,
                 style: TextStyle(
                   color: Colors.black,
-                   fontSize: 15),
+                   fontSize: h1/35),
                 textAlign: TextAlign.left,
               ),
               Text(Text2,
                   style: TextStyle(
                       color: BorderColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                      fontSize: h1/25),
                   textAlign: TextAlign.left),
               Image.asset(FoodImage),
             ],

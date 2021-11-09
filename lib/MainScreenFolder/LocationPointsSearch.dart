@@ -18,10 +18,8 @@ class _LocationState extends State<Location> {
             Icon(
               Icons.location_on,
               color: Color(0xFFFAB84C),
-              size: 10,
             ),
-            Text("Location",
-                style: TextStyle(color: Color(0xFF0E1829), fontSize: 5)),
+            Text("Location", style: TextStyle(color: Color(0xFF0E1829))),
           ],
         ),
       ),
@@ -44,15 +42,10 @@ class _PointsState extends State<Points> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Points",
-                style: TextStyle(
-                  fontSize: 5,
-                  color: Color(0xFF0E1829),
-                )),
+            Text("Points", style: TextStyle(color: Color(0xFF0E1829))),
             Icon(
               Icons.money,
               color: Color(0xFFFAB84C),
-              size: 12,
             ),
           ],
         ),
@@ -76,11 +69,11 @@ class _SearchState extends State<Search> {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(w1 / 50),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Color(0xFFFCE19E),
+          color: Color(0xFFFCE19E).withOpacity(0.35),
         ),
         height: h1 / 15,
         width: 12 * w1 / 13,
@@ -92,7 +85,7 @@ class _SearchState extends State<Search> {
           child: FittedBox(
             fit: BoxFit.contain,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.fromLTRB(w1 / 20, h1 / 100, 0, h1 / 100),
               child: Row(
                 children: [
                   Icon(
@@ -100,7 +93,7 @@ class _SearchState extends State<Search> {
                     color: Color(0xFF6B6B6B),
                   ),
                   SizedBox(
-                    width: w1 / 30,
+                    width: w1 / 70,
                   ),
                   Text(
                     "Search Cuisines",

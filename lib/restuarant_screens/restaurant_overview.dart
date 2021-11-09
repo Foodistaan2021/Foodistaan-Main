@@ -9,7 +9,7 @@ import 'package:foodistan/widgets/bottom_navbar.dart';
 
 class RestaurantOverview extends StatefulWidget {
   static String id = 'restaurant_overview';
-   
+
   @override
   _RestaurantOverviewState createState() => _RestaurantOverviewState();
 }
@@ -48,7 +48,6 @@ class _RestaurantOverviewState extends State<RestaurantOverview> {
                   )),
             ]),
       ),
-      bottomNavigationBar: BottomNavBar(),
       body: SizedBox(
         child: ListView(
           shrinkWrap: true,
@@ -67,8 +66,8 @@ class _RestaurantOverviewState extends State<RestaurantOverview> {
                       ),
                     )),
                 Center(
-                  // child: RestaurantMain(),
-                )
+                    // child: RestaurantMain(),
+                    )
               ],
             ),
             Column(

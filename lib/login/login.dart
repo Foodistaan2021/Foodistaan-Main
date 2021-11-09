@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/MainScreenFolder/HomeScreenFile.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-import 'front.dart';
+import 'user_detail_form.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 //import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -37,11 +39,19 @@ class _LoginScreenState extends State<LoginScreen> {
         showLoading = false;
       });
       if (authCredential.user != null) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    UserDetail(phone_number: phoneController.text)));
+        final _userDetail = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(phoneController.text)
+            .get();
+
+        _userDetail.exists
+            ? Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainScreen()))
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        UserDetail(phone_number: phoneController.text)));
       }
     } on FirebaseAuthException catch (e) {
       setState(() {

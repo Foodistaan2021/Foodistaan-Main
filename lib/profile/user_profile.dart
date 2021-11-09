@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:foodistan/profile/settings.dart';
 import 'profile_bookmarks.dart';
 import 'payment_methods.dart';
@@ -37,11 +37,10 @@ class _UserProfileState extends State<UserProfile> {
         setState(() {
           items["name"] = value.get("name");
           items["email"] = value.get("email");
-          items["number"] = value.get("number");
+          items["number"] = value.get("phoneNumber");
           items["pic"] = value.get("profilePic");
         });
       }).whenComplete(() {
-        print(items);
         setState(() {});
       });
     } catch (e) {
@@ -62,7 +61,11 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            Opacity(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Opacity(
                   opacity: 0.7,
                   child: Image.asset(
                     'Images/profilepage.png',
@@ -87,9 +90,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                     ),
-                    const Text('  |  ',style: TextStyle(
-                      color: Colors.grey,
-                    ),),
+                    const Text(
+                      '  |  ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: const Text(
@@ -101,9 +107,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                     ),
-                    const Text('  |  ',style: TextStyle(
-                      color: Colors.grey,
-                    ),),
+                    const Text(
+                      '  |  ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: const Text(
@@ -135,9 +144,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                     ),
-                    const Text('  |  ',style: TextStyle(
-                      color: Colors.grey,
-                    ),),
+                    const Text(
+                      '  |  ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: const Text(
@@ -149,11 +161,17 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                     ),
-                    const Text('  |  ',style: TextStyle(
-                      color: Colors.grey,
-                    ),),
+                    const Text(
+                      '  |  ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        FirebaseAuth.instance.signOut().whenComplete(() =>
+                            {Navigator.pushReplacementNamed(context, 'L')});
+                      },
                       child: const Text(
                         'Logout',
                         style: TextStyle(
@@ -187,7 +205,7 @@ class _UserProfileState extends State<UserProfile> {
                             padding: const EdgeInsets.only(left: 30),
                             child: Text(
                               items["name"],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                               ),
@@ -217,21 +235,21 @@ class _UserProfileState extends State<UserProfile> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       items["email"],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 3,
                                     ),
                                     Text(
                                       items["number"],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.grey,
                                       ),
                                     ),

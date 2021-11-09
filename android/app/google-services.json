@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "201527710402-a2jhehne7jmth66l2erpkbu7u69uab30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodistan",
+            "certificate_hash": "27ddf053f38833b0564de51070279a0bae0f6700"
+          }
+        },
+        {
           "client_id": "201527710402-dkomo3nu7u5itdkgorjl00ol2vj9skls.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.foodistan",
             "certificate_hash": "479eea9ad656887cbfd8bebbb4e687338870ac19"
+          }
+        },
+        {
+          "client_id": "201527710402-lij4k41k9a8c9u41ptu252n8rnt6n46v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodistan",
+            "certificate_hash": "f446274b71538eae6874149ca1ac680a4014bf41"
           }
         },
         {

@@ -52,7 +52,6 @@ class _RestuarantDeliveryMenuSReview extends State<RestuarantDeliveryReview> {
           child: Column(
             children: [
               ReviewerWidget(),
-              ReviewerWidget(),
             ],
           ),
         )

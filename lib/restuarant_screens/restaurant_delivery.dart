@@ -3,13 +3,14 @@
 
 import 'dart:ui';
 
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/auth/autentication.dart';
+import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery_review.dart';
 import 'package:foodistan/restuarant_screens/restaurant_main.dart';
 import 'package:foodistan/restuarant_screens/restuarant_delivery_menu.dart';
 import 'package:foodistan/widgets/bottom_navbar.dart';
-
 
 class RestaurantDelivery extends StatefulWidget {
   static String id = 'restaurant_delivery';
@@ -24,13 +25,19 @@ class RestaurantDelivery extends StatefulWidget {
 class _RestaurantDeliveryState extends State<RestaurantDelivery> {
   bool isMenuSelected = true;
   bool isReviewSelected = false;
- 
+  bool isCartEmpty = true;
+
+  @override
+  
+
   @override
   Widget build(BuildContext context) {
     var itemWidth = MediaQuery.of(context).size.width * 0.4;
     var itemHeight = MediaQuery.of(context).size.height * 0.25;
 
     return Scaffold(
+      bottomNavigationBar:
+          Visibility(visible: isCartEmpty, child: BottomNavBar()),
       backgroundColor: Color.fromRGBO(250, 250, 250, 1),
       appBar: PreferredSize(
         preferredSize:
@@ -118,17 +125,19 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                         GestureDetector(
                           onTap: () {
                             print("Menu selected");
-                            isReviewSelected = false;
-                            isMenuSelected = true;
+                            setState(() {
+                              isReviewSelected = false;
+                              isMenuSelected = true;
+                            });
                           },
                           child: Text(
                             "Menu",
                             style: isMenuSelected == true
                                 ? TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline)
+                                    color: Colors.amber,
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.overline)
                                 : TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -141,17 +150,19 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                         GestureDetector(
                           onTap: () {
                             print("Reviews selected");
-                            isReviewSelected = true;
-                            isMenuSelected = false;
+                            setState(() {
+                              isReviewSelected = true;
+                              isMenuSelected = false;
+                            });
                           },
                           child: Text(
                             "Reviews",
                             style: isReviewSelected == true
                                 ? TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline)
+                                    color: Colors.amber,
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.overline)
                                 : TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -167,7 +178,9 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: isReviewSelected
                     ? RestuarantDeliveryReview()
-                    : RestuarantDeliveryMenu(vendor_id: widget.vendor_id,)),
+                    : RestuarantDeliveryMenu(
+                        vendor_id: widget.vendor_id,
+                      )),
           ],
         ),
       ),
