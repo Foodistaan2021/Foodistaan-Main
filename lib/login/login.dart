@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (authCredential.user != null) {
         final _userDetail = await FirebaseFirestore.instance
             .collection('users')
-            .doc(phoneController.text)
+            .doc("+91"+phoneController.text)
             .get();
 
         _userDetail.exists
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        UserDetail(phone_number: phoneController.text)));
+                        UserDetail(phone_number: "+91"+phoneController.text)));
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -64,37 +66,38 @@ class _LoginScreenState extends State<LoginScreen> {
   MobileVerificationState currentState =
       MobileVerificationState.SHOW_MOBILE_FORM_STATE;
   getMobileFormWidget(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 1,
-      width: MediaQuery.of(context).size.width * 1,
-      child: Column(
-        children: [
-          Container(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child:
-                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
-          Container(
+    return ListView(
+      children: [
+        Container(
             width: MediaQuery.of(context).size.width * 1,
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.02,
-            ),
-            child: Image.asset('Images/pic4.png'),
+            height: MediaQuery.of(context).size.height * 0.3,
+            child:
+                Image.asset('Images/top.jpeg',fit: BoxFit.fill)),
+        Container(
+          width: MediaQuery.of(context).size.width * 1,
+          height: MediaQuery.of(context).size.height * 0.15,
+          margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.02,
           ),
+          child: Image.asset('Images/pic4.png'),
+        ),
 
-          Container(
+        Align(
+          alignment: Alignment.center,
+          child: Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.05,
+              top: MediaQuery.of(context).size.height * 0.01,
             ),
-            width: MediaQuery.of(context).size.height * 0.5,
-            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.09,
             child: TextFormField(
               textAlign: TextAlign.center,
               controller: phoneController,
               //keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                focusColor: Colors.yellow,
-                hintText: 'Phone Number (Please enter +91)',
+                focusColor: Color(0xFFF7C12B),
+                hintText: 'Phone Number',
+                prefix: Text("+91"),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3.0),
                 ),
@@ -104,19 +107,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Container(
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.04,
+              top: MediaQuery.of(context).size.height * 0.01,
             ),
-            width: MediaQuery.of(context).size.height * 0.5,
-            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.07,
             child: ElevatedButton(
               onPressed: () async {
                 setState(() {
                   showLoading = true;
                 });
                 await _auth.verifyPhoneNumber(
-                  phoneNumber: phoneController.text,
+                  phoneNumber: "+91"+phoneController.text,
                   verificationCompleted: (phoneAuthCredential) async {
                     setState(() {
                       showLoading = false;
@@ -144,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Send OTP',
                 style: TextStyle(
                   color: Colors.white,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
               style: ElevatedButton.styleFrom(
@@ -152,44 +159,43 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          //   ],
-          // ),
+        ),
+        //   ],
+        // ),
 
-          Container(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: Image.asset('Images/bottom.jpeg',
-                  height: 20, fit: BoxFit.fill)),
-        ],
-      ),
+        Container(
+            width: MediaQuery.of(context).size.width * 1,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Image.asset('Images/bottom.jpeg',fit: BoxFit.fill)),
+      ],
     );
   }
 
   getOtpFormWidget(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 1,
-      width: MediaQuery.of(context).size.width * 1,
-      child: Column(
-        children: [
-          Container(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child:
-                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
-          Container(
+    return ListView(
+      children: [
+        Container(
             width: MediaQuery.of(context).size.width * 1,
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.02,
-            ),
-            child: Image.asset('Images/pic4.png'),
+            height: MediaQuery.of(context).size.height * 0.3,
+            child:
+                Image.asset('Images/top.jpeg', fit: BoxFit.fill)),
+        Container(
+          width: MediaQuery.of(context).size.width * 1,
+          height: MediaQuery.of(context).size.height * 0.15,
+          margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.02,
           ),
+          child: Image.asset('Images/pic4.png'),
+        ),
 
-          Container(
+        Align(
+          alignment: Alignment.center,
+          child: Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.05,
+              top: MediaQuery.of(context).size.height * 0.01,
             ),
-            width: MediaQuery.of(context).size.height * 0.5,
-            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.09,
             child: TextFormField(
               textAlign: TextAlign.center,
               controller: otpController,
@@ -206,28 +212,31 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+        ),
 
-          // Container(
-          //   child: OTPTextField(
-          //     length: 6,
-          //     width: MediaQuery.of(context).size.width,
-          //     fieldWidth: 40,
-          //     style: TextStyle(
-          //         fontSize: 17
-          //     ),
-          //     textFieldAlignment: MainAxisAlignment.spaceAround,
-          //     fieldStyle: FieldStyle.underline,
-          //     onCompleted: (pin) {
-          //       print("Completed: " + pin);
-          //     },
-          //   ),
-          // ),
-          Container(
+        // Container(
+        //   child: OTPTextField(
+        //     length: 6,
+        //     width: MediaQuery.of(context).size.width,
+        //     fieldWidth: 40,
+        //     style: TextStyle(
+        //         fontSize: 17
+        //     ),
+        //     textFieldAlignment: MainAxisAlignment.spaceAround,
+        //     fieldStyle: FieldStyle.underline,
+        //     onCompleted: (pin) {
+        //       print("Completed: " + pin);
+        //     },
+        //   ),
+        // ),
+        Align(
+          alignment: Alignment.center,
+          child: Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.04,
+              top: MediaQuery.of(context).size.height * 0.01,
             ),
-            width: MediaQuery.of(context).size.height * 0.5,
-            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.07,
             child: ElevatedButton(
               onPressed: () async {
                 PhoneAuthCredential phoneAuthCredential =
@@ -248,16 +257,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          //   ],
-          // ),
+        ),
+        //   ],
+        // ),
 
-          Container(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: Image.asset('Images/bottom.jpeg',
-                  height: 20, fit: BoxFit.fill)),
-        ],
-      ),
+        Container(
+            width: MediaQuery.of(context).size.width * 1,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Image.asset('Images/bottom.jpeg',
+                height: 20, fit: BoxFit.fill)),
+      ],
     );
   }
 
@@ -281,14 +290,3 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-
-
-// class Login extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     double height, width;
-//     height = MediaQuery.of(context).size.height;
-//     width = MediaQuery.of(context).size.width;
-//     return
-//   }
-// }

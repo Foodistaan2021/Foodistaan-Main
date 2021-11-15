@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\AKSHAT\\StudioProjects\\Foodistaan\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-af\\values-af.xml",
+            "outputFile": "C:\\Users\\AKSHAT\\Desktop\\Foodistaan-Main2\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-af\\values-af.xml",
             "map": [
                 {
                     "source": "C:\\Users\\AKSHAT\\.gradle\\caches\\transforms-2\\files-2.1\\169f868ff4a46669c47b19d2adeb7cc6\\jetified-play-services-base-17.1.0\\res\\values-af\\values.xml",

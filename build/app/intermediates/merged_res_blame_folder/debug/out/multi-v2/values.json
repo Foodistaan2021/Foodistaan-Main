@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\AKSHAT\\StudioProjects\\Foodistaan\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "C:\\Users\\AKSHAT\\Desktop\\Foodistaan-Main2\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\AKSHAT\\.gradle\\caches\\transforms-2\\files-2.1\\3035d3fb892d52b0eca5412afa275202\\jetified-play-services-maps-17.0.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "165",
+                        "endLines": "62",
+                        "endColumns": "20",
+                        "endOffsets": "1582"
+                    },
+                    "to": {
+                        "startLines": "381",
+                        "startColumns": "4",
+                        "startOffsets": "24038",
+                        "endLines": "439",
+                        "endColumns": "20",
+                        "endOffsets": "25455"
+                    }
+                },
                 {
                     "source": "C:\\Users\\AKSHAT\\.gradle\\caches\\transforms-2\\files-2.1\\b841fcc388bfa10d92daccd34a58d829\\browser-1.0.0\\res\\values\\values.xml",
                     "from": {
@@ -50,35 +69,16 @@
                         "endOffsets": "300,376,462,548,624,701,777,853,1051,1232,1353,1456,1636,1755,1867,1966,2154,2255,2436,2557,2732,2876,2935,2993,3068,3474,3887"
                     },
                     "to": {
-                        "startLines": "7,8,9,10,11,12,13,14,93,94,95,96,97,98,99,100,102,103,104,105,106,107,108,109,110,368,381",
+                        "startLines": "7,8,9,10,11,12,13,14,93,94,95,96,97,98,99,100,102,103,104,105,106,107,108,109,110,368,440",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "415,505,585,675,765,845,926,1006,5850,5955,6136,6261,6368,6548,6671,6787,7057,7245,7350,7531,7656,7831,7979,8042,8104,23723,24038",
-                        "endLines": "7,8,9,10,11,12,13,14,93,94,95,96,97,98,99,100,102,103,104,105,106,107,108,109,110,380,399",
+                        "startOffsets": "415,505,585,675,765,845,926,1006,5850,5955,6136,6261,6368,6548,6671,6787,7057,7245,7350,7531,7656,7831,7979,8042,8104,23723,25460",
+                        "endLines": "7,8,9,10,11,12,13,14,93,94,95,96,97,98,99,100,102,103,104,105,106,107,108,109,110,380,458",
                         "endColumns": "89,79,89,89,79,80,79,79,104,180,124,106,179,122,115,102,187,104,180,124,174,147,62,61,78,20,20",
-                        "endOffsets": "500,580,670,760,840,921,1001,1081,5950,6131,6256,6363,6543,6666,6782,6885,7240,7345,7526,7651,7826,7974,8037,8099,8178,24033,24450"
+                        "endOffsets": "500,580,670,760,840,921,1001,1081,5950,6131,6256,6363,6543,6666,6782,6885,7240,7345,7526,7651,7826,7974,8037,8099,8178,24033,25872"
                     }
                 },
                 {
-                    "source": "C:\\Users\\AKSHAT\\StudioProjects\\Foodistaan\\android\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "176,830",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "472,996"
-                    },
-                    "to": {
-                        "startLines": "119,124",
-                        "startColumns": "4,4",
-                        "startOffsets": "8990,9287",
-                        "endLines": "123,126",
-                        "endColumns": "12,12",
-                        "endOffsets": "9282,9451"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\AKSHAT\\StudioProjects\\Foodistaan\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
+                    "source": "C:\\Users\\AKSHAT\\Desktop\\Foodistaan-Main2\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",
@@ -109,6 +109,25 @@
                         "startOffsets": "5712,6890",
                         "endColumns": "67,166",
                         "endOffsets": "5775,7052"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\AKSHAT\\Desktop\\Foodistaan-Main2\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,816",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "465,980"
+                    },
+                    "to": {
+                        "startLines": "119,124",
+                        "startColumns": "4,4",
+                        "startOffsets": "8990,9287",
+                        "endLines": "123,126",
+                        "endColumns": "12,12",
+                        "endOffsets": "9282,9451"
                     }
                 },
                 {

@@ -32,7 +32,7 @@ class MainScreenAppBar extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(top: 6),
         child: Container(
-          height: h1 / 25,
+          height: h1 / 32,
           width: w1,
           child: Row(
             children: [
