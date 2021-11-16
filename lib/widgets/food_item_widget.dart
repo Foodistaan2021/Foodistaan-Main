@@ -67,8 +67,8 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(top: 10),
                   width: MediaQuery.of(context).size.width * 0.30,
+                  height: MediaQuery.of(context).size.height * 0.07,
                   child: Text("${widget.menu_item['description']}",
                       maxLines: 3,
                       style:
@@ -86,31 +86,37 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
               ],
             ),
           ),
-          ElevatedButton(
-            child: Text('ADD'),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.amber,
-              onPrimary: Colors.white,
-              shadowColor: Colors.red,
-              elevation: 5,
+          Container(
+            height: MediaQuery.of(context).size.height * 0.04,
+            child: ElevatedButton(
+              child: Text('ADD'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.amber,
+                onPrimary: Colors.white,
+                shadowColor: Colors.red,
+                elevation: 5,
+              ),
+              onPressed: () async {
+                String text = await CartFunctions().addItemToCart(
+                    user_number,
+                    widget.menu_item['id'],
+                    widget.vendor_id,
+                    widget.menu_item['price']);
+
+                final snackBar = SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(text),
+                  action: SnackBarAction(
+                    label: '',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
             ),
-            onPressed: () async {
-              String text = await CartFunctions().addItemToCart(
-                  user_number, widget.menu_item['id'], widget.vendor_id,widget.menu_item['price']);
-
-              final snackBar = SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text(text),
-                action: SnackBarAction(
-                  label: '',
-                  onPressed: () {
-                    // Some code to undo the change.
-                  },
-                ),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            },
           )
         ],
       ),
