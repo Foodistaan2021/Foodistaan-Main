@@ -1,16 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/auth/autentication.dart';
-import 'dart:math' as math;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:foodistan/functions/cart_functions.dart';
-import 'package:foodistan/MainScreenFolder/ListingsFile.dart';
 
 class MyFoodItemWidget extends StatefulWidget {
   static String id = 'my_food_widget';
   var menu_item;
-  String vendor_id;
-  MyFoodItemWidget({required this.menu_item, required this.vendor_id});
+  String vendor_id, cartId,vendorName;
+  MyFoodItemWidget(
+      {required this.menu_item, required this.vendor_id, required this.cartId,required this.vendorName});
 
   @override
   _MyFoodItemWidgetState createState() => _MyFoodItemWidgetState();
@@ -67,8 +65,8 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(top: 10),
                   width: MediaQuery.of(context).size.width * 0.30,
+                  height: MediaQuery.of(context).size.height * 0.07,
                   child: Text("${widget.menu_item['description']}",
                       maxLines: 3,
                       style:
@@ -86,31 +84,10 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
               ],
             ),
           ),
-          ElevatedButton(
-            child: Text('ADD'),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.amber,
-              onPrimary: Colors.white,
-              shadowColor: Colors.red,
-              elevation: 5,
-            ),
-            onPressed: () async {
-              String text = await CartFunctions().addItemToCart(
-                  user_number, widget.menu_item['id'], widget.vendor_id,widget.menu_item['price']);
-
-              final snackBar = SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text(text),
-                action: SnackBarAction(
-                  label: '',
-                  onPressed: () {
-                    // Some code to undo the change.
-                  },
-                ),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            },
+          Container(
+            height: MediaQuery.of(context).size.height * 0.04,
+            child: CartFunctions().quantityWidgetInRestaurant(widget.cartId,
+                widget.menu_item['id'], widget.vendor_id, widget.menu_item,widget.vendorName),
           )
         ],
       ),
