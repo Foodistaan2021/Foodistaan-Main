@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "201527710402-ii4tqqp6suia336cc28u07jdcjt615e2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodistan",
+            "certificate_hash": "7849c00cb8b1d8f3e7e868a3167bcd8461a6518e"
+          }
+        },
+        {
           "client_id": "201527710402-lij4k41k9a8c9u41ptu252n8rnt6n46v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -37,6 +45,35 @@
             "certificate_hash": "f446274b71538eae6874149ca1ac680a4014bf41"
           }
         },
+        {
+          "client_id": "201527710402-epeq8m4952k6samd6q48lfmimj0s3qk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7KtuC2VhUBU5BgnKSKzypxCebnIDtskc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201527710402-epeq8m4952k6samd6q48lfmimj0s3qk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201527710402:android:0897f8855d8fe9e102215b",
+        "android_client_info": {
+          "package_name": "com.foodistaan.delivery.foodistaan_delivery"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "201527710402-epeq8m4952k6samd6q48lfmimj0s3qk8.apps.googleusercontent.com",
           "client_type": 3

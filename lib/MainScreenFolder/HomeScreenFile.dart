@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding:
-                    EdgeInsets.fromLTRB(w1 / 16, h1 / 70, w1 / 70, h1 / 20),
+                    EdgeInsets.fromLTRB(w1 / 16, h1 / 70, w1 / 70, h1 / 25),
                 child: GestureDetector(
                   onTap: () async {
                     await fetchData('DummyData');
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding:
-                    EdgeInsets.fromLTRB(w1 / 16, h1 / 70, w1 / 70, h1 / 20),
+                    EdgeInsets.fromLTRB(w1 / 16, h1 / 70, w1 / 70, h1 / 25),
                 child: GestureDetector(
                   onTap: () async {
                     await fetchData('TiffinServices');
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: "Order by ",
                   style: TextStyle(
                              color: Color(0xFF0F1B2B),
-                            fontSize: h1 / 27,) ,
+                            fontSize: h1 / 30,) ,
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Cuisines',
