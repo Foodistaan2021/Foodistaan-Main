@@ -24,8 +24,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   void _onItemTapped(int index) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => screens[index]));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => screens[index]));
   }
 
   @override

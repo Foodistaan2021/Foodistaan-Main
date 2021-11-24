@@ -26,9 +26,10 @@ class CuisineTileList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: CuisineTiles.length,
         itemBuilder: (context, index) {
+          final item= CuisineTiles[index];
           return Padding(
             padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 50, w1 / 70, h1 / 50),
-            child: CuisineTiles[index],
+            child:  item
           );
         },
       ),
@@ -57,7 +58,8 @@ class Cuisines extends StatelessWidget {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Container(
-      width: w1/4,
+
+      width: 2*w1/9,
       decoration: BoxDecoration(
           color: BgColor,
           borderRadius: BorderRadius.circular(10.0),
@@ -69,27 +71,24 @@ class Cuisines extends StatelessWidget {
         onTap: () {},
         child: FittedBox(
           fit:BoxFit.contain,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Text1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                Text1,
+                style: TextStyle(
+                  color: Colors.black,
+                   fontSize: h1/35),
+                textAlign: TextAlign.left,
+              ),
+              Text(Text2,
                   style: TextStyle(
-                    color: Colors.black,
-                     fontSize: h1/35),
-                  textAlign: TextAlign.left,
-                ),
-                Text(Text2,
-                    style: TextStyle(
-                        color: BorderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: h1/25),
-                    textAlign: TextAlign.left),
-                Image.asset(FoodImage),
-              ],
-            ),
+                      color: BorderColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: h1/25),
+                  textAlign: TextAlign.left),
+              Image.asset(FoodImage),
+            ],
           ),
         ),
       ),

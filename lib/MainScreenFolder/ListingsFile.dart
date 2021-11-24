@@ -90,7 +90,6 @@ class _ListedTileState extends State<ListedTile> {
                 builder: (context) => RestaurantDelivery(
                       items: StreetFoodDetails,
                       vendor_id: Vendor_ID,
-                      vendorName :StreetFoodDetails['Name']
                     )));
       },
       child: Container(
@@ -174,8 +173,7 @@ class leftSide extends StatelessWidget {
                   child: Text(
                     address,
                     style: TextStyle(
-                      fontSize: h1/100,
-                        color: Colors.white, fontWeight: FontWeight.w900),
+                        color: Colors.white, fontWeight: FontWeight.w500),
                   ),
                 )),
           )
@@ -258,16 +256,16 @@ class rightSide extends StatelessWidget {
                       height: h1 / 50,
                     ),
                     SizedBox(
-                      width: w1 / 100,
+                      width: w1 / 50,
                     ),
                     FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        "Cost for two: $cost",
+                        "Cost for two:" + cost.toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
-                            fontSize: h1 / 70),
+                            fontSize: h1 / 65),
                       ),
                     ),
                   ],
@@ -281,14 +279,14 @@ class rightSide extends StatelessWidget {
                             height: h1 / 50,
                           ),
                           SizedBox(
-                            width: w1 / 100,
+                            width: w1 / 50,
                           ),
                           Text(
                             "Delivery",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: h1 / 70),
+                                fontSize: h1 / 65),
                           )
                         ],
                       )
@@ -302,14 +300,14 @@ class rightSide extends StatelessWidget {
                             height: h1 / 50,
                           ),
                           SizedBox(
-                            width: w1 / 100,
+                            width: w1 / 50,
                           ),
                           Text(
                             "Takeaway",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: h1 / 70),
+                                fontSize: h1 / 65),
                           )
                         ],
                       )

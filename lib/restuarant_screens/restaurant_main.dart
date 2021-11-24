@@ -13,16 +13,8 @@ class RestaurantMain extends StatefulWidget {
 }
 
 class _RestaurantMainState extends State<RestaurantMain> {
-  bool isDeliverySelected = false;
-  bool isPickupSelected = false;
-  bool isOverviewSelected = false;
+  bool isSelected = false;
   @override
-  @override
-  void initState() {
-    super.initState();
-    isDeliverySelected = true;
-  }
-
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
@@ -114,7 +106,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
             ],
           ),
           Container(
-            // margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.all(8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -197,35 +189,30 @@ class _RestaurantMainState extends State<RestaurantMain> {
             ),
           ),
           Container(
+            margin: EdgeInsets.only(top: 15),
             height: MediaQuery.of(context).size.height * 0.07,
             padding: EdgeInsets.all(10),
             width: MediaQuery.of(context).size.width * 0.9,
-            // decoration: BoxDecoration(
-            //     border: Border.all(color: Colors.grey, width: 1),
-            //     borderRadius: BorderRadius.circular(50)),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(50)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      isDeliverySelected = true;
-                      isPickupSelected = false;
-                      isOverviewSelected = false;
+                      isSelected = true;
                     });
                   },
                   child: Container(
-                    // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: isDeliverySelected == true
-                            ? Colors.amber[400]
-                            : Colors.white,
-                        border: isDeliverySelected == true
-                            ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
-                        borderRadius: isDeliverySelected == true
-                            ? BorderRadius.circular(10)
-                            : BorderRadius.circular(0)),
+                      color:
+                          isSelected == true ? Colors.amber[400] : Colors.white,
+                      border: isSelected == true
+                          ? Border.all(color: Colors.amber, width: 1)
+                          : Border.all(color: Colors.white, width: 1),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
@@ -238,13 +225,16 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           color: Colors.grey,
                         ),
                         widget.restaurant_details["Delivery"] == true
-                            ? Text(" Delivery",
-                                style: isDeliverySelected == true
-                                    ? TextStyle(
-                                        color: Colors.black, fontSize: 15)
-                                    : TextStyle(
-                                        color: Colors.grey, fontSize: 10))
-                            : SizedBox()
+                            ? Text(
+                                " Delivery",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              )
+                            : Text(
+                                " No Delivery",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              )
                       ],
                     ),
                   ),
@@ -252,23 +242,17 @@ class _RestaurantMainState extends State<RestaurantMain> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      isDeliverySelected = false;
-                      isPickupSelected = true;
-                      isOverviewSelected = false;
+                      isSelected = true;
                     });
                   },
                   child: Container(
-                    // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: isPickupSelected == true
-                            ? Colors.amber[400]
-                            : Colors.white,
-                        border: isPickupSelected == true
-                            ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
-                        borderRadius: isPickupSelected == true
-                            ? BorderRadius.circular(10)
-                            : BorderRadius.circular(0)),
+                      color:
+                          isSelected == true ? Colors.amber[400] : Colors.white,
+                      border: isSelected == true
+                          ? Border.all(color: Colors.amber, width: 1)
+                          : Border.all(color: Colors.white, width: 1),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
@@ -281,12 +265,11 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           color: Colors.grey,
                         ),
                         widget.restaurant_details["Takeaway"]
-                            ? Text(" Pickup",
-                                style: isPickupSelected == true
-                                    ? TextStyle(
-                                        color: Colors.black, fontSize: 15)
-                                    : TextStyle(
-                                        color: Colors.grey, fontSize: 10))
+                            ? Text(
+                                " Pickup",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              )
                             : SizedBox()
                       ],
                     ),
@@ -295,23 +278,17 @@ class _RestaurantMainState extends State<RestaurantMain> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      isDeliverySelected = false;
-                      isPickupSelected = false;
-                      isOverviewSelected = true;
+                      isSelected = true;
                     });
                   },
                   child: Container(
-                    // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: isOverviewSelected == true
-                            ? Colors.amber[400]
-                            : Colors.white,
-                        border: isOverviewSelected == true
-                            ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
-                        borderRadius: isOverviewSelected == true
-                            ? BorderRadius.circular(10)
-                            : BorderRadius.circular(0)),
+                      color:
+                          isSelected == true ? Colors.amber[400] : Colors.white,
+                      border: isSelected == true
+                          ? Border.all(color: Colors.amber, width: 1)
+                          : Border.all(color: Colors.white, width: 1),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
@@ -323,10 +300,10 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           size: 15,
                           color: Colors.grey,
                         ),
-                        Text(" Overview",
-                            style: isOverviewSelected == true
-                                ? TextStyle(color: Colors.black, fontSize: 15)
-                                : TextStyle(color: Colors.grey, fontSize: 10))
+                        Text(
+                          " Overview",
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                        )
                       ],
                     ),
                   ),

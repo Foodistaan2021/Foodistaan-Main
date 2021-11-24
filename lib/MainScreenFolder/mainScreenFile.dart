@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/profile/foodistaan_pro.dart';
 import 'package:foodistan/profile/user_profile.dart';
@@ -24,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
+    var w1 = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -61,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: currentIndex == 0
           ? PreferredSize(
               preferredSize:
-                  Size.fromHeight(h1 * 0.12), // here the desired height
+                  Size.fromHeight(h1 / 6.8), // here the desired height
               child: SafeArea(
                 child: MainScreenAppBar(),
               ),

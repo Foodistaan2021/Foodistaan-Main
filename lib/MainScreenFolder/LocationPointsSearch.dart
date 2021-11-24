@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'LocationMap.dart';
 
 class Location extends StatefulWidget {
   @override
@@ -9,17 +8,8 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location> {
   @override
   Widget build(BuildContext context) {
-    var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddLocation(),
-          ),
-        );
-      },
+      onTap: () {},
       child: FittedBox(
         alignment: Alignment.bottomLeft,
         fit: BoxFit.contain,
@@ -28,14 +18,8 @@ class _LocationState extends State<Location> {
             Icon(
               Icons.location_on,
               color: Color(0xFFFAB84C),
-              size: h1*0.07,
             ),
-            Text("Location",
-                style: TextStyle(
-                    color: Color(0xFF0E1829),
-                    fontSize: h1 *0.05,
-                    fontFamily: 'Segoe UI'
-                )),
+            Text("Location", style: TextStyle(color: Color(0xFF0E1829))),
           ],
         ),
       ),
@@ -51,8 +35,6 @@ class Points extends StatefulWidget {
 class _PointsState extends State<Points> {
   @override
   Widget build(BuildContext context) {
-    var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {},
       child: FittedBox(
@@ -60,16 +42,10 @@ class _PointsState extends State<Points> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Points",
-                style: TextStyle(
-                    color: Color(0xFF0E1829),
-                    fontSize: h1 *0.05,
-                    fontFamily: 'Segoe UI'
-                )),
+            Text("Points", style: TextStyle(color: Color(0xFF0E1829))),
             Icon(
               Icons.money,
               color: Color(0xFFFAB84C),
-              size: h1 *0.07,
             ),
           ],
         ),
@@ -93,13 +69,13 @@ class _SearchState extends State<Search> {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.fromLTRB(w1*0.01,h1*0.01,w1*0.01,h1*0.01,),
+      padding: EdgeInsets.all(w1 / 50),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Color(0xFFFCE19E).withOpacity(0.35),
         ),
-        height: h1 *0.05,
+        height: h1 / 15,
         width: 12 * w1 / 13,
         alignment: Alignment.centerLeft,
         child: GestureDetector(
@@ -115,7 +91,6 @@ class _SearchState extends State<Search> {
                   Icon(
                     Icons.search,
                     color: Color(0xFF6B6B6B),
-                    size: h1 / 40,
                   ),
                   SizedBox(
                     width: w1 / 70,
@@ -123,9 +98,7 @@ class _SearchState extends State<Search> {
                   Text(
                     "Search Cuisines",
                     style: TextStyle(
-                        color: Color(0xFF6B6B6B),
-                        fontSize: h1 / 50,
-                        fontFamily: 'Segoe UI'
+                      color: Color(0xFF6B6B6B),
                     ),
                   ),
                 ],
