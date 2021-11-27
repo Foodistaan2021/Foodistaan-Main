@@ -12,13 +12,13 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:foodistan/UserLogin/OTPScreen.dart';
 
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-
-
-class LoginScreen extends StatelessWidget {
-  final phoneController = TextEditingController();
-  bool showLoading = false;
-
+class _LoginScreenState extends State<LoginScreen> {
+  final _phoneNumberController = TextEditingController();
 
   getMobileFormWidget(context) {
     return ListView(
@@ -26,8 +26,7 @@ class LoginScreen extends StatelessWidget {
         Container(
             width: MediaQuery.of(context).size.width * 1,
             height: MediaQuery.of(context).size.height * 0.3,
-            child:
-            Image.asset('Images/loginTop.png',fit: BoxFit.fill)),
+            child: Image.asset('Images/loginTop.png', fit: BoxFit.fill)),
         Container(
           width: MediaQuery.of(context).size.width * 1,
           height: MediaQuery.of(context).size.height * 0.18,
@@ -35,13 +34,28 @@ class LoginScreen extends StatelessWidget {
             top: MediaQuery.of(context).size.height * 0.02,
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,
-              MediaQuery.of(context).size.height * 0.01,MediaQuery.of(context).size.width * 0.02,MediaQuery.of(context).size.height * 0.01,),
+            padding: EdgeInsets.fromLTRB(
+              MediaQuery.of(context).size.width * 0.05,
+              MediaQuery.of(context).size.height * 0.01,
+              MediaQuery.of(context).size.width * 0.02,
+              MediaQuery.of(context).size.height * 0.01,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Welcome to",style: TextStyle(color: Color(0xFFF7C12B),fontSize: MediaQuery.of(context).size.height * 0.05),),
-                Text("FOODISTAAN",style: TextStyle(color: Color(0xFF0F1B2B),fontSize: MediaQuery.of(context).size.height * 0.08,letterSpacing: MediaQuery.of(context).size.width * 0.01),),
+                Text(
+                  "Welcome to",
+                  style: TextStyle(
+                      color: Color(0xFFF7C12B),
+                      fontSize: MediaQuery.of(context).size.height * 0.04),
+                ),
+                Text(
+                  "FOODISTAAN",
+                  style: TextStyle(
+                      color: Color(0xFF0F1B2B),
+                      fontSize: MediaQuery.of(context).size.height * 0.06,
+                      letterSpacing: MediaQuery.of(context).size.width * 0.01),
+                ),
               ],
             ),
           ),
@@ -54,7 +68,7 @@ class LoginScreen extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.09,
             child: TextFormField(
               textAlign: TextAlign.center,
-              controller: phoneController,
+              controller: _phoneNumberController,
               //keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 focusColor: Color(0xFFF7C12B),
@@ -80,19 +94,21 @@ class LoginScreen extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.07,
             child: ElevatedButton(
               onPressed: () async {
-                if(phoneController.text!="" && phoneController.text.length==10) {
+                if (_phoneNumberController.text != "" &&
+                    _phoneNumberController.text.length == 10) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>
-                        GetOTP(phone: "+91" + phoneController.text,),
-                    ),);
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          OTPScreen(phone: "+91" + _phoneNumberController.text),
+                    ),
+                  );
                 }
-
               },
               child: Text(
                 'Send OTP',
                 style: TextStyle(
-                  fontSize:17,
+                  fontSize: 17,
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
                 ),
@@ -110,28 +126,17 @@ class LoginScreen extends StatelessWidget {
         Container(
             width: MediaQuery.of(context).size.width * 1,
             height: MediaQuery.of(context).size.height * 0.35,
-            child: Image.asset('Images/bottom.jpeg',fit: BoxFit.fill)),
+            child: Image.asset('Images/bottom.jpeg', fit: BoxFit.fill)),
       ],
     );
   }
 
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Container(
-        child: showLoading
-            ? Center(
-          child: CircularProgressIndicator(),
-        )
-        :getMobileFormWidget(context),
-
+        child: getMobileFormWidget(context),
       ),
     );
   }
 }
-

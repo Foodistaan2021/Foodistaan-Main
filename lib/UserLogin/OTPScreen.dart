@@ -3,79 +3,95 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/MainScreenFolder/HomeScreenFile.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-import 'user_detail_form.dart';
+import 'package:foodistan/functions/cart_functions.dart';
+import 'package:foodistan/UserLogin/user_detail_form.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
-class GetOTP extends StatefulWidget {
-String phone;
-  GetOTP({required this.phone});
+class OTPScreen extends StatefulWidget {
+  String phone;
+  OTPScreen({required this.phone});
   @override
-  _GetOTPState createState() => _GetOTPState();
+  _OTPScreenState createState() => _OTPScreenState();
 }
 
-class _GetOTPState extends State<GetOTP> {
-  String verificationCode = "";
-  bool showLoading = false;
-
-  void signInWithPhoneAuthCredential(
-      PhoneAuthCredential phoneAuthCredential) async {
-    setState(() {
-      showLoading = true;
-    });
-    try {
-      final authCredential =
-          await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
-      setState(() {
-        showLoading = false;
-      });
-      if (authCredential.user != null) {
-        final _userDetail = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(widget.phone)
-            .get();
-
-        _userDetail.exists
-            ? Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MainScreen()))
-            : Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        UserDetail(phone_number: widget.phone)));
-      }
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        showLoading = false;
-      });
-      // _scaffoldKey.currentState.ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message!)));
-    }
-  }
-
-
-  int _start = 120;
-
-  void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    Timer _timer = new Timer.periodic(
-      oneSec,
-          (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
-
-  final _pinPutController = TextEditingController();
+class _OTPScreenState extends State<OTPScreen> {
+  String? verificationCode;
+  final _pinOTPController = TextEditingController();
   final _pinPutFocusNode = FocusNode();
-  final BoxDecoration pinPutDecoration = BoxDecoration(
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    verifyPhoneNumber();
+  }
+
+  verifyPhoneNumber() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: widget.phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          User? user;
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) {
+            if (value.user != null) {
+              user = value.user;
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             UserDetail(phone_number: widget.phone)));
+            }
+          });
+          if (user != null) {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(widget.phone)
+                .get()
+                .then((value) {
+              if (value.exists) {
+                if (value.data()!.containsKey('cart-id')) {
+                  Navigator.pushNamed(context, 'H');
+                } else {
+                  String uId = user!.uid;
+                  CartFunctions()
+                      .createCartFeild(uId, widget.phone)
+                      .then((value) {
+                    Navigator.pushNamed(context, 'H');
+                  });
+                }
+              } else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            UserDetail(phone_number: widget.phone)));
+              }
+            });
+          }
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(e.message.toString()),
+            duration: Duration(seconds: 2),
+          ));
+        },
+        codeSent: (String vId, int? resendToken) {
+          setState(() {
+            verificationCode = vId;
+          });
+        },
+        codeAutoRetrievalTimeout: (String vId) {
+          setState(() {
+            verificationCode = vId;
+          });
+        },
+        timeout: Duration(seconds: 60));
+  }
+
+  final BoxDecoration pinOTPCodeDecoration = BoxDecoration(
     color: Color(0xffFFEEC0),
     borderRadius: BorderRadius.circular(5.0),
     border: Border.all(
@@ -100,7 +116,7 @@ class _GetOTPState extends State<GetOTP> {
               alignment: Alignment.topCenter,
               child: Text(
                 "Sent OTP to ${widget.phone}",
-                style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               )),
         ),
         Padding(
@@ -112,28 +128,71 @@ class _GetOTPState extends State<GetOTP> {
                 const TextStyle(fontSize: 25.0, color: Color(0xffF7C12B)),
             eachFieldWidth: MediaQuery.of(context).size.width * 0.1,
             eachFieldHeight: MediaQuery.of(context).size.height * 0.05,
-            onSubmit: (String pin) async {
+            onSubmit: (pin) async {
               try {
-                PhoneAuthCredential phoneAuthCredential =
-                    PhoneAuthProvider.credential(
-                        verificationId: verificationCode, smsCode: pin);
-                signInWithPhoneAuthCredential(phoneAuthCredential);
-              } catch (e) {}
+                User? user;
+                await FirebaseAuth.instance
+                    .signInWithCredential(PhoneAuthProvider.credential(
+                        verificationId: verificationCode!, smsCode: pin))
+                    .then((value) {
+                  if (value.user != null) {
+                    user = value.user;
+                  }
+                });
+                if (user != null) {
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(widget.phone)
+                      .get()
+                      .then((value) {
+                    if (value.exists) {
+                      if (value.data()!.containsKey('cart-id')) {
+                        Navigator.pushNamed(context, 'H');
+                      } else {
+                        String uId = user!.uid;
+                        CartFunctions()
+                            .createCartFeild(uId, widget.phone)
+                            .then((value) {
+                          Navigator.pushNamed(context, 'H');
+                        });
+                      }
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  UserDetail(phone_number: widget.phone)));
+                    }
+                  });
+                }
+              } catch (e) {
+                FocusScope.of(context).unfocus();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(e.toString()),
+                  duration: Duration(seconds: 2),
+                ));
+              }
             },
             focusNode: _pinPutFocusNode,
-            controller: _pinPutController,
-            submittedFieldDecoration: pinPutDecoration,
-            selectedFieldDecoration: pinPutDecoration,
-            followingFieldDecoration: pinPutDecoration,
-            pinAnimationType: PinAnimationType.fade,
+            controller: _pinOTPController,
+            submittedFieldDecoration: pinOTPCodeDecoration,
+            selectedFieldDecoration: pinOTPCodeDecoration,
+            followingFieldDecoration: pinOTPCodeDecoration,
+            pinAnimationType: PinAnimationType.rotation,
           ),
         ),
-        Align(
-          alignment: Alignment.center,
-          child: Container(margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.03,
-          ),child: Text("Resending OTP in $_start seconds",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),),
-        ),
+        // Align(
+        //   alignment: Alignment.center,
+        //   child: Container(
+        //     margin: EdgeInsets.only(
+        //       top: MediaQuery.of(context).size.height * 0.03,
+        //     ),
+        //     child: Text(
+        //       "Resending OTP in $_start seconds",
+        //       style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
+        //     ),
+        //   ),
+        // ),
         Container(
             width: MediaQuery.of(context).size.width * 1,
             height: MediaQuery.of(context).size.height * 0.37,
@@ -142,62 +201,19 @@ class _GetOTPState extends State<GetOTP> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text("OTP Verification"),
+        title: Text("OTP Verification"),
         centerTitle: true,
         backgroundColor: Color(0xff0F1B2B),
       ),
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: Container(
-        child: showLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : getOtpFormWidget(context),
+        child: getOtpFormWidget(context),
       ),
     );
-  }
-
-  verifyPhone() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: widget.phone,
-      verificationCompleted: (PhoneAuthCredential) async {
-        await FirebaseAuth.instance
-            .signInWithCredential(PhoneAuthCredential)
-            .then((value) async {
-          if (value.user != null) {
-            signInWithPhoneAuthCredential(PhoneAuthCredential);
-          }
-        });
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        print(e.message);
-      },
-      codeSent: (verificationId, resendingToken) async {
-        setState(() {
-          verificationCode = verificationId;
-        });
-      },
-      codeAutoRetrievalTimeout: (verificationId) {
-        setState(() {
-          verificationCode = verificationId;
-        });
-      },
-      timeout: Duration(seconds: 120),
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    verifyPhone();
-    startTimer();
   }
 }

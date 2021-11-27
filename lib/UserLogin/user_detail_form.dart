@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/HomeScreenFile.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
+import 'package:foodistan/functions/cart_functions.dart';
 import 'LoginScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,26 +14,19 @@ class UserDetail extends StatefulWidget {
   _UserDetailState createState() => _UserDetailState();
 }
 
-addUser(_userData) {
-  Map<String, dynamic> m = {};
-  try {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(_userData['phoneNumber'])
-        .set({
-      'name': _userData['name'],
-      'email': _userData['email'],
-      'phoneNumber': _userData['phoneNumber'],
-      'dateAndTime': _userData['dateAndTime'],
-      'profilePic': _userData['profilePic'],
-      'cart-total-map' : {} as Map,
-    });
-  } on Exception catch (e) {
-    print(e.toString());
-    return false;
-  }
-
-  return true;
+addUser(_userData) async {
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(_userData['phoneNumber'])
+      .set({
+    'name': _userData['name'],
+    'email': _userData['email'],
+    'phoneNumber': _userData['phoneNumber'],
+    'dateAndTime': _userData['dateAndTime'],
+    'profilePic': _userData['profilePic'],
+  });
+  String uId = FirebaseAuth.instance.currentUser!.uid;
+  await CartFunctions().createCartFeild(uId, _userData['phoneNumber']);
 }
 
 class _UserDetailState extends State<UserDetail> {
@@ -52,15 +46,17 @@ class _UserDetailState extends State<UserDetail> {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xff0F1B2B),),
+      appBar: AppBar(
+        backgroundColor: Color(0xff0F1B2B),
+      ),
       resizeToAvoidBottomInset: false,
       body: ListView(
         children: [
           Container(
               width: MediaQuery.of(context).size.width * 1,
               height: MediaQuery.of(context).size.height * 0.3,
-              child: Image.asset('Images/top.jpeg',
-                  height: 20, fit: BoxFit.fill)),
+              child:
+                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
           Container(
             width: MediaQuery.of(context).size.width * 1,
             height: MediaQuery.of(context).size.height * 0.15,
@@ -86,11 +82,11 @@ class _UserDetailState extends State<UserDetail> {
                   hintText: 'Name',
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
                   ),
                 ),
               ),
@@ -113,11 +109,11 @@ class _UserDetailState extends State<UserDetail> {
                   hintText: 'Email-id',
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
                   ),
                 ),
               ),
@@ -137,9 +133,10 @@ class _UserDetailState extends State<UserDetail> {
                   _userData['email'] = emailController.text;
                   _userData['phoneNumber'] = widget.phone_number;
                   _userData['dateAndTime'] = DateTime.now().toString();
-                  await addUser(_userData);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MainScreen()));
+                  addUser(_userData).then((v) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MainScreen()));
+                  });
                 },
                 child: Text(
                   'Submit',

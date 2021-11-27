@@ -16,8 +16,8 @@ import 'package:foodistan/widgets/bottom_navbar.dart';
 class RestaurantDelivery extends StatefulWidget {
   static String id = 'restaurant_delivery';
   var items;
-  String vendor_id;
-  RestaurantDelivery({required this.items, required this.vendor_id});
+  String vendor_id,vendorName;
+  RestaurantDelivery({required this.items, required this.vendor_id,required this.vendorName});
 
   @override
   _RestaurantDeliveryState createState() => _RestaurantDeliveryState();
@@ -196,6 +196,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                                   ? RestuarantDeliveryReview()
                                   : RestuarantDeliveryMenu(
                                       vendor_id: widget.vendor_id,
+                                      vendorName : widget.vendorName
                                     )),
                         ],
                       )))
