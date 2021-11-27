@@ -6,6 +6,7 @@ import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/your_orders.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -76,8 +77,13 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
         .placeOrder(widget.vednorId, widget.vendorName, userNumber, itemMap,
             totalPriceMain, paymentId)
         .then((value) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => OrderPlacedScreen()));
+      Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.bottomToTop,
+              child: OrderPlacedScreen()));
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => OrderPlacedScreen()));
     });
   }
 
