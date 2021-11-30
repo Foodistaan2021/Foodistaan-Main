@@ -1,10 +1,6 @@
-import 'dart:ui';
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodistan/MainScreenFolder/HomeScreenFile.dart';
-import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/UserLogin/user_detail_form.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -181,18 +177,6 @@ class _OTPScreenState extends State<OTPScreen> {
             pinAnimationType: PinAnimationType.rotation,
           ),
         ),
-        // Align(
-        //   alignment: Alignment.center,
-        //   child: Container(
-        //     margin: EdgeInsets.only(
-        //       top: MediaQuery.of(context).size.height * 0.03,
-        //     ),
-        //     child: Text(
-        //       "Resending OTP in $_start seconds",
-        //       style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
-        //     ),
-        //   ),
-        // ),
         Container(
             width: MediaQuery.of(context).size.width * 1,
             height: MediaQuery.of(context).size.height * 0.37,

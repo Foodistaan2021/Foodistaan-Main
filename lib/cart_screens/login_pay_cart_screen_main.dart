@@ -5,6 +5,8 @@ import 'package:foodistan/functions/cart_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foodistan/functions/razorpay_integration.dart';
+import 'package:foodistan/profile/payment_methods.dart';
 
 class CartScreenMainLogin extends StatefulWidget {
   const CartScreenMainLogin({Key? key}) : super(key: key);
@@ -13,12 +15,14 @@ class CartScreenMainLogin extends StatefulWidget {
   _CartScreenMainLoginState createState() => _CartScreenMainLoginState();
 }
 
+int totalPriceMain = 0;
+Map<String, dynamic> itemMap = {};
+
 class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
   String? userNumber;
   String cartId = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     CartFunctions().getCartId(userNumber).then((value) {
@@ -67,13 +71,16 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.yellow[700],
         automaticallyImplyLeading: false,
         title: Text('Cart'),
       ),
       body: Container(
         alignment: Alignment.topCenter,
         child: Column(
-          children: [cartId != '' ? cartItems(cartId) : spinkit],
+          children: [
+            cartId != '' ? cartItems(cartId) : spinkit,
+          ],
         ),
       ),
     );
@@ -93,7 +100,6 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
   Map<String, dynamic> restaurantData = {};
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     FirebaseFirestore.instance
         .collection('cart')
@@ -113,7 +119,17 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
     });
   }
 
+  getPrice(itemData) {
+    int totalPrice = int.parse(CartFunctions().totalPrice(itemData));
+    setState(() {
+      totalPriceMain = totalPrice;
+    });
+    return totalPrice.toString();
+  }
+
   Widget menuItemWidget(itemData) {
+    itemMap[itemData['id']] = itemData['quantity'];
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.10,
       child: Row(
@@ -162,7 +178,9 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                       )),
                 ],
               ),
-              Text('Rs. ' + itemData['price'])
+              Text('Rs. ' +
+                  CartFunctions()
+                      .pricePerItem(itemData['price'], itemData['quantity'])),
             ],
           )
         ],
@@ -200,6 +218,29 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                           );
                         }),
                   ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Item - Total'),
+                        Text(getPrice(widget.data)),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RazorPayScreen(
+                                      totalPrice: totalPriceMain,
+                                      items: itemMap,
+                                      cartId: widget.cartId,
+                                      vednorId: restaurantData['id'],
+                                vendorName:restaurantData['Name'] ,
+                                    )));
+                      },
+                      child: Text('Proceed To Pay $totalPriceMain'))
                 ],
               ),
             ),

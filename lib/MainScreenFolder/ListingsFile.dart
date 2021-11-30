@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:foodistan/restuarant_screens/restaurant_main.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
-//import 'package:foodistan/restuarant_screens/restaurant_overview.dart';
+import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
+
 
 List items = [];
+List sortItems = [];
 List vendor_id_list = [];
 
 fetchData(String category) async {
@@ -14,20 +15,39 @@ fetchData(String category) async {
       FirebaseFirestore.instance.collection(category);
   try {
     items = [];
+    sortItems = [];
     await StreetFoodList.get().then((querySnapshot) => {
           querySnapshot.docs.forEach((element) {
             items.add(element.data());
             vendor_id_list.add(element.id);
-            //print(items[0]['Name']);
           })
         });
-  } catch (e) {
+    if(currentLocation==null)
+      {
+        for(int i=0;i<items.length;i++)
+        {
+          sortItems.add(items[i]);
+          sortItems[i]['Distance']=(items[i]['Location'].latitude-0).abs()+(items[i]['Location'].longitude-0).abs();
+        }
+        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+      }
+    else
+      {
+        for(int i=0;i<items.length;i++)
+        {
+          sortItems.add(items[i]);
+          sortItems[i]['Distance']=(items[i]['Location'].latitude-currentLocation.latitude).abs()+(items[i]['Location'].longitude-currentLocation.longitude).abs();
+        }
+        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+      }
+    } catch (e) {
     print(e.toString());
   }
-  return items;
+  return sortItems;
 }
 
 class Listings extends StatefulWidget {
+
   @override
   _ListingsState createState() => _ListingsState();
 }
@@ -59,7 +79,7 @@ class _ListingsState extends State<Listings> {
                 padding:
                     EdgeInsets.fromLTRB(w1 / 30, h1 / 50, w1 / 30, h1 / 50),
                 child: ListedTile(
-                    details: items[index], Id: vendor_id_list[index]),
+                    details: items[index],Id: vendor_id_list[index],),
               );
             },
           )
@@ -90,7 +110,7 @@ class _ListedTileState extends State<ListedTile> {
                 builder: (context) => RestaurantDelivery(
                       items: StreetFoodDetails,
                       vendor_id: Vendor_ID,
-                      vendorName :StreetFoodDetails['Name']
+                      vendorName: StreetFoodDetails['Name'],
                     )));
       },
       child: Container(

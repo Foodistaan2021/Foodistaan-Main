@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:foodistan/MainScreenFolder/ListingsFile.dart';
-import 'package:foodistan/auth/autentication.dart';
+import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/widgets/change_quantity_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +84,7 @@ class CartFunctions {
       for (var item in snapshots.docs) {
         item.reference.delete();
       }
-    });
+    }).then((value) => {itemMap.clear()});
 
     await addItemToCart(vendorId, cartId, menuItem, vendorName);
   }
@@ -215,7 +214,8 @@ class CartFunctions {
             .doc(cartId)
             .collection('items')
             .doc(itemId)
-            .delete();
+            .delete()
+            .then((value) => {itemMap.remove(itemId)});
       } else {
         _quantity = _quantity - 1;
         await _firestore
@@ -227,6 +227,39 @@ class CartFunctions {
       }
     }
   }
+
+  pricePerItem(price, quantity) {
+    return (int.parse(price) * int.parse(quantity)).toString();
+  }
+
+  totalPrice(List<DocumentSnapshot> data) {
+    int totalPrice = 0;
+    for (var item in data) {
+      var price = item.get('price');
+      var quantity = item.get('quantity');
+      totalPrice += int.parse(pricePerItem(price, quantity));
+    }
+
+    return totalPrice != 0 ? totalPrice.toString() : '';
+  }
+
+  // calculateTotalPrice(cartId) {
+  //   var stream = _firestore
+  //       .collection('cart')
+  //       .doc(cartId)
+  //       .collection('items')
+  //       .snapshots();
+  //   return StreamBuilder(
+  //       stream: stream,
+  //       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //         if (snapshot.hasData) {
+  //           if (snapshot.data!.docs.length != 0) {
+  //             return totalPrice(snapshot.data!.docs);
+  //           }
+  //         }
+  //         return Center(child: Text('CartEmpty'));
+  //       });
+  // }
 }
 
 // class CartFunctions {

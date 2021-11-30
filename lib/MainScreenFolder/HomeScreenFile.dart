@@ -7,6 +7,8 @@ import 'CuisineTile.dart';
 import 'ListingsFile.dart';
 
 class HomeScreen extends StatefulWidget {
+  var myCurrentLocation;
+  HomeScreen({@required myCurrentLocation});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
