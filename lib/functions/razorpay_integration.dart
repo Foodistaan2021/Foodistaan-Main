@@ -80,8 +80,8 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
       Navigator.push(
           context,
           PageTransition(
-              type: PageTransitionType.bottomToTop,
-              child: OrderPlacedScreen()));
+              type: PageTransitionType.topToBottom,
+              child: OrderPlacedScreen(vendorName : widget.vendorName)));
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => OrderPlacedScreen()));
     });

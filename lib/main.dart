@@ -20,7 +20,6 @@ void main() async {
       'L': (context) => LoginScreen(),
       'H': (context) => MainScreen(),
       'O': (context) => OptionScreen(),
-      'OP': (context) => OrderPlacedScreen(),
     },
     debugShowCheckedModeBanner: false,
   ));

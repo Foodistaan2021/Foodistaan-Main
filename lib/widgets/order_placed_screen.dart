@@ -1,38 +1,89 @@
 import 'package:flutter/material.dart';
-
+import 'package:foodistan/MainScreenFolder/accepted_order.dart';
+import 'package:foodistan/profile/your_orders.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderPlacedScreen extends StatefulWidget {
-  const OrderPlacedScreen({Key? key}) : super(key: key);
+  String vendorName;
+  OrderPlacedScreen({required this.vendorName});
 
   @override
   _OrderPlacedScreenState createState() => _OrderPlacedScreenState();
 }
 
-class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
+class _OrderPlacedScreenState extends State<OrderPlacedScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _animationComplete = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+
+    _controller.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          _animationComplete = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Lottie.asset('Images/food-animation.json'),
-            Container(
-                child: Text("Order Placed",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold))),
-            SizedBox(
-              height: 30,
-            ),
-            Container(
-                child: Text("At Gupta Burger",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.normal))),
+            Lottie.asset('Images/lf20_1mskailz.json',
+                repeat: false, controller: _controller, onLoaded: (compostion) {
+              _controller.forward();
+            }),
+            _animationComplete
+                ? Container(
+                    child: Text("Order Placed",
+                        style: TextStyle(
+                            color: Color(0xfff7c12b),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)))
+                : Container(),
+            _animationComplete
+                ? Container(
+                    child: Text("At ${widget.vendorName}",
+                        style: TextStyle(
+                            color: Color(0xfff7c12b),
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal)))
+                : Container(),
+            _animationComplete
+                ? ElevatedButton(
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xFFF7C12B)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xFFF7C12B)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                        ))),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AcceptedOrder())),
+                    child: Text('Track Order'),
+                  )
+                : Container()
           ],
         ),
       ),
