@@ -54,7 +54,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
   void openCheckout() {
     var options = {
       "key": "rzp_test_GjPw97IIEcO9oU",
-      "amount": widget.totalPrice * 100,
+      "amount": widget.totalPrice,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "$userNumber", "email": "akshat@gmail.com"},
@@ -75,14 +75,13 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     String paymentId = response.paymentId!;
     OrderFunction()
         .placeOrder(widget.vednorId, widget.vendorName, userNumber, itemMap,
-            totalPriceMain, paymentId, widget.cartId)
+            totalPriceMain, paymentId)
         .then((value) {
       Navigator.push(
           context,
           PageTransition(
               type: PageTransitionType.topToBottom,
-              child: OrderPlacedScreen(
-                  vendorName: widget.vendorName, orderId: value)));
+              child: OrderPlacedScreen(vendorName : widget.vendorName)));
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => OrderPlacedScreen()));
     });
