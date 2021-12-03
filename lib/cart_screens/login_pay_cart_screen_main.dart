@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodistan/functions/razorpay_integration.dart';
 import 'package:foodistan/profile/payment_methods.dart';
+import 'package:foodistan/profile/your_orders.dart';
 
 class CartScreenMainLogin extends StatefulWidget {
   const CartScreenMainLogin({Key? key}) : super(key: key);
@@ -42,6 +43,78 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
     },
   );
 
+  Widget checkIfAnyOrders(userNumber) {
+    var stream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userNumber)
+        .collection('orders')
+        .snapshots();
+    return StreamBuilder(
+        stream: stream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            var count = snapshot.data!.docs.length;
+            if (count > 0)
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.20,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('You Have Eixsting Orders'),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFF7C12B)),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFF)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                              )),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Orders()));
+                            },
+                            child: Text('Track Order'))
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'H');
+                        },
+                        child: Text('Place Another Order')),
+                  )
+                ],
+              );
+            else
+              return Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'H');
+                    },
+                    child: Text('Add Items to Cart')),
+              );
+          }
+          return Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'H');
+                },
+                child: Text('Add Items to Cart')),
+          );
+        });
+  }
+
   Widget cartItems(cartId) {
     var stream = FirebaseFirestore.instance
         .collection('cart')
@@ -57,13 +130,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               return CartItemsWidget(data: snapshot.data!.docs, cartId: cartId);
             }
           }
-          return Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'H');
-                },
-                child: Text('Add Items to Cart')),
-          );
+          return checkIfAnyOrders(userNumber);
         });
   }
 
@@ -237,7 +304,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                       items: itemMap,
                                       cartId: widget.cartId,
                                       vednorId: restaurantData['id'],
-                                vendorName:restaurantData['Name'] ,
+                                      vendorName: restaurantData['Name'],
                                     )));
                       },
                       child: Text('Proceed To Pay $totalPriceMain'))
