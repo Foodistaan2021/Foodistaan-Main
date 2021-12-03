@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/profile/user_profile.dart';
-import 'package:foodistan/widgets/order_placed_screen.dart';
+import 'package:foodistan/widgets/current_order_bottom_widget.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';
 import 'HomeScreenFile.dart';
@@ -32,10 +31,12 @@ class _MainScreenState extends State<MainScreen> {
     BufferScreen(),
     UserProfile(),
   ];
+
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Scaffold(
+      bottomSheet: CurrentOrderBottomWidget(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
