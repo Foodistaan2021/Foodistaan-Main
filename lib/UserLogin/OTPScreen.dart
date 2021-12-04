@@ -174,7 +174,6 @@ class _OTPScreenState extends State<OTPScreen> {
             submittedFieldDecoration: pinOTPCodeDecoration,
             selectedFieldDecoration: pinOTPCodeDecoration,
             followingFieldDecoration: pinOTPCodeDecoration,
-            pinAnimationType: PinAnimationType.rotation,
           ),
         ),
         Container(

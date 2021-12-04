@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodistan/MainScreenFolder/HomeScreenFile.dart';
+
+var currentLocation = null;
 
 class AcceptedOrder extends StatelessWidget {
   const AcceptedOrder({Key? key}) : super(key: key);
@@ -10,14 +13,22 @@ class AcceptedOrder extends StatelessWidget {
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: const Text('Order Status',style: TextStyle(
-            color: Colors.black,
-          ),),
+          title: const Text(
+            'Order Status',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                            myCurrentLocation: currentLocation,
+                          )));
             },
             child: const Icon(
               Icons.arrow_back_ios,
@@ -30,7 +41,8 @@ class AcceptedOrder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('Images/trackorder.png',
+              Image.asset(
+                'Images/trackorder.png',
                 width: double.infinity,
               ),
               Row(
@@ -52,26 +64,32 @@ class AcceptedOrder extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(22),
                               border: Border.all(
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 width: 1,
                               ),
                             ),
                             child: const Center(
                               child: Icon(
                                 Icons.event_note,
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 size: 25,
                               ),
                             ),
                           ),
-                          const Text('Order',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
-                          const Text('Confirmed',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
+                          const Text(
+                            'Order',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
+                          const Text(
+                            'Confirmed',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -91,26 +109,32 @@ class AcceptedOrder extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(22),
                               border: Border.all(
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 width: 1,
                               ),
                             ),
                             child: const Center(
                               child: Icon(
                                 Icons.hot_tub,
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 size: 25,
                               ),
                             ),
                           ),
-                          const Text('Food',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
-                          const Text('Preparing',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
+                          const Text(
+                            'Food',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
+                          const Text(
+                            'Preparing',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -130,26 +154,32 @@ class AcceptedOrder extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(22),
                               border: Border.all(
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 width: 1,
                               ),
                             ),
                             child: const Center(
                               child: Icon(
                                 Icons.local_mall,
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 size: 25,
                               ),
                             ),
                           ),
-                          const Text('Order',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
-                          const Text('Placed',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
+                          const Text(
+                            'Order',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
+                          const Text(
+                            'Placed',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -169,26 +199,32 @@ class AcceptedOrder extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(22),
                               border: Border.all(
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 width: 1,
                               ),
                             ),
                             child: const Center(
                               child: Icon(
                                 Icons.delivery_dining,
-                                color: Colors.yellow,
+                                color: Color(0xffFAC05E),
                                 size: 25,
                               ),
                             ),
                           ),
-                          const Text('Out For',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
-                          const Text('Delivery',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.5,
-                          ),),
+                          const Text(
+                            'Out For',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
+                          const Text(
+                            'Delivery',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 11.5,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -211,16 +247,22 @@ class AcceptedOrder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
-                            Text('Know your Delivery Valet',style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),),
+                            Text(
+                              'Know your Delivery Valet',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             SizedBox(
                               height: 5,
                             ),
-                            Text('You can Call and Message your Delivery Valet, check his temperature and other details.',style: TextStyle(
-                              color: Colors.black,
-                            ),),
+                            Text(
+                              'You can Call and Message your Delivery Valet, check his temperature and other details.',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -231,7 +273,7 @@ class AcceptedOrder extends StatelessWidget {
                         padding: EdgeInsets.all(15),
                         child: Icon(
                           Icons.delivery_dining,
-                          color: Colors.yellow,
+                          color: Color(0xffFAC05E),
                           size: 35,
                         ),
                       ),
@@ -259,7 +301,8 @@ class AcceptedOrder extends StatelessWidget {
                           const SizedBox(
                             width: 11,
                           ),
-                          Image.asset('Images/valetpic.png',
+                          Image.asset(
+                            'Images/valetpic.png',
                             height: 55,
                             width: 55,
                           ),
@@ -270,13 +313,19 @@ class AcceptedOrder extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
-                              Text('Rahul Sharma',style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                              Text('Delivery Executive',style: TextStyle(
-                                color: Colors.grey,
-                              ),),
+                              Text(
+                                'Rahul Sharma',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Delivery Executive',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -288,7 +337,7 @@ class AcceptedOrder extends StatelessWidget {
                         padding: EdgeInsets.all(15),
                         child: Icon(
                           Icons.phone_in_talk,
-                          color: Colors.yellow,
+                          color: Color(0xffFAC05E),
                           size: 35,
                         ),
                       ),
@@ -318,20 +367,26 @@ class AcceptedOrder extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('98.5\'F',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),),
+                          Text(
+                            '98.5\'F',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: const [
-                          Text('Last Checked: 22 Minutes ago',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),),
+                          Text(
+                            'Last Checked: 22 Minutes ago',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
                           SizedBox(
                             width: 15,
                           ),
@@ -357,17 +412,23 @@ class AcceptedOrder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Want to check your Order details?',style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),),
+                            const Text(
+                              'Want to check your Order details?',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(
                               height: 5,
                             ),
-                            const Text('Click below to review your Order details.',style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                            ),),
+                            const Text(
+                              'Click below to review your Order details.',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                              ),
+                            ),
                             const SizedBox(
                               height: 11,
                             ),
@@ -377,14 +438,17 @@ class AcceptedOrder extends StatelessWidget {
                                 height: 33,
                                 width: 177,
                                 decoration: BoxDecoration(
-                                  color: Colors.yellow,
+                                  color: Color(0xffFAC05E),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: const Center(
-                                  child: Text('View Order details',style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),),
+                                  child: Text(
+                                    'View Order details',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -398,7 +462,7 @@ class AcceptedOrder extends StatelessWidget {
                         padding: EdgeInsets.all(11),
                         child: Icon(
                           Icons.event_note,
-                          color: Colors.yellow,
+                          color: Color(0xffFAC05E),
                           size: 35,
                         ),
                       ),
@@ -425,17 +489,23 @@ class AcceptedOrder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Do you have any Query?',style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),),
+                            const Text(
+                              'Do you have any Query?',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(
                               height: 5,
                             ),
-                            const Text('Click below to chat with us.',style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                            ),),
+                            const Text(
+                              'Click below to chat with us.',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                              ),
+                            ),
                             const SizedBox(
                               height: 11,
                             ),
@@ -447,16 +517,19 @@ class AcceptedOrder extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border.all(
-                                    color: Colors.yellow,
+                                    color: Color(0xffFAC05E),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: const Center(
-                                  child: Text('Chat with Us',style: TextStyle(
-                                    color: Colors.yellow,
-                                    fontSize: 15,
-                                  ),),
+                                  child: Text(
+                                    'Chat with Us',
+                                    style: TextStyle(
+                                      color: Color(0xffFAC05E),
+                                      fontSize: 15,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -470,7 +543,7 @@ class AcceptedOrder extends StatelessWidget {
                         padding: EdgeInsets.all(11),
                         child: Icon(
                           Icons.chat,
-                          color: Colors.yellow,
+                          color: Color(0xffFAC05E),
                           size: 35,
                         ),
                       ),

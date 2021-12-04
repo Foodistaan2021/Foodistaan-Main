@@ -238,7 +238,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           color: Colors.grey,
                         ),
                         widget.restaurant_details["Delivery"] == true
-                            ? Text(" Delivery",
+                            ? Text("Delivery",
                                 style: isDeliverySelected == true
                                     ? TextStyle(
                                         color: Colors.black, fontSize: 15)
