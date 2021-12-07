@@ -22,7 +22,7 @@ class _ReviewerWidgetState extends State<ReviewerWidget> {
             )),
         padding: EdgeInsets.all(8),
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.4,
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

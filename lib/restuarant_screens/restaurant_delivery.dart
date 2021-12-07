@@ -13,8 +13,9 @@ import 'package:foodistan/widgets/bottom_navbar.dart';
 class RestaurantDelivery extends StatefulWidget {
   static String id = 'restaurant_delivery';
   var items;
-  String vendor_id,vendorName;
-  RestaurantDelivery({required this.items, required this.vendor_id,required this.vendorName});
+  String vendor_id, vendorName;
+  RestaurantDelivery(
+      {required this.items, required this.vendor_id, required this.vendorName});
 
   @override
   _RestaurantDeliveryState createState() => _RestaurantDeliveryState();
@@ -39,12 +40,10 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
     var itemHeight = MediaQuery.of(context).size.height * 0.25;
 
     return Scaffold(
-        bottomNavigationBar:
-            Visibility(visible: isCartEmpty, child: BottomNavBar()),
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         appBar: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.06),
           child: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
@@ -65,7 +64,6 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                     )),
               ]),
         ),
-        // bottomNavigationBar: BottomNavBar(),
         body: SizedBox(
             child: ListView(
           shrinkWrap: true,
@@ -73,8 +71,9 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
             Stack(
               children: [
                 Container(
+                    padding: EdgeInsets.all(10),
                     color: Colors.white,
-                    width: MediaQuery.of(context).size.width*0.9,
+                    width: MediaQuery.of(context).size.width * 1,
                     height: MediaQuery.of(context).size.height * 0.35,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),
@@ -84,6 +83,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                       ),
                     )),
                 Container(
+                  padding: EdgeInsets.all(10),
                   child: Center(
                     child: RestaurantMain(
                       restaurant_details: widget.items,
@@ -93,30 +93,31 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
               ],
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
               margin: EdgeInsets.only(top: 15),
-              height: MediaQuery.of(context).size.height * 0.08,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Center(
-                child: TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(Icons.search),
-                        ),
-                        hintText: "Search within the menu",
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            )))),
-              ),
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: TextFormField(
+                  decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Icon(Icons.search),
+                      ),
+                      hintText: "Search within the menu",
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: Colors.amber,
+                            width: 2.0,
+                          )),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: Colors.amber,
+                            width: 2.0,
+                          )))),
+            ),
+            SizedBox(
+              height: 10,
             ),
             SizedBox(
               height: 500,
@@ -150,7 +151,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                                               color: Colors.amber,
                                               fontWeight: FontWeight.w700,
                                               decoration:
-                                                  TextDecoration.overline)
+                                                  TextDecoration.underline)
                                           : TextStyle(
                                               fontSize: 16,
                                               color: Colors.grey,
@@ -176,7 +177,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                                               color: Colors.amber,
                                               fontWeight: FontWeight.w700,
                                               decoration:
-                                                  TextDecoration.overline)
+                                                  TextDecoration.underline)
                                           : TextStyle(
                                               fontSize: 16,
                                               color: Colors.grey,
@@ -193,8 +194,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                                   ? RestuarantDeliveryReview()
                                   : RestuarantDeliveryMenu(
                                       vendor_id: widget.vendor_id,
-                                      vendorName : widget.vendorName
-                                    )),
+                                      vendorName: widget.vendorName)),
                         ],
                       )))
                   : RestaurantOverview(),
