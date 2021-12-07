@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -77,7 +74,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
               children: [
                 Container(
                     color: Colors.white,
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(context).size.width*0.9,
                     height: MediaQuery.of(context).size.height * 0.35,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),

@@ -360,12 +360,19 @@ packages:
     source: hosted
     version: "1.7.0"
   modal_bottom_sheet:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: modal_bottom_sheet
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  modal_progress_hud_nsn:
+    dependency: "direct main"
+    description:
+      name: modal_progress_hud_nsn
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0-nullsafety-1"
   nested:
     dependency: transitive
     description:
@@ -476,6 +483,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  solid_bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: solid_bottom_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.10"
   source_span:
     dependency: transitive
     description:

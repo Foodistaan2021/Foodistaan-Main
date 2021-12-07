@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/UserLogin/user_detail_form.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class OTPScreen extends StatefulWidget {
   String phone;
@@ -13,6 +14,7 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  bool showSpinner = false;
   String? verificationCode;
   final _pinOTPController = TextEditingController();
   final _pinPutFocusNode = FocusNode();
@@ -125,6 +127,9 @@ class _OTPScreenState extends State<OTPScreen> {
             eachFieldWidth: MediaQuery.of(context).size.width * 0.1,
             eachFieldHeight: MediaQuery.of(context).size.height * 0.05,
             onSubmit: (pin) async {
+              setState(() {
+                showSpinner = true;
+              });
               try {
                 User? user;
                 await FirebaseAuth.instance
@@ -143,16 +148,25 @@ class _OTPScreenState extends State<OTPScreen> {
                       .then((value) {
                     if (value.exists) {
                       if (value.data()!.containsKey('cart-id')) {
+                        setState(() {
+                          showSpinner = false;
+                        });
                         Navigator.pushNamed(context, 'H');
                       } else {
                         String uId = user!.uid;
                         CartFunctions()
                             .createCartFeild(uId, widget.phone)
                             .then((value) {
+                          setState(() {
+                            showSpinner = false;
+                          });
                           Navigator.pushNamed(context, 'H');
                         });
                       }
                     } else {
+                      setState(() {
+                        showSpinner = false;
+                      });
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -162,6 +176,9 @@ class _OTPScreenState extends State<OTPScreen> {
                   });
                 }
               } catch (e) {
+                setState(() {
+                  showSpinner = false;
+                });
                 FocusScope.of(context).unfocus();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
@@ -174,7 +191,6 @@ class _OTPScreenState extends State<OTPScreen> {
             submittedFieldDecoration: pinOTPCodeDecoration,
             selectedFieldDecoration: pinOTPCodeDecoration,
             followingFieldDecoration: pinOTPCodeDecoration,
-            pinAnimationType: PinAnimationType.rotation,
           ),
         ),
         Container(
@@ -187,16 +203,19 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("OTP Verification"),
-        centerTitle: true,
-        backgroundColor: Color(0xff0F1B2B),
-      ),
-      resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
-      body: Container(
-        child: getOtpFormWidget(context),
+    return ModalProgressHUD(
+      inAsyncCall: showSpinner,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("OTP Verification"),
+          centerTitle: true,
+          backgroundColor: Color(0xff0F1B2B),
+        ),
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        body: Container(
+          child: getOtpFormWidget(context),
+        ),
       ),
     );
   }

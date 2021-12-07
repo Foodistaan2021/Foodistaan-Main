@@ -28,14 +28,13 @@ class _LocationState extends State<Location> {
             Icon(
               Icons.location_on,
               color: Color(0xFFFAB84C),
-              size: h1*0.07,
+              size: h1 * 0.07,
             ),
             Text("Location",
                 style: TextStyle(
                     color: Color(0xFF0E1829),
-                    fontSize: h1 *0.05,
-                    fontFamily: 'Segoe UI'
-                )),
+                    fontSize: h1 * 0.05,
+                    fontFamily: 'Segoe UI')),
           ],
         ),
       ),
@@ -63,13 +62,12 @@ class _PointsState extends State<Points> {
             Text("Points",
                 style: TextStyle(
                     color: Color(0xFF0E1829),
-                    fontSize: h1 *0.05,
-                    fontFamily: 'Segoe UI'
-                )),
+                    fontSize: h1 * 0.05,
+                    fontFamily: 'Segoe UI')),
             Icon(
               Icons.money,
               color: Color(0xFFFAB84C),
-              size: h1 *0.07,
+              size: h1 * 0.07,
             ),
           ],
         ),
@@ -93,13 +91,18 @@ class _SearchState extends State<Search> {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.fromLTRB(w1*0.01,h1*0.01,w1*0.01,h1*0.01,),
+      padding: EdgeInsets.fromLTRB(
+        w1 * 0.01,
+        h1 * 0.01,
+        w1 * 0.01,
+        h1 * 0.01,
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Color(0xFFFCE19E).withOpacity(0.35),
         ),
-        height: h1 *0.05,
+        height: h1 * 0.05,
         width: 12 * w1 / 13,
         alignment: Alignment.centerLeft,
         child: GestureDetector(
@@ -125,8 +128,7 @@ class _SearchState extends State<Search> {
                     style: TextStyle(
                         color: Color(0xFF6B6B6B),
                         fontSize: h1 / 50,
-                        fontFamily: 'Segoe UI'
-                    ),
+                        fontFamily: 'Segoe UI'),
                   ),
                 ],
               ),

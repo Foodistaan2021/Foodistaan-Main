@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/accepted_order.dart';
+import 'package:foodistan/profile/your_orders.dart';
 import 'package:foodistan/widgets/order_history_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderFunction {
   final _firestore = FirebaseFirestore.instance;
@@ -132,5 +135,136 @@ class OrderFunction {
     final minutes = timestamp.toDate().minute.toString();
 
     return '$month $date, $year at $hour : $minutes';
+  }
+
+  Widget fetchCurrentOrder(userNumber) {
+    var stream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userNumber)
+        .collection('orders')
+        .where('live-order', isEqualTo: true)
+        .snapshots();
+
+    return StreamBuilder(
+        stream: stream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return CircularProgressIndicator();
+            default:
+              if (snapshot.hasData) {
+                int totalDocs = snapshot.data!.docs.length;
+                if (totalDocs > 0)
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        bool onlyOneOrder = totalDocs == 1 ? true : false;
+                        var orderData = snapshot.data!.docs.first;
+                        return GestureDetector(
+                          onTap: () {
+                            onlyOneOrder
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AcceptedOrder(
+                                            orderData: orderData)))
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Orders()));
+                          },
+                          child: Container(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 1,
+                              color: Colors.white,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 4,
+                                                child: SvgPicture.asset(
+                                                  'Images/foodpreparing.svg',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      2,
+                                                )),
+                                            Expanded(
+                                              flex: 6,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  onlyOneOrder
+                                                      ? Text(
+                                                          orderData[
+                                                                  'order-status']
+                                                              .toString()
+                                                              .toUpperCase(),
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        )
+                                                      : Text(
+                                                          'Preparing Your Orders',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                  if (onlyOneOrder)
+                                                    Text(orderData[
+                                                        'vendor-name'])
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 2,
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            foregroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(0xFFF7C12B)),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(0xFFF)),
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(6)),
+                                            )),
+                                          ),
+                                          onPressed: null,
+                                          child: onlyOneOrder
+                                              ? Text('Track Order')
+                                              : Text('Track All Orders')))
+                                ],
+                              )),
+                        );
+                      });
+                else
+                  return Center();
+              } else {
+                return Center();
+              }
+          }
+        });
   }
 }

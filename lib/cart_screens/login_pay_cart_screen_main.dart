@@ -87,22 +87,66 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, 'H');
-                        },
-                        child: Text('Place Another Order')),
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(11),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, 'H');
+                      },
+                      child: Container(
+                        height: 35,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.yellow.shade700,
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Place Another Order',
+                            style: TextStyle(
+                              color: Colors.yellow.shade700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               );
             else
-              return Center(
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'H');
-                    },
-                    child: Text('Add Items to Cart')),
+              return Padding(
+                padding: const EdgeInsets.all(11),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'H');
+                  },
+                  child: Container(
+                    height: 35,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.yellow.shade700,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add Items to Cart',
+                        style: TextStyle(
+                          color: Colors.yellow.shade700,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               );
           }
           return Center(
