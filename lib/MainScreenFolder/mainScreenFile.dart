@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
 import 'AppBar/AppBarFile.dart';
@@ -23,6 +24,16 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   int inx = 0;
   bool once = false;
+  String? userNumber = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+    });
+  }
 
   var Screens = [
     HomeScreen(
@@ -35,96 +46,111 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Color(0xff0E1829),
-        selectedItemColor: Color(0xffFAC05E),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) => setState(() => currentIndex = index),
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Colors.grey.shade900,
+          selectedItemColor: Color.fromRGBO(247, 193, 43, 1),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          items: [
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'Images/home.png',
+                height: 22,
+              ),
+              label: 'Home',
             ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_cart,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'Images/cart.png',
+                height: 22,
+              ),
+              label: 'Cart',
             ),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.qr_code_scanner,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'Images/scan.png',
+                height: 22,
+              ),
+              label: 'Scan',
             ),
-            label: 'Scan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'Images/profile.png',
+                height: 22,
+              ),
+              label: 'Profile',
             ),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      appBar: currentIndex == 0
-          ? PreferredSize(
-              preferredSize:
-                  Size.fromHeight(h1 * 0.12), // here the desired height
-              child: SafeArea(
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: Container(
-                      height: h1 / 32,
-                      width: w1,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              flex: 3,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AddLocation(),
-                                    ),
-                                  );
-                                },
-                                child: Location(),
-                              )),
-                          Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, w1 / 40, 0),
-                                child: Points(),
-                              )),
-                        ],
+          ],
+        ),
+        appBar: currentIndex == 0
+            ? PreferredSize(
+                preferredSize:
+                    Size.fromHeight(h1 * 0.12), // here the desired height
+                child: SafeArea(
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Container(
+                        height: h1 / 32,
+                        width: w1,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                flex: 3,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddLocation(),
+                                      ),
+                                    );
+                                  },
+                                  child: Location(),
+                                )),
+                            Expanded(flex: 1, child: Points()),
+                          ],
+                        ),
                       ),
                     ),
+                    Search(
+                      searchTask: () {
+                        showSearch(
+                            context: context,
+                            delegate: DataSearch(file: Data.restaurants));
+                      },
+                    ),
+                  ]),
+                ),
+              )
+            : null,
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("Images/BgSmiley.png"),
+                    fit: BoxFit.cover,
                   ),
-                  Search(
-                    searchTask: () {
-                      showSearch(
-                          context: context,
-                          delegate: DataSearch(file: Data.restaurants));
-                    },
-                  ),
-                ]),
-              ),
-            )
-          : null,
-      backgroundColor: Colors.white,
-      body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("Images/BgSmiley.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Screens[currentIndex]),
+                ),
+                child: Screens[currentIndex]),
+            userNumber != ''
+                ? Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: OrderFunction().fetchCurrentOrder(userNumber),
+                    ),
+                  )
+                : Center(),
+          ],
+        ),
+      ),
     );
   }
 }

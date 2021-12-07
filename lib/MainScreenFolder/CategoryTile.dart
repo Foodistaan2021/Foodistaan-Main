@@ -33,7 +33,9 @@ class FoodCategories extends StatelessWidget {
           fit: BoxFit.contain,
           child: Column(
             children: [
-              Image(image: AssetImage(ImagePath)),
+              Image(
+                image: AssetImage(ImagePath),
+              ),
               Text(
                 Caption,
                 style: TextStyle(color: Color(0xFF1E2019)),

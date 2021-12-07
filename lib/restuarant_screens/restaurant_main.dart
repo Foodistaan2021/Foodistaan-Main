@@ -143,33 +143,6 @@ class _RestaurantMainState extends State<RestaurantMain> {
                     ],
                   ),
                 ),
-                // Container(
-                //   padding: EdgeInsets.all(10),
-                //   child: Row(
-                //     children: [
-                //       CircleAvatar(
-                //         maxRadius: 10,
-                //         backgroundColor: Colors.blue,
-                //         child: Icon(
-                //           Icons.bike_scooter,
-                //           size: 12,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //       widget.restaurant_details['delivery'] == true
-                //           ? Text(
-                //               "Delivery Available",
-                //               style: TextStyle(
-                //                   color: Colors.grey, fontSize: 10),
-                //             )
-                //           : Text(
-                //               "Delivery Not Available",
-                //               style: TextStyle(
-                //                   color: Colors.grey, fontSize: 10),
-                //             )
-                //     ],
-                //   ),
-                // ),
                 Container(
                   padding: EdgeInsets.all(10),
                   child: Row(
@@ -238,7 +211,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           color: Colors.grey,
                         ),
                         widget.restaurant_details["Delivery"] == true
-                            ? Text(" Delivery",
+                            ? Text("Delivery",
                                 style: isDeliverySelected == true
                                     ? TextStyle(
                                         color: Colors.black, fontSize: 15)

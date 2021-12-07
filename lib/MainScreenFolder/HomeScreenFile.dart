@@ -14,8 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool selectStreetStyle=true;
-  bool selectTiffinServices=false;
+  bool selectStreetStyle = true;
+  bool selectTiffinServices = false;
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
@@ -34,14 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     await fetchData('DummyData');
-                    selectStreetStyle=true;
-                    selectTiffinServices=false;
+                    selectStreetStyle = true;
+                    selectTiffinServices = false;
                     setState(() {});
                   },
                   child: FoodCategories(
-                      ImagePath: 'Images/food-trolley.png',
-                      Caption: 'Street Style',
-                      isSelected:selectStreetStyle,),
+                    ImagePath: 'Images/food-trolley.png',
+                    Caption: 'Street Style',
+                    isSelected: selectStreetStyle,
+                  ),
                 ),
               ),
               Padding(
@@ -50,15 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     await fetchData('TiffinServices');
-                    selectStreetStyle=false;
-                    selectTiffinServices=true;
+                    selectStreetStyle = false;
+                    selectTiffinServices = true;
                     setState(() {});
-
                   },
                   child: FoodCategories(
-                      ImagePath: 'Images/tiffin.png',
-                      Caption: 'Tiffin Services',
-                  isSelected:selectTiffinServices ,),
+                    ImagePath: 'Images/tiffin.png',
+                    Caption: 'Tiffin Services',
+                    isSelected: selectTiffinServices,
+                  ),
                 ),
               )
             ],
@@ -66,31 +67,32 @@ class _HomeScreenState extends State<HomeScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(w1 / 20, 0,0,0),
-              child:RichText(
-                text:  TextSpan(
-                  text: "Order by ",
-                  style: TextStyle(
-                             color: Color(0xFF0F1B2B),
-                            fontSize: h1 / 30,) ,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Cuisines',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        color: Color(0xFF0F1B2B),
-                      ),
+                padding: EdgeInsets.fromLTRB(w1 / 20, 0, 0, 0),
+                child: RichText(
+                  text: TextSpan(
+                    text: "Order by ",
+                    style: TextStyle(
+                      color: Color(0xFF0F1B2B),
+                      fontSize: h1 / 30,
                     ),
-                  ],
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Cuisines',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0F1B2B),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                // child: Text("Order by Cuisines",
+                //     children:,
+                //     style: TextStyle(
+                //         color: Color(0xFF0F1B2B),
+                //         fontSize: h1 / 25,
+                //         fontWeight: FontWeight.bold)),
                 ),
-              )
-              // child: Text("Order by Cuisines",
-              //     children:,
-              //     style: TextStyle(
-              //         color: Color(0xFF0F1B2B),
-              //         fontSize: h1 / 25,
-              //         fontWeight: FontWeight.bold)),
-            ),
           ),
           CuisineTileList(),
           Listings(),
