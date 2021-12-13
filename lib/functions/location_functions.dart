@@ -7,7 +7,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'places_search_model.dart';
 
-class LocationFcuntions {
+class LocationFunctions {
   final _firestore = FirebaseFirestore.instance;
 
   updateUserLocation(lattitude, longitude) async {
@@ -43,7 +43,7 @@ class LocationFcuntions {
     return places.street;
   }
 
-    final API_KEY = 'AIzaSyA2D_qJoq8XQ6DRIo9wSfzelarrEm-ARZM';
+  final API_KEY = 'AIzaSyA2D_qJoq8XQ6DRIo9wSfzelarrEm-ARZM';
   Future<List<PlaceSearch>> getAutocomplete(searchQuery, sessionToken) async {
     var url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchQuery&language=en&types=geocode&key=$API_KEY&sessiontoken=$sessionToken';

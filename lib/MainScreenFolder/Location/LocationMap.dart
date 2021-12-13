@@ -37,7 +37,7 @@ class _AddLocationState extends State<AddLocation> {
   }
 
   asyncFunction(query) async {
-    await LocationFcuntions()
+    await LocationFunctions()
         .getAutocomplete(query, _sessionToken)
         .then((value) {
       setState(() {
@@ -70,7 +70,7 @@ class _AddLocationState extends State<AddLocation> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xfff7c12b),
           title: customSearchBar,
           automaticallyImplyLeading: false,
           actions: [
@@ -127,7 +127,7 @@ class _AddLocationState extends State<AddLocation> {
                         _sessionToken = '';
                       });
                       customIcon = const Icon(Icons.search);
-                      customSearchBar = const Text('IMDB API Demo');
+                      customSearchBar = const Text('Search For Places');
                     }
                   });
                 },
@@ -184,9 +184,9 @@ class _AddLocationState extends State<AddLocation> {
 
   pointToSelectedLocation(placeId) async {
     GeoPoint locationPoint =
-        await LocationFcuntions().getPlaceFromPlaceId(placeId);
+        await LocationFunctions().getPlaceFromPlaceId(placeId);
 
-    await LocationFcuntions()
+    await LocationFunctions()
         .updateUserLocation(locationPoint.latitude, locationPoint.longitude);
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -224,7 +224,7 @@ class _AddLocationState extends State<AddLocation> {
       if (permissionStatus != PermissionStatus.granted) return null;
     }
     final locationData = await location.getLocation();
-    await LocationFcuntions()
+    await LocationFunctions()
         .updateUserLocation(locationData.latitude!, locationData.longitude!);
 
     addMarker(locationData);

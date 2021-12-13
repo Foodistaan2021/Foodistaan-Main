@@ -20,7 +20,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
     // TODO: implement initState
     super.initState();
     if (global.currentLocation != null) {
-      LocationFcuntions()
+      LocationFunctions()
           .getAddress(global.currentLocation!.latitude,
               global.currentLocation!.longitude)
           .then((value) {

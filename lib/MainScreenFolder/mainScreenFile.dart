@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    LocationFcuntions().getUserLocation().then((value) {
+    LocationFunctions().getUserLocation().then((value) {
       setState(() {
         global.currentLocation = value;
         userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;

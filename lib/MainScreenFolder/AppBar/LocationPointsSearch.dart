@@ -22,9 +22,9 @@ class _LocationState extends State<Location> {
   }
 
   _asyncFunctions() async {
-    var userLocation = await LocationFcuntions().getUserLocation();
+    var userLocation = await LocationFunctions().getUserLocation();
     if (userLocation != null) {
-      var address = await LocationFcuntions()
+      var address = await LocationFunctions()
           .getAddress(userLocation!.latitude, userLocation.longitude);
       return address;
     }
