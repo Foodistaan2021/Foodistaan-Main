@@ -1,5 +1,5 @@
 name: foodistan
-description: A new Flutter application.
+description: A new Flutter application. Foodistaan.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -41,7 +41,9 @@ dependencies:
   readmore: ^2.1.0
   rflutter_alert: ^2.0.4
   sizer: ^2.0.15
+  google_fonts: ^2.1.0
   solid_bottom_sheet: ^0.1.10
+  qr_code_scanner: ^0.6.1
 
 dev_dependencies:
   flutter_test:

@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 class CuisineTileList extends StatelessWidget {
 
   List CuisineTiles=[
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFF03636),BgColor: const Color(0xFFFFE7E7),),
-    Cuisines(Text1: "Fusion", Text2: "FRIES", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFFFE800),BgColor: const Color(0xFFFFFCDE)),
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFA0FF00),BgColor: const Color(0xFFEFFFD4)),
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFF00CCFF),BgColor: const Color(0xFFE9F9FD)),
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFF03636),BgColor: const Color(0xFFFFE7E7),),
-    Cuisines(Text1: "Fusion", Text2: "FRIES", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFFFE800),BgColor: const Color(0xFFFFFCDE)),
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFA0FF00),BgColor: const Color(0xFFEFFFD4)),
-    Cuisines(Text1: "Burger", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFF00CCFF),BgColor: const Color(0xFFE9F9FD)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFF03636),BgColor: const Color(0xFFFFE7E7),),
+    Cuisines(Text1: "FUSION", Text2: "FRIES", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFFFE800),BgColor: const Color(0xFFFFFCDE)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFA0FF00),BgColor: const Color(0xFFEFFFD4)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFF00CCFF),BgColor: const Color(0xFFE9F9FD)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFF03636),BgColor: const Color(0xFFFFE7E7),),
+    Cuisines(Text1: "FUSION", Text2: "FRIES", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFFFE800),BgColor: const Color(0xFFFFFCDE)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFFA0FF00),BgColor: const Color(0xFFEFFFD4)),
+    Cuisines(Text1: "BURGER", Text2: "BOMB", FoodImage: 'Images/burger.png',BorderColor: const Color(0xFF00CCFF),BgColor: const Color(0xFFE9F9FD)),
 
   ];
 
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
+    // var w1 = MediaQuery.of(context).size.width;
     return Container(
-      height: h1 / 6,
+      height: h1 / 7,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         shrinkWrap: true,
@@ -27,7 +27,11 @@ class CuisineTileList extends StatelessWidget {
         itemCount: CuisineTiles.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 50, w1 / 70, h1 / 50),
+            padding: EdgeInsets.only(
+              left: 11,
+              top: 11,
+              bottom: 11,
+            ),
             child: CuisineTiles[index],
           );
         },
@@ -60,34 +64,49 @@ class Cuisines extends StatelessWidget {
       width: w1/4,
       decoration: BoxDecoration(
           color: BgColor,
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: BorderColor, // red as border color
-            width: 2,
-          )),
+            width: 1.5,
+          ),),
       child: GestureDetector(
         onTap: () {},
         child: FittedBox(
           fit:BoxFit.contain,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  Text1,
-                  style: TextStyle(
-                    color: Colors.black,
-                     fontSize: h1/35),
-                  textAlign: TextAlign.left,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Text1,
+                      style: TextStyle(
+                        color: Colors.black,
+                         fontSize: h1/88,),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(Text2,
+                        style: TextStyle(
+                            color: BorderColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: w1/25,
+                        ),
+                        textAlign: TextAlign.left),
+                  ],
                 ),
-                Text(Text2,
-                    style: TextStyle(
-                        color: BorderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: h1/25),
-                    textAlign: TextAlign.left),
-                Image.asset(FoodImage),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Image.asset(FoodImage,
+                      width: w1*0.07,
+                    ),],
+                ),
               ],
             ),
           ),

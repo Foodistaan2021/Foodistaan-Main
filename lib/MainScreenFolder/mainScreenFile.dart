@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
@@ -11,6 +12,7 @@ import 'HomeScreenFile.dart';
 import 'package:foodistan/Data/data.dart';
 import 'Location/LocationMap.dart';
 import 'AppBar/LocationPointsSearch.dart';
+import 'package:foodistan/foodistaan_custom_icon_icons.dart';
 
 var currentLocation = null;
 
@@ -43,94 +45,105 @@ class _MainScreenState extends State<MainScreen> {
     BufferScreen(),
     UserProfile(),
   ];
+
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.grey.shade900,
-          selectedItemColor: Color.fromRGBO(247, 193, 43, 1),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/home.png',
-                height: 22,
-              ),
-              label: 'Home',
+    final Color selected = Color.fromRGBO(247, 193, 43, 1);
+    final Color unselected = Colors.grey;
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: unselected,
+        selectedItemColor: selected,
+        backgroundColor: Colors.white,
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        elevation: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomhome.svg',
+              color: currentIndex == 0 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/cart.png',
-                height: 22,
-              ),
-              label: 'Cart',
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomcart.svg',
+              color: currentIndex == 1 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/scan.png',
-                height: 22,
-              ),
-              label: 'Scan',
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomscan.svg',
+              color: currentIndex == 2 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/profile.png',
-                height: 22,
-              ),
-              label: 'Profile',
+            label: 'Scan',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomprofile.svg',
+              color: currentIndex == 3 ? selected : unselected,
             ),
-          ],
-        ),
-        appBar: currentIndex == 0
-            ? PreferredSize(
-                preferredSize:
-                    Size.fromHeight(h1 * 0.12), // here the desired height
-                child: SafeArea(
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Container(
-                        height: h1 / 32,
-                        width: w1,
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 3,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddLocation(),
-                                      ),
-                                    );
-                                  },
-                                  child: Location(),
-                                )),
-                            Expanded(flex: 1, child: Points()),
-                          ],
-                        ),
+            label: 'Profile',
+          ),
+        ],
+      ),
+      appBar: currentIndex == 0
+          ? PreferredSize(
+              preferredSize:
+                  Size.fromHeight(h1 * 0.15), // here the desired height
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 15,
+                    ),
+                    child: Container(
+                      height: h1 / 25,
+                      width: w1,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                              flex: 3,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddLocation(),
+                                    ),
+                                  );
+                                },
+                                child: Location(),
+                              )),
+                          Expanded(flex: 1, child: Points()),
+                        ],
                       ),
                     ),
-                    Search(
-                      searchTask: () {
-                        showSearch(
-                            context: context,
-                            delegate: DataSearch(file: Data.restaurants));
-                      },
-                    ),
-                  ]),
-                ),
-              )
-            : null,
-        backgroundColor: Colors.white,
-        body: Stack(
+                  ),
+                  Search(
+                    searchTask: () {
+                      showSearch(
+                          context: context,
+                          delegate: DataSearch(file: Data.restaurants));
+                    },
+                  ),
+                ],),
+              ),
+            )
+          : null,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
           children: [
             Container(
                 decoration: BoxDecoration(

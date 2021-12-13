@@ -27,14 +27,14 @@ class _RestaurantMainState extends State<RestaurantMain> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         color: Colors.white,
       ),
       margin: EdgeInsets.only(
         top: MediaQuery.of(context).size.height * 0.2,
       ),
       width: MediaQuery.of(context).size.width * 0.97,
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: Column(
         children: [
           Row(
@@ -77,11 +77,9 @@ class _RestaurantMainState extends State<RestaurantMain> {
               Container(
                   decoration: BoxDecoration(
                       color: Colors.green,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          bottomLeft: Radius.circular(15))),
+                      borderRadius: BorderRadius.circular(15),),
                   padding: const EdgeInsets.all(8),
-                  width: MediaQuery.of(context).size.width * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   child: TextButton(
                       onPressed: null,
                       child: Column(
@@ -94,10 +92,11 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               Text(
                                 "${widget.restaurant_details['Stars']}",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                                    color: Colors.white, fontSize: 22),
                               ),
                               Icon(
                                 Icons.star,
+                                size: 25,
                                 color: Colors.white,
                               ),
                             ],
@@ -191,13 +190,13 @@ class _RestaurantMainState extends State<RestaurantMain> {
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         color: isDeliverySelected == true
-                            ? Colors.amber[400]
+                            ? Colors.amber[100]
                             : Colors.white,
                         border: isDeliverySelected == true
                             ? Border.all(color: Colors.amber, width: 1)
                             : Border.all(color: Colors.white, width: 1),
                         borderRadius: isDeliverySelected == true
-                            ? BorderRadius.circular(10)
+                            ? BorderRadius.circular(11)
                             : BorderRadius.circular(0)),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.1,
@@ -230,7 +229,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         color: isPickupSelected == true
-                            ? Colors.amber[400]
+                            ? Colors.amber[100]
                             : Colors.white,
                         border: isPickupSelected == true
                             ? Border.all(color: Colors.amber, width: 1)
@@ -273,7 +272,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         color: isOverviewSelected == true
-                            ? Colors.amber[400]
+                            ? Colors.amber[100]
                             : Colors.white,
                         border: isOverviewSelected == true
                             ? Border.all(color: Colors.amber, width: 1)
@@ -345,11 +344,11 @@ class _RestaurantMainState extends State<RestaurantMain> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.45,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color.fromRGBO(226, 55, 68, 1),
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -361,7 +360,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 8,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -372,7 +371,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               Text(
                                 "20% OFF UPTO ₹300",
                                 style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12.5,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -398,11 +397,11 @@ class _RestaurantMainState extends State<RestaurantMain> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.45,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color.fromRGBO(132, 194, 37, 1),
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -414,7 +413,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 8,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -425,7 +424,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               Text(
                                 "20% OFF UPTO ₹300",
                                 style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12.5,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
