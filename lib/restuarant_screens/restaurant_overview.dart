@@ -55,7 +55,7 @@ class _RestaurantOverviewState extends State<RestaurantOverview> {
             Stack(
               children: [
                 Container(
-                    color: Colors.red,
+                    color: Colors.white,
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.25,
                     child: ClipRRect(

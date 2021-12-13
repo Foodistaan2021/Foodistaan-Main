@@ -1,18 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
-import 'package:foodistan/widgets/order_placed_screen.dart';
+import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';
 import 'HomeScreenFile.dart';
 import 'package:foodistan/Data/data.dart';
-import 'Location/LocationMap.dart';
 import 'AppBar/LocationPointsSearch.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-var currentLocation = null;
+import 'package:foodistan/global/global_variables.dart' as global;
 
 class MainScreen extends StatefulWidget {
   @override
@@ -28,17 +30,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {
-      userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+    LocationFcuntions().getUserLocation().then((value) {
+      setState(() {
+        global.currentLocation = value;
+        userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+      });
     });
   }
 
   var Screens = [
-    HomeScreen(
-      myCurrentLocation: currentLocation,
-    ), //HomeScreenFile
+    HomeScreen(), //HomeScreenFile
     CartScreenMainLogin(),
     BufferScreen(),
     UserProfile(),
@@ -103,13 +105,19 @@ class _MainScreenState extends State<MainScreen> {
                             Expanded(
                                 flex: 3,
                                 child: GestureDetector(
-                                  onTap: () async {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddLocation(),
-                                      ),
-                                    );
+                                  onTap: () {
+                                    showBarModalBottomSheet(
+                                        duration: Duration(milliseconds: 300),
+                                        bounce: true,
+                                        backgroundColor: Colors.black,
+                                        context: context,
+                                        builder: (context) => Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.7,
+                                            child:
+                                                LocationBottomSheetWidget()));
                                   },
                                   child: Location(),
                                 )),
@@ -130,25 +138,30 @@ class _MainScreenState extends State<MainScreen> {
               )
             : null,
         backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("Images/BgSmiley.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Screens[currentIndex]),
-            userNumber != ''
-                ? Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: OrderFunction().fetchCurrentOrder(userNumber),
+        body: WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: Stack(
+            children: [
+              Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("Images/BgSmiley.png"),
+                      fit: BoxFit.cover,
                     ),
-                  )
-                : Center(),
-          ],
+                  ),
+                  child: Screens[currentIndex]),
+              userNumber != ''
+                  ? Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: OrderFunction().fetchCurrentOrder(userNumber),
+                      ),
+                    )
+                  : Center(),
+            ],
+          ),
         ),
       ),
     );

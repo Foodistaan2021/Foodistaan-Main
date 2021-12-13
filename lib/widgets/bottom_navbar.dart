@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-import 'package:foodistan/auth/autentication.dart';
+
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
-import 'package:foodistan/cart_screens/pay_cart_screen_main.dart';
-import 'package:foodistan/functions/cart_functions.dart';
+
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

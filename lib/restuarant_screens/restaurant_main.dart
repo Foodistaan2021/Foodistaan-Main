@@ -57,14 +57,14 @@ class _RestaurantMainState extends State<RestaurantMain> {
                     Text(
                       "${widget.restaurant_details['Cuisines']}",
                       style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 8,
                           fontWeight: FontWeight.normal,
                           color: Colors.black),
                     ),
                     Text(
                       "${widget.restaurant_details['Address']}",
                       style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 8,
                           fontWeight: FontWeight.normal,
                           color: Colors.grey),
                     ),
@@ -200,20 +200,24 @@ class _RestaurantMainState extends State<RestaurantMain> {
                             ? BorderRadius.circular(10)
                             : BorderRadius.circular(0)),
                     width: MediaQuery.of(context).size.width * 0.27,
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.bike_scooter,
-                            size: 15,
-                            color: isDeliverySelected == true
-                                ? Colors.black
-                                : Colors.grey),
-                        Text(" Delivery",
-                            style: isDeliverySelected == true
-                                ? TextStyle(color: Colors.black, fontSize: 15)
-                                : TextStyle(color: Colors.grey, fontSize: 10))
+                        Icon(
+                          Icons.bike_scooter,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
+                        widget.restaurant_details["Delivery"] == true
+                            ? Text("Delivery",
+                                style: isDeliverySelected == true
+                                    ? TextStyle(
+                                        color: Colors.black, fontSize: 15)
+                                    : TextStyle(
+                                        color: Colors.grey, fontSize: 10))
+                            : SizedBox()
                       ],
                     ),
                   ),
@@ -239,16 +243,16 @@ class _RestaurantMainState extends State<RestaurantMain> {
                             ? BorderRadius.circular(10)
                             : BorderRadius.circular(0)),
                     width: MediaQuery.of(context).size.width * 0.27,
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.food_bank,
-                            size: 15,
-                            color: isPickupSelected == true
-                                ? Colors.black
-                                : Colors.grey),
+                        Icon(
+                          Icons.food_bank,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
                         widget.restaurant_details["Takeaway"]
                             ? Text(" Pickup",
                                 style: isPickupSelected == true
@@ -287,11 +291,11 @@ class _RestaurantMainState extends State<RestaurantMain> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.note_add_outlined,
-                            size: 15,
-                            color: isOverviewSelected == true
-                                ? Colors.black
-                                : Colors.grey),
+                        Icon(
+                          Icons.note_add_outlined,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
                         Text(" Overview",
                             style: isOverviewSelected == true
                                 ? TextStyle(color: Colors.black, fontSize: 15)
