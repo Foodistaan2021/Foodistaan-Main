@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/UserLogin/user_detail_form.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -18,7 +19,7 @@ class _OTPScreenState extends State<OTPScreen> {
   String? verificationCode;
   final _pinOTPController = TextEditingController();
   final _pinPutFocusNode = FocusNode();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -98,32 +99,37 @@ class _OTPScreenState extends State<OTPScreen> {
   );
 
   getOtpFormWidget(context) {
-    return ListView(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-            width: MediaQuery.of(context).size.width * 1,
-            height: MediaQuery.of(context).size.height * 0.32,
-            child: Image.asset('Images/OTPTop.png', fit: BoxFit.fill)),
-        Container(
-          width: MediaQuery.of(context).size.width * 1,
-          height: MediaQuery.of(context).size.height * 0.05,
-          margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.04,
-          ),
-          child: Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                "Sent OTP to ${widget.phone}",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-              )),
+        SvgPicture.asset(
+          'Images/otpimage.svg',
+          height: MediaQuery.of(context).size.width*0.33,
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "OTP Sent to ${widget.phone}",
+          style: TextStyle(
+            color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: MediaQuery.of(context).size.width*0.05),
+        ),
+        SizedBox(
+          height: 15,
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 15, 30, 0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+          ),
           child: PinPut(
             fieldsCount: 6,
             withCursor: true,
             textStyle:
-                const TextStyle(fontSize: 25.0, color: Color(0xffF7C12B)),
+                const TextStyle(fontSize: 25,
+                    color: Color(0xffF7C12B),),
             eachFieldWidth: MediaQuery.of(context).size.width * 0.1,
             eachFieldHeight: MediaQuery.of(context).size.height * 0.05,
             onSubmit: (pin) async {
@@ -182,7 +188,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 FocusScope.of(context).unfocus();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 3,),
                 ));
               }
             },
@@ -193,10 +199,6 @@ class _OTPScreenState extends State<OTPScreen> {
             followingFieldDecoration: pinOTPCodeDecoration,
           ),
         ),
-        Container(
-            width: MediaQuery.of(context).size.width * 1,
-            height: MediaQuery.of(context).size.height * 0.37,
-            child: Image.asset('Images/OTPBottom.png', fit: BoxFit.fill)),
       ],
     );
   }
@@ -205,16 +207,65 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("OTP Verification"),
-          centerTitle: true,
-          backgroundColor: Color(0xff0F1B2B),
-        ),
-        resizeToAvoidBottomInset: false,
-        key: _scaffoldKey,
-        body: Container(
-          child: getOtpFormWidget(context),
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset('Images/welcometopleft.svg',
+                    width: MediaQuery.of(context).size.width*0.44,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset('Images/welcomebottomright.svg',
+                        width: MediaQuery.of(context).size.width*0.44,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 25,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              getOtpFormWidget(context),
+            ],
+          ),
         ),
       ),
     );

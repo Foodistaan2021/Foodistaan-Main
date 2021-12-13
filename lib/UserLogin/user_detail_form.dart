@@ -43,115 +43,116 @@ class _UserDetailState extends State<UserDetail> {
 
   @override
   Widget build(BuildContext context) {
-    var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff0F1B2B),
-      ),
-      resizeToAvoidBottomInset: false,
-      body: ListView(
-        children: [
-          Container(
+    // var h1 = MediaQuery.of(context).size.height;
+    // var w1 = MediaQuery.of(context).size.width;
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xff0F1B2B),
+        ),
+        body: ListView(
+          children: [
+            Container(
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.3,
+                child:
+                    Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
+            Container(
               width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child:
-                  Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
-          Container(
-            width: MediaQuery.of(context).size.width * 1,
-            height: MediaQuery.of(context).size.height * 0.15,
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.02,
-            ),
-            child: Image.asset('Images/pic4.png'),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
+              height: MediaQuery.of(context).size.height * 0.15,
               margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.01,
+                top: MediaQuery.of(context).size.height * 0.02,
               ),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                controller: nameController,
-                //keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  focusColor: Colors.yellow,
-                  hintText: 'Name',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+              child: Image.asset('Images/pic4.png'),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.01,
+                ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.09,
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: nameController,
+                  //keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    focusColor: Colors.yellow,
+                    hintText: 'Name',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.01,
-              ),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                controller: emailController,
-                //keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  focusColor: Colors.yellow,
-                  hintText: 'Email-id',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.01,
+                ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.09,
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: emailController,
+                  //keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    focusColor: Colors.yellow,
+                    hintText: 'Email-id',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFF7C12B), width: 3.0),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.03,
-              ),
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: MediaQuery.of(context).size.height * 0.06,
-              child: ElevatedButton(
-                onPressed: () async {
-                  _userData['name'] = nameController.text;
-                  _userData['email'] = emailController.text;
-                  _userData['phoneNumber'] = widget.phone_number;
-                  _userData['dateAndTime'] = DateTime.now().toString();
-                  addUser(_userData).then((v) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainScreen()));
-                  });
-                },
-                child: Text(
-                  'Submit',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.03,
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFF7C12B),
-                  fixedSize: Size(100, 48),
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.06,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    _userData['name'] = nameController.text;
+                    _userData['email'] = emailController.text;
+                    _userData['phoneNumber'] = widget.phone_number;
+                    _userData['dateAndTime'] = DateTime.now().toString();
+                    addUser(_userData).then((v) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MainScreen()));
+                    });
+                  },
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFF7C12B),
+                    fixedSize: Size(100, 48),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

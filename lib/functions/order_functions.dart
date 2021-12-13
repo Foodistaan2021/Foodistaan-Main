@@ -162,102 +162,126 @@ class OrderFunction {
                       itemBuilder: (context, index) {
                         bool onlyOneOrder = totalDocs == 1 ? true : false;
                         var orderData = snapshot.data!.docs.first;
-                        return GestureDetector(
-                          onTap: () {
-                            onlyOneOrder
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AcceptedOrder(
-                                            orderData: orderData)))
-                                : Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Orders()));
-                          },
-                          child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              width: MediaQuery.of(context).size.width * 1,
+                        return Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                      flex: 3,
-                                      child: Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(20, 10, 10, 10),
-                                        child: Row(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey.shade200,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            child: Stack(
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                    Container(
+                                      height: 44,
+                                      width: 44,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(22),
+                                        border: Border.all(
+                                          color: Color(0xffFAC05E),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.hot_tub,
+                                          color: Color(0xffFAC05E),
+                                          size: 25,
+                                        ),
+                                      ),
+                                    ),
+                                        // SvgPicture.asset('Images/foodpreparing.svg',
+                                        //   height: MediaQuery.of(context).size.height*0.05,
+                                        // ),
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
-                                                flex: 4,
-                                                child: SvgPicture.asset(
-                                                  'Images/foodpreparing.svg',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      2,
-                                                )),
-                                            Expanded(
-                                              flex: 6,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  onlyOneOrder
-                                                      ? Text(
-                                                          orderData[
-                                                                  'order-status']
-                                                              .toString()
-                                                              .toUpperCase(),
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )
-                                                      : Text(
-                                                          'Preparing Your Orders',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                  if (onlyOneOrder)
-                                                    Text(orderData[
-                                                        'vendor-name'])
-                                                ],
-                                              ),
-                                            )
+                                            onlyOneOrder ? Text(
+                                              orderData['order-status'].toString().toUpperCase(),
+                                              style: TextStyle(
+                                                fontSize: MediaQuery.of(context).size.height*0.02,
+                                                  fontWeight: FontWeight.bold),
+                                            ) : Text(
+                                              'Preparing Your Orders',
+                                              style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.height*0.02,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            if (onlyOneOrder)
+                                              Text(orderData[
+                                              'vendor-name'],),
                                           ],
                                         ),
-                                      )),
-                                  Expanded(
-                                      flex: 2,
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            foregroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Color(0xFFF7C12B)),
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Color(0xFFF)),
-                                            shape: MaterialStateProperty.all<
-                                                    RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(6)),
-                                            )),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        onlyOneOrder
+                                            ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AcceptedOrder(
+                                                    orderData: orderData)))
+                                            : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Orders()));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 11,
+                                        ),
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width/3,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.circular(15),
                                           ),
-                                          onPressed: null,
-                                          child: onlyOneOrder
-                                              ? Text('Track Order')
-                                              : Text('Track All Orders')))
-                                ],
-                              )),
-                        );
+                                          child: Center(
+                                            child: onlyOneOrder
+                                                ? Text('Track Order',style: TextStyle(
+                                              color: Colors.white,
+                                            ),)
+                                                : Text('Track Orders',style: TextStyle(
+                                              color: Colors.white,
+                                            ),),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 11,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),);
                       });
                 else
                   return Center();

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSettings extends StatelessWidget {
@@ -125,6 +126,35 @@ class ProfileSettings extends StatelessWidget {
                 ),
                 Text('App Permissions'),
               ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 11),
+              child: Divider(
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            GestureDetector(
+              onTap: () {
+                FirebaseAuth.instance.signOut().whenComplete(() =>
+                {Navigator.pushReplacementNamed(context, 'L')});
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    width: 22,
+                  ),
+                  Text('LogOut'),
+                ],
+              ),
             ),
             const SizedBox(
               height: 5,
