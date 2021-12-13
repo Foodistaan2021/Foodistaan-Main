@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodistan/functions/location_functions.dart';
 
-class Location extends StatelessWidget {
+class Location extends StatefulWidget {
+  @override
+  State<Location> createState() => _LocationState();
+}
+
+class _LocationState extends State<Location> {
+  String userAddress = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _asyncFunctions().then((value) {
+      setState(() {
+        userAddress = value;
+      });
+    });
+  }
+
+  _asyncFunctions() async {
+    var userLocation = await LocationFcuntions().getUserLocation();
+    if (userLocation != null) {
+      var address = await LocationFcuntions()
+          .getAddress(userLocation!.latitude, userLocation.longitude);
+      return address;
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
@@ -14,7 +43,7 @@ class Location extends StatelessWidget {
           Icon(
             Icons.location_on,
             color: Color(0xFFFAB84C),
-            size: h1*0.055,
+            size: h1 * 0.055,
           ),
           SizedBox(
             width: 11,
@@ -23,21 +52,22 @@ class Location extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Home',style: TextStyle(
-                color: Colors.black,
-                fontSize: h1*0.033,
-              ),),
-              Text('Rohini, Sec 13',style: TextStyle(
-                color: Colors.grey,
-                fontSize: h1*0.03,
-              ),),
+              Text(
+                'Home',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: h1 * 0.033,
+                ),
+              ),
+              Text(
+                userAddress == '' ? '' : userAddress,
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: h1 * 0.03,
+                ),
+              ),
             ],
           ),
-          // Text("Location",
-          //     style: TextStyle(
-          //       color: Color(0xFF0E1829),
-          //       fontSize: h1 *0.03,
-          //     ),),
         ],
       ),
     );
@@ -66,27 +96,28 @@ class _PointsState extends State<Points> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('0',style: TextStyle(
-                  color: Color(0xFFFAB84C),
-                  fontSize: h1*0.033,
-                ),),
-                Text('Points',style: TextStyle(
-                  color: Colors.black,
-                  fontSize: h1*0.033,
-                ),),
+                Text(
+                  '0',
+                  style: TextStyle(
+                    color: Color(0xFFFAB84C),
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
+                Text(
+                  'Points',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
               ],
             ),
-            // Text("Points",
-            //     style: TextStyle(
-            //         color: Color(0xFF0E1829),
-            //         fontSize: h1 *0.03,
-            //         //fontFamily: 'Segoe UI'
-            //     ),),
             SizedBox(
               width: 11,
             ),
-            SvgPicture.asset('Images/fs_points.svg',
-              height: h1*0.055,
+            SvgPicture.asset(
+              'Images/fs_points.svg',
+              height: h1 * 0.055,
             ),
           ],
         ),
@@ -115,7 +146,9 @@ class _SearchState extends State<Search> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(11),),
+          borderRadius: BorderRadius.all(
+            Radius.circular(11),
+          ),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -125,7 +158,7 @@ class _SearchState extends State<Search> {
             ),
           ],
         ),
-        height: h1 *0.05,
+        height: h1 * 0.05,
         width: double.infinity,
         alignment: Alignment.centerLeft,
         child: FittedBox(
@@ -154,9 +187,9 @@ class _SearchState extends State<Search> {
                   Text(
                     "Search Cuisines",
                     style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: h1 / 50,
-                        //fontFamily: 'Segoe UI'
+                      color: Colors.grey,
+                      fontSize: h1 / 50,
+                      //fontFamily: 'Segoe UI'
                     ),
                   ),
                 ],

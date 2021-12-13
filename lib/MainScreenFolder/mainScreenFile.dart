@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
+import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';
@@ -13,6 +15,8 @@ import 'package:foodistan/Data/data.dart';
 import 'Location/LocationMap.dart';
 import 'AppBar/LocationPointsSearch.dart';
 import 'package:foodistan/foodistaan_custom_icon_icons.dart';
+import 'package:foodistan/global/global_variables.dart' as global;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 var currentLocation = null;
 
@@ -30,17 +34,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {
-      userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+    LocationFcuntions().getUserLocation().then((value) {
+      setState(() {
+        global.currentLocation = value;
+        userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+      });
     });
   }
 
   var Screens = [
-    HomeScreen(
-      myCurrentLocation: currentLocation,
-    ), //HomeScreenFile
+    HomeScreen(), //HomeScreenFile
     CartScreenMainLogin(),
     BufferScreen(),
     UserProfile(),
@@ -100,44 +104,51 @@ class _MainScreenState extends State<MainScreen> {
               child: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 15,
-                    ),
-                    child: Container(
-                      height: h1 / 25,
-                      width: w1,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                              flex: 3,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AddLocation(),
-                                    ),
-                                  );
-                                },
-                                child: Location(),
-                              )),
-                          Expanded(flex: 1, child: Points()),
-                        ],
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 15,
+                      ),
+                      child: Container(
+                        height: h1 / 25,
+                        width: w1,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                flex: 3,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    showBarModalBottomSheet(
+                                        duration: Duration(milliseconds: 300),
+                                        bounce: true,
+                                        backgroundColor: Colors.black,
+                                        context: context,
+                                        builder: (context) => Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.7,
+                                            child:
+                                                LocationBottomSheetWidget()));
+                                  },
+                                  child: Location(),
+                                )),
+                            Expanded(flex: 1, child: Points()),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Search(
-                    searchTask: () {
-                      showSearch(
-                          context: context,
-                          delegate: DataSearch(file: Data.restaurants));
-                    },
-                  ),
-                ],),
+                    Search(
+                      searchTask: () {
+                        showSearch(
+                            context: context,
+                            delegate: DataSearch(file: Data.restaurants));
+                      },
+                    ),
+                  ],
+                ),
               ),
             )
           : null,

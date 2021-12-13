@@ -7,8 +7,6 @@ import 'CuisineTile.dart';
 import 'ListingsFile.dart';
 
 class HomeScreen extends StatefulWidget {
-  var myCurrentLocation;
-  HomeScreen({@required myCurrentLocation});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -33,13 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(
-                        left: 11,
-                        right: 5.5,
-                        top: 15,
-                        bottom: 15,
-                      ),
+                  padding: EdgeInsets.only(
+                    left: 11,
+                    right: 5.5,
+                    top: 15,
+                    bottom: 15,
+                  ),
                   child: GestureDetector(
                     onTap: () async {
                       await fetchData('DummyData');
@@ -58,13 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(
-                        left: 5.5,
-                        right: 11,
-                        top: 15,
-                        bottom: 15,
-                      ),
+                  padding: EdgeInsets.only(
+                    left: 5.5,
+                    right: 11,
+                    top: 15,
+                    bottom: 15,
+                  ),
                   child: GestureDetector(
                     onTap: () async {
                       await fetchData('TiffinServices');
@@ -87,40 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
               top: 11,
               left: 11,
             ),
-            child: Text('Order by Cuisines',
+            child: Text(
+              'Order by Cuisines',
               textAlign: TextAlign.left,
               style: TextStyle(
-              color: Colors.black,
-              fontSize: h1/33,
-            ),),
+                color: Colors.black,
+                fontSize: h1 / 33,
+              ),
+            ),
           ),
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child: Padding(
-          //       padding: EdgeInsets.only(
-          //         top: 5,
-          //         left: 11,
-          //       ),
-          //       child: RichText(
-          //         text: TextSpan(
-          //           text: "Order by ",
-          //           style: TextStyle(
-          //             color: Color(0xFF0F1B2B),
-          //             fontSize: h1 / 33,
-          //           ),
-          //           children: <TextSpan>[
-          //             TextSpan(
-          //               text: 'Cuisines',
-          //               style: TextStyle(
-          //                 // fontWeight: FontWeight.bold,
-          //                 color: Color(0xFF0F1B2B),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //   ),
-          // ),
           CuisineTileList(),
           Listings(),
         ],
