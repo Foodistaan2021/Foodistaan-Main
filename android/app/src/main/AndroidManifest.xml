@@ -43,10 +43,8 @@
             android:value="2" />
        <meta-data
            android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyA2D_qJoq8XQ6DRIo9wSfzelarrEm-ARZM"
+           android:value="AIzaSyDmr34Mvk_P-FiEY6Tw23Q7gtdTe-ySwVE"
            />
-        <meta-data android:name="com.here.sdk.access_key_id" android:value="mvIu_zDltDBeKgoHHTf8LQ"/>
-<meta-data android:name="com.here.sdk.access_key_secret" android:value="cN9JBH4xJbMmN-8swWBNZQ8FkKfOfzK3UmjZih-_q-nGefvTr0lRlRTSjMUmkSJYNGnq7Fr_IFU5L0tZdobtHg"/>   
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 </manifest>

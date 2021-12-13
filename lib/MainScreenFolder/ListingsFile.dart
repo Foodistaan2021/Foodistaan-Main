@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-import 'package:foodistan/global/global_variables.dart' as global;
+
 
 List items = [];
 List sortItems = [];
@@ -22,31 +22,32 @@ fetchData(String category) async {
             vendor_id_list.add(element.id);
           })
         });
-    if (global.currentLocation == null) {
-      for (int i = 0; i < items.length; i++) {
-        sortItems.add(items[i]);
-        sortItems[i]['Distance'] = (items[i]['Location'].latitude - 0).abs() +
-            (items[i]['Location'].longitude - 0).abs();
+    if(currentLocation==null)
+      {
+        for(int i=0;i<items.length;i++)
+        {
+          sortItems.add(items[i]);
+          sortItems[i]['Distance']=(items[i]['Location'].latitude-0).abs()+(items[i]['Location'].longitude-0).abs();
+        }
+        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
       }
-      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
-    } else {
-      for (int i = 0; i < items.length; i++) {
-        sortItems.add(items[i]);
-        sortItems[i]['Distance'] = (items[i]['Location'].latitude -
-                    global.currentLocation!.latitude)
-                .abs() +
-            (items[i]['Location'].longitude - global.currentLocation!.longitude)
-                .abs();
+    else
+      {
+        for(int i=0;i<items.length;i++)
+        {
+          sortItems.add(items[i]);
+          sortItems[i]['Distance']=(items[i]['Location'].latitude-currentLocation.latitude).abs()+(items[i]['Location'].longitude-currentLocation.longitude).abs();
+        }
+        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
       }
-      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
-    }
-  } catch (e) {
+    } catch (e) {
     print(e.toString());
   }
   return sortItems;
 }
 
 class Listings extends StatefulWidget {
+
   @override
   _ListingsState createState() => _ListingsState();
 }
@@ -54,6 +55,7 @@ class Listings extends StatefulWidget {
 class _ListingsState extends State<Listings> {
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     fetchData('DummyData').then((value) {
       setState(() {
@@ -77,9 +79,7 @@ class _ListingsState extends State<Listings> {
                 padding:
                     EdgeInsets.fromLTRB(w1 / 30, h1 / 50, w1 / 30, h1 / 50),
                 child: ListedTile(
-                  details: items[index],
-                  Id: vendor_id_list[index],
-                ),
+                    details: items[index],Id: vendor_id_list[index],),
               );
             },
           )
@@ -194,9 +194,8 @@ class leftSide extends StatelessWidget {
                   child: Text(
                     address,
                     style: TextStyle(
-                        fontSize: h1 / 100,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900),
+                      fontSize: h1/100,
+                        color: Colors.white, fontWeight: FontWeight.w900),
                   ),
                 )),
           )

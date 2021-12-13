@@ -7,6 +7,8 @@ import 'CuisineTile.dart';
 import 'ListingsFile.dart';
 
 class HomeScreen extends StatefulWidget {
+  var myCurrentLocation;
+  HomeScreen({@required myCurrentLocation});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -48,9 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     EdgeInsets.fromLTRB(w1 / 16, h1 / 70, w1 / 70, h1 / 25),
                 child: GestureDetector(
                   onTap: () async {
-                    await fetchData(
-                      'TiffinServices',
-                    );
+                    await fetchData('TiffinServices');
                     selectStreetStyle = false;
                     selectTiffinServices = true;
                     setState(() {});
@@ -85,7 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                )),
+                )
+                // child: Text("Order by Cuisines",
+                //     children:,
+                //     style: TextStyle(
+                //         color: Color(0xFF0F1B2B),
+                //         fontSize: h1 / 25,
+                //         fontWeight: FontWeight.bold)),
+                ),
           ),
           CuisineTileList(),
           Listings(),
