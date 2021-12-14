@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/location_functions.dart';
@@ -8,6 +7,7 @@ import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
 import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
+import '../scanner.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';
 import 'HomeScreenFile.dart';
@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
   var Screens = [
     HomeScreen(), //HomeScreenFile
     CartScreenMainLogin(),
-    BufferScreen(),
+    ScannerScreen(),
     UserProfile(),
   ];
 
@@ -157,12 +157,12 @@ class _MainScreenState extends State<MainScreen> {
         child: Stack(
           children: [
             Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("Images/BgSmiley.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   image: DecorationImage(
+                //     image: AssetImage("Images/BgSmiley.png"),
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 child: Screens[currentIndex]),
             userNumber != ''
                 ? Positioned.fill(

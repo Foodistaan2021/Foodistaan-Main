@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'bufferScreenFile.dart';
+import 'scanner.dart';
 import 'MainScreenFolder/mainScreenFile.dart';
 import 'optionScreenFile.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       MaterialApp(
         initialRoute: FirebaseAuth.instance.currentUser != null ? 'H' : 'L',
         routes: {
-          'B': (context) => BufferScreen(),
+          'S': (context) => ScannerScreen(),
           'L': (context) => LoginScreen(),
           'H': (context) => MainScreen(),
           'O': (context) => OptionScreen(),

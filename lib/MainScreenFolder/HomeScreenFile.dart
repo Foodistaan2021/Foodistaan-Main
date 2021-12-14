@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'Crousel.dart';
 import 'CategoryTile.dart';
 import 'CuisineTile.dart';
@@ -78,22 +77,32 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 11,
-              left: 11,
-            ),
-            child: Text(
-              'Order by Cuisines',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: h1 / 33,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 11,
+                  left: 11,
+                ),
+                child: Text(
+                  'Order by Cuisines',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: h1 / 33,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           CuisineTileList(),
           Listings(),
+          SizedBox(
+            height: 33,
+          ),
         ],
       ),
     );

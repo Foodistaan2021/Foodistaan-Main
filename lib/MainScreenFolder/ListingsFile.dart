@@ -200,7 +200,7 @@ class leftSide extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on,
-                        size: h1/44,
+                        size: h1/55,
                         color: Colors.white,
                       ),
                       SizedBox(
@@ -209,7 +209,7 @@ class leftSide extends StatelessWidget {
                       Text(
                         address,
                         style: TextStyle(
-                          fontSize: h1/55,
+                          fontSize: h1/77,
                             color: Colors.white,
                             // fontWeight: FontWeight.w700,
                         ),
@@ -266,7 +266,9 @@ class rightSide extends StatelessWidget {
                     child: Text(
                       name,
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                      ),
                     )),
                 FittedBox(
                     fit: BoxFit.contain,
@@ -329,7 +331,7 @@ class rightSide extends StatelessWidget {
                             "Delivery",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w600,
+                                // fontWeight: FontWeight.w600,
                                 fontSize: h1 / 70),
                           )
                         ],
@@ -352,7 +354,7 @@ class rightSide extends StatelessWidget {
                             "Takeaway",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w600,
+                                // fontWeight: FontWeight.w600,
                                 fontSize: h1 / 70),
                           )
                         ],

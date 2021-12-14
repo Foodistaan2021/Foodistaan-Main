@@ -78,7 +78,7 @@ class _UserProfileState extends State<UserProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 133,
+                height: 135,
                 width: double.infinity,
                 child: Stack(
                   children: [
@@ -103,7 +103,7 @@ class _UserProfileState extends State<UserProfile> {
                           height: 60,
                           width: double.infinity,
                           decoration: const BoxDecoration(
-                            color: Color.fromRGBO(255, 206, 69, 0.5),
+                            color: Color.fromRGBO(255, 206, 69, 0.66),
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(22),
                               bottomLeft: Radius.circular(22),
@@ -353,7 +353,7 @@ class _UserProfileState extends State<UserProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: 11,
                     ),
                     Icon(
                       Icons.history,
@@ -399,7 +399,7 @@ class _UserProfileState extends State<UserProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: 11,
                     ),
                     Icon(
                       Icons.contacts_outlined,
@@ -420,7 +420,7 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 11),
@@ -445,7 +445,7 @@ class _UserProfileState extends State<UserProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: 11,
                     ),
                     Icon(
                       Icons.star_border,
@@ -491,7 +491,7 @@ class _UserProfileState extends State<UserProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: 11,
                     ),
                     Icon(
                       Icons.celebration,
@@ -537,7 +537,7 @@ class _UserProfileState extends State<UserProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: 11,
                     ),
                     Icon(
                       Icons.help_outline,
