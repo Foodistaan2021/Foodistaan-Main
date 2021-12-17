@@ -6,12 +6,9 @@ import 'package:foodistan/functions/cart_functions.dart';
 class MyFoodItemWidget extends StatefulWidget {
   static String id = 'my_food_widget';
   var menu_item;
-  String vendor_id, cartId, vendorName;
+  String vendor_id, cartId,vendorName;
   MyFoodItemWidget(
-      {required this.menu_item,
-      required this.vendor_id,
-      required this.cartId,
-      required this.vendorName});
+      {required this.menu_item, required this.vendor_id, required this.cartId,required this.vendorName});
 
   @override
   _MyFoodItemWidgetState createState() => _MyFoodItemWidgetState();
@@ -45,7 +42,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
             child: Image.network('${widget.menu_item['image']}'),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
                 Row(
@@ -92,12 +89,8 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.04,
-            child: CartFunctions().quantityWidgetInRestaurant(
-                widget.cartId,
-                widget.menu_item['id'],
-                widget.vendor_id,
-                widget.menu_item,
-                widget.vendorName),
+            child: CartFunctions().quantityWidgetInRestaurant(widget.cartId,
+                widget.menu_item['id'], widget.vendor_id, widget.menu_item,widget.vendorName),
           )
         ],
       ),

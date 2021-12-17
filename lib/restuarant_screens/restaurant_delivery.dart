@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/auth/autentication.dart';
-import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery_review.dart';
 import 'package:foodistan/restuarant_screens/restaurant_main.dart';
@@ -41,43 +40,6 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
 
     return SafeArea(
       child: Scaffold(
-          bottomNavigationBar: Container(
-            width: MediaQuery.of(context).size.width * 1,
-            height: MediaQuery.of(context).size.height * 0.1,
-            color: Colors.green,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.1,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("1 item | Rs 110",
-                          style: TextStyle(color: Colors.white)),
-                      Text("Extra charges may apply",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: GestureDetector(
-                      onTap: () async {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (c) => CartScreenMainLogin()));
-                      },
-                      child: Text("VIEW BILL",
-                          style: TextStyle(color: Colors.white))),
-                )
-              ],
-            ),
-          ),
           backgroundColor: Color.fromRGBO(250, 250, 250, 1),
           appBar: PreferredSize(
             preferredSize:
@@ -226,8 +188,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 15),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
+                                height: MediaQuery.of(context).size.height * 0.5,
                                 width: MediaQuery.of(context).size.width * 0.95,
                                 child: isReviewSelected
                                     ? RestuarantDeliveryReview()
