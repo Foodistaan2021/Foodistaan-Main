@@ -131,28 +131,27 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 11),
-                margin: EdgeInsets.only(top: 15),
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(7.5),
-                          child: Icon(Icons.search),
-                        ),
-                        hintText: "Search within the menu",
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            )))),
+                height: MediaQuery.of(context).size.height * 0.06,
+                child: Center(
+                  child: TextFormField(
+                      textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          hintText: "Search within the menu",
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Colors.amber,
+                                width: 2.0,
+                              )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Colors.amber,
+                                width: 2.0,
+                              )))),
+                ),
               ),
               SizedBox(
                 height: 11,
@@ -220,6 +219,41 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                                                 fontSize: 16,
                                                 color: Colors.grey,
                                               ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                      child: DropdownButton(
+                                        hint: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Top Rated",
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                        isExpanded: true,
+                                        iconSize: 30.0,
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                        items: ['Top Rated', 'Oldest', 'Latest']
+                                            .map(
+                                          (val) {
+                                            return DropdownMenuItem<String>(
+                                              value: val,
+                                              child: Text(val),
+                                            );
+                                          },
+                                        ).toList(),
+                                        onChanged: (val) {
+                                          // selectcountry = val;
+                                          // onSubmit check
+                                        },
                                       ),
                                     ),
                                   ]),

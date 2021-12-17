@@ -31,7 +31,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
         top: MediaQuery.of(context).size.height * 0.2,
       ),
       width: MediaQuery.of(context).size.width * 0.97,
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.55,
       child: Column(
         children: [
           Row(
@@ -187,24 +187,15 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        boxShadow: isDeliverySelected == true
-                            ? [
-                                BoxShadow(
-                                  color: Colors.yellowAccent,
-                                  blurRadius: 10.0,
-                                  spreadRadius: 2.0,
-                                ),
-                              ]
-                            : null,
                         color: isDeliverySelected == true
                             ? Colors.amber[100]
                             : Colors.white,
                         border: isDeliverySelected == true
                             ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
+                            : Border.all(color: Colors.grey, width: 1),
                         borderRadius: isDeliverySelected == true
                             ? BorderRadius.circular(11)
-                            : BorderRadius.circular(0)),
+                            : BorderRadius.circular(11)),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: Row(
@@ -235,24 +226,14 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        boxShadow: isPickupSelected == true
-                            ? [
-                                BoxShadow(
-                                  color: Colors.yellowAccent,
-                                  blurRadius: 10.0,
-                                  spreadRadius: 2.0,
-                                ),
-                              ]
-                            : null,
-                        color: isPickupSelected == true
-                            ? Colors.amber[100]
-                            : Colors.white,
-                        border: isPickupSelected == true
-                            ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
-                        borderRadius: isPickupSelected == true
-                            ? BorderRadius.circular(10)
-                            : BorderRadius.circular(0)),
+                      color: isPickupSelected == true
+                          ? Colors.amber[100]
+                          : Colors.white,
+                      border: isPickupSelected == true
+                          ? Border.all(color: Colors.amber, width: 1)
+                          : Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(11),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: Row(
@@ -287,24 +268,14 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        boxShadow: isOverviewSelected == true
-                            ? [
-                                BoxShadow(
-                                  color: Colors.yellowAccent,
-                                  blurRadius: 10.0,
-                                  spreadRadius: 2.0,
-                                ),
-                              ]
-                            : null,
-                        color: isOverviewSelected == true
-                            ? Colors.amber[100]
-                            : Colors.white,
-                        border: isOverviewSelected == true
-                            ? Border.all(color: Colors.amber, width: 1)
-                            : Border.all(color: Colors.white, width: 1),
-                        borderRadius: isOverviewSelected == true
-                            ? BorderRadius.circular(10)
-                            : BorderRadius.circular(0)),
+                      color: isOverviewSelected == true
+                          ? Colors.amber[100]
+                          : Colors.white,
+                      border: isOverviewSelected == true
+                          ? Border.all(color: Colors.amber, width: 1)
+                          : Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(11),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.27,
                     height: MediaQuery.of(context).size.height * 0.07,
                     child: Row(
