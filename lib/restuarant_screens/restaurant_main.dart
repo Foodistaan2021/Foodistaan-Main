@@ -73,8 +73,9 @@ class _RestaurantMainState extends State<RestaurantMain> {
               ),
               Container(
                   decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(15),),
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   padding: const EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: TextButton(
@@ -186,6 +187,15 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                        boxShadow: isDeliverySelected == true
+                            ? [
+                                BoxShadow(
+                                  color: Colors.yellowAccent,
+                                  blurRadius: 10.0,
+                                  spreadRadius: 2.0,
+                                ),
+                              ]
+                            : null,
                         color: isDeliverySelected == true
                             ? Colors.amber[100]
                             : Colors.white,
@@ -225,6 +235,15 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                        boxShadow: isPickupSelected == true
+                            ? [
+                                BoxShadow(
+                                  color: Colors.yellowAccent,
+                                  blurRadius: 10.0,
+                                  spreadRadius: 2.0,
+                                ),
+                              ]
+                            : null,
                         color: isPickupSelected == true
                             ? Colors.amber[100]
                             : Colors.white,
@@ -268,6 +287,15 @@ class _RestaurantMainState extends State<RestaurantMain> {
                   child: Container(
                     // padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                        boxShadow: isOverviewSelected == true
+                            ? [
+                                BoxShadow(
+                                  color: Colors.yellowAccent,
+                                  blurRadius: 10.0,
+                                  spreadRadius: 2.0,
+                                ),
+                              ]
+                            : null,
                         color: isOverviewSelected == true
                             ? Colors.amber[100]
                             : Colors.white,
