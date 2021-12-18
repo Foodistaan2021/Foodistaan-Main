@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodistan/functions/razorpay_integration.dart';
 import 'package:foodistan/profile/payment_methods.dart';
+import 'package:foodistan/profile/your_orders.dart';
 
 class CartScreenMainLogin extends StatefulWidget {
   const CartScreenMainLogin({Key? key}) : super(key: key);
@@ -42,6 +43,122 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
     },
   );
 
+  Widget checkIfAnyOrders(userNumber) {
+    var stream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userNumber)
+        .collection('orders')
+        .snapshots();
+    return StreamBuilder(
+        stream: stream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            var count = snapshot.data!.docs.length;
+            if (count > 0)
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.20,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('You Have Eixsting Orders'),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFF7C12B)),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFF)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                              )),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Orders()));
+                            },
+                            child: Text('Track Order'))
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(11),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, 'H');
+                      },
+                      child: Container(
+                        height: 35,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.yellow.shade700,
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Place Another Order',
+                            style: TextStyle(
+                              color: Colors.yellow.shade700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            else
+              return Padding(
+                padding: const EdgeInsets.all(11),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'H');
+                  },
+                  child: Container(
+                    height: 35,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.yellow.shade700,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add Items to Cart',
+                        style: TextStyle(
+                          color: Colors.yellow.shade700,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+          }
+          return Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'H');
+                },
+                child: Text('Add Items to Cart')),
+          );
+        });
+  }
+
   Widget cartItems(cartId) {
     var stream = FirebaseFirestore.instance
         .collection('cart')
@@ -57,13 +174,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               return CartItemsWidget(data: snapshot.data!.docs, cartId: cartId);
             }
           }
-          return Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'H');
-                },
-                child: Text('Add Items to Cart')),
-          );
+          return checkIfAnyOrders(userNumber);
         });
   }
 
@@ -227,6 +338,20 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                       ],
                     ),
                   ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    width: MediaQuery.of(context).size.width * 1,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    color: Colors.yellow[700],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.ac_unit),
+                        Text("Apply Coupon"),
+                      ],
+                    ),
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -237,7 +362,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                       items: itemMap,
                                       cartId: widget.cartId,
                                       vednorId: restaurantData['id'],
-                                vendorName:restaurantData['Name'] ,
+                                      vendorName: restaurantData['Name'],
                                     )));
                       },
                       child: Text('Proceed To Pay $totalPriceMain'))
