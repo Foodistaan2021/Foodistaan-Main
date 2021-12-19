@@ -6,9 +6,12 @@ import 'package:foodistan/functions/cart_functions.dart';
 class MyFoodItemWidget extends StatefulWidget {
   static String id = 'my_food_widget';
   var menu_item;
-  String vendor_id, cartId,vendorName;
+  String vendor_id, cartId, vendorName;
   MyFoodItemWidget(
-      {required this.menu_item, required this.vendor_id, required this.cartId,required this.vendorName});
+      {required this.menu_item,
+      required this.vendor_id,
+      required this.cartId,
+      required this.vendorName});
 
   @override
   _MyFoodItemWidgetState createState() => _MyFoodItemWidgetState();
@@ -26,21 +29,23 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width * 0.5,
-      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.18,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
             ),
             child: Image.network('${widget.menu_item['image']}'),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,22 +78,26 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                           TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
                 ),
                 Container(
-                  alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.only(top: 10),
+                  alignment: Alignment.topCenter,
+                  height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.30,
-                  child: Text("Rs. ${widget.menu_item['price']}",
+                  child: Text("₹ ${widget.menu_item['price']}",
                       maxLines: 3,
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.04,
+                  child: CartFunctions().quantityWidgetInRestaurant(
+                      widget.cartId,
+                      widget.menu_item['id'],
+                      widget.vendor_id,
+                      widget.menu_item,
+                      widget.vendorName),
+                )
               ],
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.04,
-            child: CartFunctions().quantityWidgetInRestaurant(widget.cartId,
-                widget.menu_item['id'], widget.vendor_id, widget.menu_item,widget.vendorName),
-          )
         ],
       ),
     );

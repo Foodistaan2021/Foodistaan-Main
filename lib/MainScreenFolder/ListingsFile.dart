@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-
+import 'package:foodistan/global/global_variables.dart' as global;
 
 List items = [];
 List sortItems = [];
@@ -22,25 +22,25 @@ fetchData(String category) async {
             vendor_id_list.add(element.id);
           })
         });
-    if(currentLocation==null)
-      {
-        for(int i=0;i<items.length;i++)
-        {
-          sortItems.add(items[i]);
-          sortItems[i]['Distance']=(items[i]['Location'].latitude-0).abs()+(items[i]['Location'].longitude-0).abs();
-        }
-        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+    if (global.currentLocation == null) {
+      for (int i = 0; i < items.length; i++) {
+        sortItems.add(items[i]);
+        sortItems[i]['Distance'] = (items[i]['Location'].latitude - 0).abs() +
+            (items[i]['Location'].longitude - 0).abs();
       }
-    else
-      {
-        for(int i=0;i<items.length;i++)
-        {
-          sortItems.add(items[i]);
-          sortItems[i]['Distance']=(items[i]['Location'].latitude-currentLocation.latitude).abs()+(items[i]['Location'].longitude-currentLocation.longitude).abs();
-        }
-        sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+    } else {
+      for (int i = 0; i < items.length; i++) {
+        sortItems.add(items[i]);
+        sortItems[i]['Distance'] = (items[i]['Location'].latitude -
+                    global.currentLocation!.latitude)
+                .abs() +
+            (items[i]['Location'].longitude - global.currentLocation!.longitude)
+                .abs();
       }
-    } catch (e) {
+      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+    }
+  } catch (e) {
     print(e.toString());
   }
   return sortItems;
@@ -77,7 +77,10 @@ class _ListingsState extends State<Listings> {
             itemBuilder: (context, index) {
               return Padding(
                 padding:
-                    EdgeInsets.fromLTRB(w1 / 30, h1 / 50, w1 / 30, h1 / 50),
+                    EdgeInsets.symmetric(
+                      horizontal: 11,
+                      vertical: 11,
+                    ),
                 child: ListedTile(
                     details: items[index],Id: vendor_id_list[index],),
               );
@@ -114,15 +117,16 @@ class _ListedTileState extends State<ListedTile> {
                     )));
       },
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey,
-              blurRadius: 10.0,
-              spreadRadius: 0.5,
+              color: Colors.grey.shade300,
+              blurRadius: 3,
+              spreadRadius: 5,
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(11),
         ),
         child: Row(
           children: [
@@ -157,8 +161,8 @@ class leftSide extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(7.0),
-          bottomLeft: Radius.circular(7.0),
+          topLeft: Radius.circular(11),
+          bottomLeft: Radius.circular(11),
         ),
         color: Color(0xffE43B3B),
       ),
@@ -169,7 +173,7 @@ class leftSide extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(7.0),
+              topLeft: Radius.circular(11),
             ),
             child: Image.network(
               foodImage,
@@ -182,20 +186,35 @@ class leftSide extends StatelessWidget {
             width: w1 / 3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(7.0),
+                bottomLeft: Radius.circular(11),
               ),
               color: Color(0xffE43B3B),
             ),
             child: FittedBox(
                 fit: BoxFit.contain,
                 child: Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
-                  child: Text(
-                    address,
-                    style: TextStyle(
-                      fontSize: h1/100,
-                        color: Colors.white, fontWeight: FontWeight.w900),
+                  padding: const EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: h1/55,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        address,
+                        style: TextStyle(
+                          fontSize: h1/77,
+                            color: Colors.white,
+                            // fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                 )),
           )
@@ -233,7 +252,7 @@ class rightSide extends StatelessWidget {
           width: w1 / 3,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(7.0),
+              topRight: Radius.circular(11),
             ),
             color: Colors.white,
           ),
@@ -247,7 +266,9 @@ class rightSide extends StatelessWidget {
                     child: Text(
                       name,
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                      ),
                     )),
                 FittedBox(
                     fit: BoxFit.contain,
@@ -286,11 +307,14 @@ class rightSide extends StatelessWidget {
                         "Cost for two: $cost",
                         style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            // fontWeight: FontWeight.w600,
                             fontSize: h1 / 70),
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 2,
                 ),
                 delivery == true
                     ? Row(
@@ -307,12 +331,14 @@ class rightSide extends StatelessWidget {
                             "Delivery",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w600,
+                                // fontWeight: FontWeight.w600,
                                 fontSize: h1 / 70),
                           )
                         ],
                       )
-                    : SizedBox(),
+                    : SizedBox(
+                  height: 2,
+                ),
                 takeaway == true
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -328,7 +354,7 @@ class rightSide extends StatelessWidget {
                             "Takeaway",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w600,
+                                // fontWeight: FontWeight.w600,
                                 fontSize: h1 / 70),
                           )
                         ],
@@ -343,7 +369,7 @@ class rightSide extends StatelessWidget {
           width: w1 / 3,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(7.0),
+              bottomRight: Radius.circular(11),
             ),
             color:
                 foodistaanCertified == true ? Color(0xffF7C12B) : Colors.white,
@@ -356,7 +382,8 @@ class rightSide extends StatelessWidget {
                 child: Text(
                   "Foodistaan Certified",
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w900),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800),
                 ),
               )),
         )

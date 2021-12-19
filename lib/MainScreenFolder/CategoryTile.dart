@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FoodCategories extends StatelessWidget {
   String ImagePath = "";
@@ -19,7 +19,14 @@ class FoodCategories extends StatelessWidget {
       width: 2 * w1 / 5,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            spreadRadius: 5,
+            blurRadius: 3,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(11),
         border: Border.all(
           color: isSelected
               ? Color(0xffFAB84C)
@@ -28,17 +35,22 @@ class FoodCategories extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(7.5),
         child: FittedBox(
           fit: BoxFit.contain,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
-                image: AssetImage(ImagePath),
+              SvgPicture.asset(ImagePath,),
+              SizedBox(
+                height: 2.5,
               ),
               Text(
                 Caption,
-                style: TextStyle(color: Color(0xFF1E2019)),
+                style: TextStyle(
+                  color: Colors.black,
+                  // color: Color(0xFF1E2019),
+                ),
               ),
             ],
           ),

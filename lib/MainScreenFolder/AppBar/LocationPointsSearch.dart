@@ -1,7 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
+import 'package:foodistan/functions/address_model.dart';
+import 'package:foodistan/functions/location_functions.dart';
 
+class Location extends StatefulWidget {
+  @override
+  State<Location> createState() => _LocationState();
+}
 
-class Location extends StatelessWidget {
+class _LocationState extends State<Location> {
+  AddressModel? userAddress;
+  bool hasAddress = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _asyncFunctions().then((value) {
+      if (value) {
+        setState(() {
+          hasAddress = true;
+        });
+      } else {
+        setState(() {
+          hasAddress = false;
+        });
+      }
+    });
+  }
+
+  _asyncFunctions() async {
+    var userLocation = await LocationFunctions().getUserLocation();
+    if (userLocation != null) {
+      var address = await LocationFunctions()
+          .getAddress(userLocation.latitude, userLocation.longitude);
+      setState(() {
+        userAddress = address;
+      });
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
@@ -9,24 +49,43 @@ class Location extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       fit: BoxFit.contain,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(
             Icons.location_on,
             color: Color(0xFFFAB84C),
-            size: h1*0.07,
+            size: h1 * 0.055,
           ),
-          Text("Location",
-              style: TextStyle(
-                color: Color(0xFF0E1829),
-                fontSize: h1 *0.05,
-                //fontFamily: 'Segoe UI'
-              )),
+          SizedBox(
+            width: 11,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Home',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: h1 * 0.033,
+                ),
+              ),
+              hasAddress == true
+                  ? Text(
+                      userAddress!.subLocality!,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: h1 * 0.03,
+                      ),
+                    )
+                  : Text('data'),
+            ],
+          ),
         ],
       ),
     );
   }
 }
-
 
 class Points extends StatefulWidget {
   @override
@@ -37,24 +96,44 @@ class _PointsState extends State<Points> {
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
+    // var w1 = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FsPoints()));
+      },
       child: FittedBox(
+        alignment: Alignment.bottomRight,
         fit: BoxFit.contain,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text("Points",
-                style: TextStyle(
-                    color: Color(0xFF0E1829),
-                    fontSize: h1 *0.05,
-                    //fontFamily: 'Segoe UI'
-                )),
-            Icon(
-              Icons.money,
-              color: Color(0xFFFAB84C),
-              size: h1 *0.07,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '0',
+                  style: TextStyle(
+                    color: Color(0xFFFAB84C),
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
+                Text(
+                  'Points',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 11,
+            ),
+            SvgPicture.asset(
+              'Images/fs_points.svg',
+              height: h1 * 0.055,
             ),
           ],
         ),
@@ -78,39 +157,55 @@ class _SearchState extends State<Search> {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.fromLTRB(w1*0.01,h1*0.01,w1*0.01,h1*0.01,),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15,
+      ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Color(0xFFFCE19E).withOpacity(0.35),
+          borderRadius: BorderRadius.all(
+            Radius.circular(11),
+          ),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              spreadRadius: 3,
+              blurRadius: 2,
+            ),
+          ],
         ),
-        height: h1 *0.05,
-        width: 12 * w1 / 13,
+        height: h1 * 0.05,
+        width: double.infinity,
         alignment: Alignment.centerLeft,
-        child: GestureDetector(
-          onTap: () {
-            SearchTask();
-          },
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(w1 / 20, h1 / 100, 0, h1 / 100),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: GestureDetector(
+            // onTap: () {
+            //   SearchTask();
+            // },
+            child: Center(
               child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    width: 15,
+                  ),
                   Icon(
                     Icons.search,
-                    color: Color(0xFF6B6B6B),
-                    size: h1 / 40,
+                    color: Color(0xFFFAB84C),
+                    size: h1 / 33,
                   ),
                   SizedBox(
-                    width: w1 / 70,
+                    width: 15,
                   ),
                   Text(
                     "Search Cuisines",
                     style: TextStyle(
-                        color: Color(0xFF6B6B6B),
-                        fontSize: h1 / 50,
-                        //fontFamily: 'Segoe UI'
+                      color: Colors.grey,
+                      fontSize: h1 / 50,
+                      //fontFamily: 'Segoe UI'
                     ),
                   ),
                 ],

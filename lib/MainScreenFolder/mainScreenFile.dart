@@ -1,16 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
+import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
+import '../scanner.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';
 import 'HomeScreenFile.dart';
 import 'package:foodistan/Data/data.dart';
 import 'Location/LocationMap.dart';
 import 'AppBar/LocationPointsSearch.dart';
+import 'package:foodistan/foodistaan_custom_icon_icons.dart';
+import 'package:foodistan/global/global_variables.dart' as global;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 var currentLocation = null;
 
@@ -28,88 +34,104 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {
-      userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+    LocationFunctions().getUserLocation().then((value) {
+      setState(() {
+        global.currentLocation = value;
+        userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+      });
     });
   }
 
   var Screens = [
-    HomeScreen(
-      myCurrentLocation: currentLocation,
-    ), //HomeScreenFile
+    HomeScreen(), //HomeScreenFile
     CartScreenMainLogin(),
-    BufferScreen(),
+    ScannerScreen(),
     UserProfile(),
   ];
+
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.grey.shade900,
-          selectedItemColor: Color.fromRGBO(247, 193, 43, 1),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/home.png',
-                height: 22,
-              ),
-              label: 'Home',
+    final Color selected = Color.fromRGBO(247, 193, 43, 1);
+    final Color unselected = Colors.grey;
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: unselected,
+        selectedItemColor: selected,
+        backgroundColor: Colors.white,
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        elevation: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomhome.svg',
+              color: currentIndex == 0 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/cart.png',
-                height: 22,
-              ),
-              label: 'Cart',
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomcart.svg',
+              color: currentIndex == 1 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/scan.png',
-                height: 22,
-              ),
-              label: 'Scan',
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomscan.svg',
+              color: currentIndex == 2 ? selected : unselected,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'Images/profile.png',
-                height: 22,
-              ),
-              label: 'Profile',
+            label: 'Scan',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'Images/bottomprofile.svg',
+              color: currentIndex == 3 ? selected : unselected,
             ),
-          ],
-        ),
-        appBar: currentIndex == 0
-            ? PreferredSize(
-                preferredSize:
-                    Size.fromHeight(h1 * 0.12), // here the desired height
-                child: SafeArea(
-                  child: Column(children: [
+            label: 'Profile',
+          ),
+        ],
+      ),
+      appBar: currentIndex == 0
+          ? PreferredSize(
+              preferredSize:
+                  Size.fromHeight(h1 * 0.15), // here the desired height
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 15,
+                      ),
                       child: Container(
-                        height: h1 / 32,
+                        height: h1 / 25,
                         width: w1,
                         child: Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                                 flex: 3,
                                 child: GestureDetector(
                                   onTap: () async {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddLocation(),
-                                      ),
-                                    );
+                                    showBarModalBottomSheet(
+                                        duration: Duration(milliseconds: 300),
+                                        bounce: true,
+                                        backgroundColor: Colors.black,
+                                        context: context,
+                                        builder: (context) => Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.7,
+                                            child:
+                                                LocationBottomSheetWidget()));
                                   },
                                   child: Location(),
                                 )),
@@ -125,20 +147,22 @@ class _MainScreenState extends State<MainScreen> {
                             delegate: DataSearch(file: Data.restaurants));
                       },
                     ),
-                  ]),
+                  ],
                 ),
-              )
-            : null,
-        backgroundColor: Colors.white,
-        body: Stack(
+              ),
+            )
+          : null,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
           children: [
             Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("Images/BgSmiley.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   image: DecorationImage(
+                //     image: AssetImage("Images/BgSmiley.png"),
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 child: Screens[currentIndex]),
             userNumber != ''
                 ? Positioned.fill(
