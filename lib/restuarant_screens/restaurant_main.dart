@@ -73,8 +73,9 @@ class _RestaurantMainState extends State<RestaurantMain> {
               ),
               Container(
                   decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(15),),
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   padding: const EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: TextButton(

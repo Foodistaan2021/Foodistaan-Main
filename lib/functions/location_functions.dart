@@ -6,6 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'places_search_model.dart';
+import 'address_model.dart';
 
 class LocationFunctions {
   final _firestore = FirebaseFirestore.instance;
@@ -20,7 +21,7 @@ class LocationFunctions {
     }
   }
 
-  getUserLocation() async {
+ Future<GeoPoint?> getUserLocation() async {
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     GeoPoint? userLocation;
     await _firestore.collection('users').doc(userNumber).get().then((v) {
@@ -40,10 +41,22 @@ class LocationFunctions {
         await placemarkFromCoordinates(latitude, longitude);
     Placemark places = placemarks[0];
 
-    return places.street;
+    AddressModel addressModel = createeAddressModel(places);
+    return addressModel;
+  }
+
+  createeAddressModel(Placemark? places) {
+    AddressModel addressModel = AddressModel(
+        street: places!.street,
+        country: places.country,
+        locality: places.locality,
+        name: places.name,
+        subLocality: places.subLocality);
+    return addressModel;
   }
 
   final API_KEY = 'AIzaSyA2D_qJoq8XQ6DRIo9wSfzelarrEm-ARZM';
+  
   Future<List<PlaceSearch>> getAutocomplete(searchQuery, sessionToken) async {
     var url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchQuery&language=en&types=geocode&key=$API_KEY&sessiontoken=$sessionToken';

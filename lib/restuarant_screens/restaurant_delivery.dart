@@ -8,6 +8,7 @@ import 'package:foodistan/restuarant_screens/restaurant_main.dart';
 import 'package:foodistan/restuarant_screens/restaurant_overview.dart';
 import 'package:foodistan/restuarant_screens/restuarant_delivery_menu.dart';
 import 'package:foodistan/widgets/bottom_navbar.dart';
+import 'package:foodistan/widgets/total_bill_bottam_widget.dart';
 
 class RestaurantDelivery extends StatefulWidget {
   static String id = 'restaurant_delivery';
@@ -64,143 +65,156 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                       )),
                 ]),
           ),
-          body: SizedBox(
-              child: ListView(
-            shrinkWrap: true,
+          body: Stack(
             children: [
-              Stack(
-                children: [
-                  Container(
-                      padding: EdgeInsets.all(11),
-                      color: Colors.white,
-                      width: MediaQuery.of(context).size.width * 1,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          '${widget.items['FoodImage']}',
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  Container(
-                    padding: EdgeInsets.all(11),
-                    child: Center(
-                      child: RestaurantMain(
-                        restaurant_details: widget.items,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 11),
-                margin: EdgeInsets.only(top: 15),
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(7.5),
-                          child: Icon(Icons.search),
-                        ),
-                        hintText: "Search within the menu",
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.all(11),
+                            color: Colors.white,
+                            width: MediaQuery.of(context).size.width * 1,
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(
+                                '${widget.items['FoodImage']}',
+                                fit: BoxFit.cover,
+                              ),
                             )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.amber,
-                              width: 2.0,
-                            )))),
-              ),
-              SizedBox(
-                height: 11,
-              ),
-              SizedBox(
-                height: 500,
-                child: isDeliverySelected == true
-                    ? Container(
-                        margin: EdgeInsets.only(top: 15),
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Center(
-                            child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 11),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        print("Menu selected");
-                                        setState(() {
-                                          isReviewSelected = false;
-                                          isMenuSelected = true;
-                                        });
-                                      },
-                                      child: Text(
-                                        "Menu",
-                                        style: isMenuSelected == true
-                                            ? TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.amber,
-                                                fontWeight: FontWeight.w700,
-                                                decoration:
-                                                    TextDecoration.underline)
-                                            : TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.grey,
-                                              ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        print("Reviews selected");
-                                        setState(() {
-                                          isReviewSelected = true;
-                                          isMenuSelected = false;
-                                        });
-                                      },
-                                      child: Text(
-                                        "Reviews",
-                                        style: isReviewSelected == true
-                                            ? TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.amber,
-                                                fontWeight: FontWeight.w700,
-                                                decoration:
-                                                    TextDecoration.underline)
-                                            : TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.grey,
-                                              ),
-                                      ),
-                                    ),
-                                  ]),
+                        Container(
+                          padding: EdgeInsets.all(11),
+                          child: Center(
+                            child: RestaurantMain(
+                              restaurant_details: widget.items,
                             ),
-                            Container(
-                                margin: EdgeInsets.only(top: 15),
-                                height: MediaQuery.of(context).size.height * 0.5,
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                child: isReviewSelected
-                                    ? RestuarantDeliveryReview()
-                                    : RestuarantDeliveryMenu(
-                                        vendor_id: widget.vendor_id,
-                                        vendorName: widget.vendorName)),
-                          ],
-                        )))
-                    : RestaurantOverview(),
-              )
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 11),
+                      margin: EdgeInsets.only(top: 15),
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(7.5),
+                                child: Icon(Icons.search),
+                              ),
+                              hintText: "Search within the menu",
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Colors.amber,
+                                    width: 2.0,
+                                  )),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Colors.amber,
+                                    width: 2.0,
+                                  )))),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: isDeliverySelected == true
+                          ? Container(
+                              margin: EdgeInsets.only(top: 15),
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Center(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 11),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              print("Menu selected");
+                                              setState(() {
+                                                isReviewSelected = false;
+                                                isMenuSelected = true;
+                                              });
+                                            },
+                                            child: Text(
+                                              "Menu",
+                                              style: isMenuSelected == true
+                                                  ? TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.amber,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      decoration: TextDecoration
+                                                          .underline)
+                                                  : TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.grey,
+                                                    ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 30,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                isReviewSelected = true;
+                                                isMenuSelected = false;
+                                              });
+                                            },
+                                            child: Text(
+                                              "Reviews",
+                                              style: isReviewSelected == true
+                                                  ? TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.amber,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      decoration: TextDecoration
+                                                          .underline)
+                                                  : TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.grey,
+                                                    ),
+                                            ),
+                                          ),
+                                        ]),
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.only(top: 15),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.5,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.95,
+                                      child: isReviewSelected
+                                          ? RestuarantDeliveryReview()
+                                          : RestuarantDeliveryMenu(
+                                              vendor_id: widget.vendor_id,
+                                              vendorName: widget.vendorName)),
+                                ],
+                              )))
+                          : RestaurantOverview(),
+                    )
+                  ],
+                ),
+              ),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: TotalBillBottomWidget()),
             ],
-          ))),
+          )),
     );
   }
 }

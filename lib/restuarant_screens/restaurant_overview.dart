@@ -48,165 +48,159 @@ class _RestaurantOverviewState extends State<RestaurantOverview> {
                   )),
             ]),
       ),
-      body: SizedBox(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Stack(
-              children: [
-                Container(
-                    color: Colors.red,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16.0),
-                      child: Image.asset(
-                        'assets/images/dosa.png',
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-                Center(
-                    // child: RestaurantMain(),
-                    )
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.pin_drop),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Location",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text("Sector 12, House No. 14, Rohni, Delhi"),
-                            Text("Location of other outlets",
-                                style: TextStyle(color: Colors.red)),
-                          ],
-                        )
-                      ]),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.lock_clock),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Timings",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text("12pm - 10pm (Today)"),
-                          ],
-                        )
-                      ]),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.monetization_on_rounded),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Cost",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text("Cost for two - ₹500 (approx.)"),
-                          ],
-                        )
-                      ]),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.star_border),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Reviews",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text("(125 Reviews)"),
-                          ],
-                        )
-                      ]),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Menu",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25),
-                        ),
-                        Row(children: [
-                          Image.asset('assets/images/menu.png'),
-                          Image.asset('assets/images/menu.png'),
-                          Image.asset('assets/images/menu.png'),
-                          Image.asset('assets/images/menu.png'),
-                        ]),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.width * 0.05),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.yellow),
-                          ),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                TextButton(
-                                    onPressed: null,
-                                    child: Center(
-                                      child: Text(
-                                        "See Full Menu",
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.yellow),
-                                      ),
-                                    )),
-                              ]),
-                        ),
-                      ],
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Stack(
+            children: [
+              Container(
+                  color: Colors.red,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.0),
+                    child: Image.asset(
+                      'assets/images/dosa.png',
+                      fit: BoxFit.cover,
                     ),
+                  )),
+              Center(
+                  // child: RestaurantMain(),
+                  )
+            ],
+          ),
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                height: MediaQuery.of(context).size.height * 0.1,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(Icons.pin_drop),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Location",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text("Sector 12, House No. 14, Rohni, Delhi"),
+                      Text("Location of other outlets",
+                          style: TextStyle(color: Colors.red)),
+                    ],
+                  )
+                ]),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                height: MediaQuery.of(context).size.height * 0.1,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(Icons.lock_clock),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Timings",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text("12pm - 10pm (Today)"),
+                    ],
+                  )
+                ]),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                height: MediaQuery.of(context).size.height * 0.1,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(Icons.monetization_on_rounded),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Cost",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text("Cost for two - ₹500 (approx.)"),
+                    ],
+                  )
+                ]),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                height: MediaQuery.of(context).size.height * 0.1,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(Icons.star_border),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Reviews",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text("(125 Reviews)"),
+                    ],
+                  )
+                ]),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Menu",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
+                      Row(children: [
+                        Image.asset('assets/images/menu.png'),
+                        Image.asset('assets/images/menu.png'),
+                        Image.asset('assets/images/menu.png'),
+                        Image.asset('assets/images/menu.png'),
+                      ]),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * 0.05),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.yellow),
+                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: null,
+                                  child: Center(
+                                    child: Text(
+                                      "See Full Menu",
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.yellow),
+                                    ),
+                                  )),
+                            ]),
+                      ),
+                    ],
                   ),
-                )
-              ],
-            ),
-          ],
-        ),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

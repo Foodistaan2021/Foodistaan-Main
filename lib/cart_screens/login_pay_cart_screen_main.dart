@@ -338,6 +338,20 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                       ],
                     ),
                   ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    width: MediaQuery.of(context).size.width * 1,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    color: Colors.yellow[700],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.ac_unit),
+                        Text("Apply Coupon"),
+                      ],
+                    ),
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.push(

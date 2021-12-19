@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
+import 'package:foodistan/functions/address_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
 
 class Location extends StatefulWidget {
@@ -8,16 +10,22 @@ class Location extends StatefulWidget {
 }
 
 class _LocationState extends State<Location> {
-  String userAddress = '';
-
+  AddressModel? userAddress;
+  bool hasAddress = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _asyncFunctions().then((value) {
-      setState(() {
-        userAddress = value;
-      });
+      if (value) {
+        setState(() {
+          hasAddress = true;
+        });
+      } else {
+        setState(() {
+          hasAddress = false;
+        });
+      }
     });
   }
 
@@ -25,10 +33,13 @@ class _LocationState extends State<Location> {
     var userLocation = await LocationFunctions().getUserLocation();
     if (userLocation != null) {
       var address = await LocationFunctions()
-          .getAddress(userLocation!.latitude, userLocation.longitude);
-      return address;
+          .getAddress(userLocation.latitude, userLocation.longitude);
+      setState(() {
+        userAddress = address;
+      });
+      return true;
     }
-    return '';
+    return false;
   }
 
   @override
@@ -59,13 +70,15 @@ class _LocationState extends State<Location> {
                   fontSize: h1 * 0.033,
                 ),
               ),
-              Text(
-                userAddress == '' ? '' : userAddress,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: h1 * 0.03,
-                ),
-              ),
+              hasAddress == true
+                  ? Text(
+                      userAddress!.subLocality!,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: h1 * 0.03,
+                      ),
+                    )
+                  : Text('data'),
             ],
           ),
         ],
@@ -85,7 +98,10 @@ class _PointsState extends State<Points> {
     var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FsPoints()));
+      },
       child: FittedBox(
         alignment: Alignment.bottomRight,
         fit: BoxFit.contain,
