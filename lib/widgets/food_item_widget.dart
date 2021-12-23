@@ -5,10 +5,10 @@ import 'package:foodistan/functions/cart_functions.dart';
 
 class MyFoodItemWidget extends StatefulWidget {
   static String id = 'my_food_widget';
-  var menu_item;
+  var menuItem;
   String vendor_id, cartId, vendorName;
   MyFoodItemWidget(
-      {required this.menu_item,
+      {required this.menuItem,
       required this.vendor_id,
       required this.cartId,
       required this.vendorName});
@@ -41,7 +41,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Image.network('${widget.menu_item['image']}'),
+            child: Image.network('${widget.menuItem['image']}'),
           ),
           Container(
             child: Column(
@@ -57,7 +57,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                       children: [
                         FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: Text('${widget.menu_item['title']}',
+                          child: Text('${widget.menuItem['title']}',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.30,
                   height: MediaQuery.of(context).size.height * 0.07,
-                  child: Text("${widget.menu_item['description']}",
+                  child: Text("${widget.menuItem['description']}",
                       maxLines: 3,
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
@@ -81,7 +81,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                   alignment: Alignment.topCenter,
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.30,
-                  child: Text("₹ ${widget.menu_item['price']}",
+                  child: Text("₹ ${widget.menuItem['price']}",
                       maxLines: 3,
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
@@ -90,9 +90,9 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                   height: MediaQuery.of(context).size.height * 0.04,
                   child: CartFunctions().quantityWidgetInRestaurant(
                       widget.cartId,
-                      widget.menu_item['id'],
+                      widget.menuItem['id'],
                       widget.vendor_id,
-                      widget.menu_item,
+                      widget.menuItem,
                       widget.vendorName),
                 )
               ],

@@ -82,6 +82,7 @@ class _RestuarantDeliveryMenuState extends State<RestuarantDeliveryMenu> {
               child: (menu_items.isEmpty && cartId == '')
                   ? spinkit
                   : GridView.count(
+                    
                       padding: EdgeInsets.zero,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -90,8 +91,9 @@ class _RestuarantDeliveryMenuState extends State<RestuarantDeliveryMenu> {
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       children: List.generate(menu_items.length, (index) {
+                        
                         return MyFoodItemWidget(
-                            menu_item: menu_items[index],
+                            menuItem: menu_items[index],
                             vendor_id: widget.vendor_id,
                             cartId: cartId,
                             vendorName: widget.vendorName);

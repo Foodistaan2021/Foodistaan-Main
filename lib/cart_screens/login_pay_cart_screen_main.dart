@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:foodistan/MainScreenFolder/coupon_screen.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,7 +18,13 @@ class CartScreenMainLogin extends StatefulWidget {
   _CartScreenMainLoginState createState() => _CartScreenMainLoginState();
 }
 
-int totalPriceMain = 0;
+final ValueNotifier<int> totalPrice = ValueNotifier<int>(0);
+final ValueNotifier<double> totalPriceMain = ValueNotifier<double>(0.0);
+
+final ValueNotifier<int> couponPercentage = ValueNotifier<int>(0);
+int maxCouponDiscount = 0;
+String couponCode = '';
+
 Map<String, dynamic> itemMap = {};
 
 class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
@@ -33,15 +41,15 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
     });
   }
 
-  final spinkit = SpinKitFadingCircle(
-    itemBuilder: (BuildContext context, int index) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          color: index.isEven ? Colors.red : Colors.yellow,
-        ),
-      );
-    },
-  );
+  // final spinkit = SpinKitFadingCircle(
+  //   itemBuilder: (BuildContext context, int index) {
+  //     return DecoratedBox(
+  //       decoration: BoxDecoration(
+  //         color: index.isEven ? Colors.red : Colors.yellow,
+  //       ),
+  //     );
+  //   },
+  // );
 
   Widget checkIfAnyOrders(userNumber) {
     var stream = FirebaseFirestore.instance
@@ -49,6 +57,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
         .doc(userNumber)
         .collection('orders')
         .snapshots();
+
     return StreamBuilder(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -56,39 +65,50 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
             var count = snapshot.data!.docs.length;
             if (count > 0)
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.20,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('You Have Eixsting Orders'),
-                        OutlinedButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xFFF7C12B)),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xFFF)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(6)),
-                              )),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Orders()));
-                            },
-                            child: Text('Track Order'))
-                      ],
+                  SizedBox(
+                    height: 33,
+                  ),
+                  Text(
+                    'You Have Existing Orders',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
                   ),
+                  SizedBox(
+                    height: 33,
+                  ),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xFFF7C12B),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.white,
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(7),
+                          ),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Orders()));
+                    },
+                    child: Text('Track Order'),
+                  ),
+                  SizedBox(
+                    height: 33,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.all(11),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 11,
+                    ),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, 'H');
@@ -102,7 +122,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                             color: Colors.yellow.shade700,
                             width: 1.5,
                           ),
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(7),
                         ),
                         child: Center(
                           child: Text(
@@ -134,7 +154,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                         color: Colors.yellow.shade700,
                         width: 1.5,
                       ),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(7),
                     ),
                     child: Center(
                       child: Text(
@@ -150,11 +170,35 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               );
           }
           return Center(
-            child: ElevatedButton(
-                onPressed: () {
+            child: Padding(
+              padding: const EdgeInsets.all(11),
+              child: GestureDetector(
+                onTap: () {
                   Navigator.pushNamed(context, 'H');
                 },
-                child: Text('Add Items to Cart')),
+                child: Container(
+                  height: 35,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.yellow.shade700,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Add Items to Cart',
+                      style: TextStyle(
+                        color: Colors.yellow.shade700,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           );
         });
   }
@@ -181,17 +225,32 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.yellow[700],
-        automaticallyImplyLeading: false,
-        title: Text('Cart'),
-      ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            cartId != '' ? cartItems(cartId) : spinkit,
-          ],
+      // appBar: AppBar(
+      //   backgroundColor: Colors.yellow[700],
+      //   automaticallyImplyLeading: false,
+      //   title: Text('Cart'),
+      // ),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              cartId != ''
+                  ? cartItems(cartId)
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(11),
+                        child: Text(
+                          'Loading...',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -227,15 +286,27 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
           restaurantData = value.data()!;
         });
       });
+
+      String couponId = value.data()!['coupon-id'];
+
+      if (couponId != '') {
+        FirebaseFirestore.instance
+            .collection('coupons')
+            .doc(couponId)
+            .get()
+            .then((value) {
+          couponPercentage.value = value.data()!['percentage'];
+          couponCode = value.data()!['code'];
+        });
+      }
     });
+    getPrice(widget.data);
   }
 
   getPrice(itemData) {
-    int totalPrice = int.parse(CartFunctions().totalPrice(itemData));
-    setState(() {
-      totalPriceMain = totalPrice;
-    });
-    return totalPrice.toString();
+    int totalPriceTemp = int.parse(CartFunctions().totalPrice(itemData));
+    totalPrice.value = totalPriceTemp;
+    return totalPriceTemp;
   }
 
   Widget menuItemWidget(itemData) {
@@ -243,134 +314,381 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              itemData['veg'] == true
-                  ? Image.asset('assets/images/green_sign.png')
-                  : Image.asset('assets/images/red_sign.png'),
-              SizedBox(
-                width: 15,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(11),
+      ),
+      child: Center(
+        child: Stack(
+          children: [
+            Container(
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 11,
+                    ),
+                    itemData['veg'] == true
+                        ? Image.asset('assets/images/green_sign.png')
+                        : Image.asset('assets/images/red_sign.png'),
+                    SizedBox(
+                      width: 11,
+                    ),
+                    Text(
+                      itemData['name'],
+                      style: TextStyle(
+                        fontSize: 17.5,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                itemData['name'],
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () async {
-                        await CartFunctions().increaseQuantity(widget.cartId,
-                            itemData['id'], itemData['quantity'], false);
-                      },
-                      icon: Icon(
-                        itemData['quantity'] != '1'
-                            ? FontAwesomeIcons.minusCircle
-                            : FontAwesomeIcons.trashAlt,
-                        color: Colors.amber,
-                        size: 18,
-                      )),
-                  Text(itemData['quantity']),
-                  IconButton(
-                      onPressed: () async {
-                        await CartFunctions().increaseQuantity(widget.cartId,
-                            itemData['id'], itemData['quantity'], true);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.plusCircle,
-                        color: Colors.amber,
-                        size: 18,
-                      )),
-                ],
-              ),
-              Text('Rs. ' +
-                  CartFunctions()
-                      .pricePerItem(itemData['price'], itemData['quantity'])),
-            ],
-          )
-        ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            onTap: () async {
+                              await CartFunctions().increaseQuantity(
+                                  widget.cartId,
+                                  itemData['id'],
+                                  itemData['quantity'],
+                                  false);
+                            },
+                            child: Icon(
+                              itemData['quantity'] != '1'
+                                  ? FontAwesomeIcons.minusCircle
+                                  : FontAwesomeIcons.trashAlt,
+                              color: Colors.amber,
+                              size: 17.5,
+                            )),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          itemData['quantity'],
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        GestureDetector(
+                            onTap: () async {
+                              await CartFunctions().increaseQuantity(
+                                  widget.cartId,
+                                  itemData['id'],
+                                  itemData['quantity'],
+                                  true);
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.plusCircle,
+                              color: Colors.amber,
+                              size: 17.5,
+                            )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 11,
+                    ),
+                    Text(
+                      '₹ ' +
+                          CartFunctions().pricePerItem(
+                            itemData['price'],
+                            itemData['quantity'],
+                          ),
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 11,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  calculateCouponDiscount(couponPercentage, maxDiscount) {
+    double discount = ((couponPercentage / 100) * totalPrice.value);
+    totalPriceMain.value = totalPrice.value - discount;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return restaurantData.isNotEmpty
-        ? SafeArea(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ListTile(
-                    leading: Image.network(restaurantData['FoodImage']),
-                    title: Text(
-                      restaurantData['Name'],
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                    ),
-                    subtitle: Text(restaurantData['Address']),
+    if (restaurantData.isNotEmpty) {
+      return SafeArea(
+        child: Container(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ListTile(
+                  leading: Image.network(restaurantData['FoodImage']),
+                  title: Text(
+                    restaurantData['Name'],
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(13),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: widget.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.10,
-                            child: menuItemWidget(widget.data[index].data()),
-                          );
-                        }),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Item - Total'),
-                        Text(getPrice(widget.data)),
-                      ],
+                  subtitle: Text(
+                    restaurantData['Address'],
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    width: MediaQuery.of(context).size.width * 1,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return menuItemWidget(widget.data[index].data());
+                      }),
+                ),
+                ValueListenableBuilder(
+                    valueListenable: totalPrice,
+                    builder: (context, value, child) {
+                      return Padding(
+                        padding: const EdgeInsets.all(11),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Cart Total - ₹ ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              getPrice(widget.data).toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CouponScreen(
+                              cartId: widget.cartId,
+                              totalPrice: totalPrice.value))).then((value) {
+                    setState(() {});
+                  }),
+                  child: Container(
                     height: MediaQuery.of(context).size.height * 0.1,
-                    color: Colors.yellow[700],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.ac_unit),
-                        Text("Apply Coupon"),
-                      ],
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.077,
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Icon(
+                                    Icons.local_offer_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  ValueListenableBuilder(
+                                      valueListenable: totalPrice,
+                                      builder: (context, value, child) {
+                                        return ValueListenableBuilder<int>(
+                                            valueListenable: couponPercentage,
+                                            builder: (BuildContext context,
+                                                int value, Widget? child) {
+                                              if (couponPercentage.value == 0) {
+                                                totalPriceMain.value =
+                                                    double.parse(totalPrice.value.toString());
+                                                return Text(
+                                                  'Apply Coupon',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.045,
+                                                  ),
+                                                );
+                                              } else {
+                                                calculateCouponDiscount(
+                                                    couponPercentage.value,
+                                                    maxCouponDiscount);
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      couponCode,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.045,
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () async {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'cart')
+                                                              .doc(
+                                                                  widget.cartId)
+                                                              .update({
+                                                            'coupon-id': ''
+                                                          }).then((value) {
+                                                            couponPercentage
+                                                                .value = 0;
+
+                                                            setState(() {});
+                                                          });
+                                                        },
+                                                        child: Text('Remove'))
+                                                  ],
+                                                );
+                                              }
+                                              // return ListTile(
+                                              //   title: Text(couponCode),
+                                              //   trailing: TextButton(
+                                              //       onPressed: () async {
+                                              //         FirebaseFirestore
+                                              //             .instance
+                                              //             .collection('cart')
+                                              //             .doc(widget.cartId)
+                                              //             .update({
+                                              //           'coupon-id': ''
+                                              //         }).then((value) {
+                                              //           couponPercentage
+                                              //               .value = 0;
+                                              //           setState(() {});
+                                              //         });
+                                              //       },
+                                              //       child: Text('Remove')),
+                                              // );
+                                            });
+                                      }),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RazorPayScreen(
-                                      totalPrice: totalPriceMain,
-                                      items: itemMap,
-                                      cartId: widget.cartId,
-                                      vednorId: restaurantData['id'],
-                                      vendorName: restaurantData['Name'],
-                                    )));
-                      },
-                      child: Text('Proceed To Pay $totalPriceMain'))
-                ],
-              ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 11,
+                      vertical: 15,
+                    ),
+                    child: ValueListenableBuilder<double>(
+                        valueListenable: totalPriceMain,
+                        builder: (context, value, child) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RazorPayScreen(
+                                    totalPrice: totalPriceMain,
+                                    items: itemMap,
+                                    cartId: widget.cartId,
+                                    vednorId: restaurantData['id'],
+                                    vendorName: restaurantData['Name'],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 35,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.yellow.shade700,
+                                  width: 1.5,
+                                ),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Proceed To Pay ₹ ${totalPriceMain.value}',
+                                  style: TextStyle(
+                                    color: Colors.yellow.shade700,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        })),
+              ],
             ),
-          )
-        : CircularProgressIndicator();
+          ),
+        ),
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
   }
 }
 

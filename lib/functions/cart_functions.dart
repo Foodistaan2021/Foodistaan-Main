@@ -243,6 +243,7 @@ class CartFunctions {
 
     return totalPrice != 0 ? totalPrice.toString() : '';
   }
+  
 
   // calculateTotalPrice(cartId) {
   //   var stream = _firestore

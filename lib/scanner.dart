@@ -11,7 +11,6 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -64,14 +63,15 @@ class _ScannerScreenState extends State<ScannerScreen> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: Container(
+                height: MediaQuery.of(context).size.height * 0.66,
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height*0.5,
                 color: Colors.white,
                 child: Center(
                   child: QRView(
                     key: qrKey,
                     onQRViewCreated: _onQRViewCreated,
-                    onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+                    onPermissionSet: (ctrl, p) =>
+                        _onPermissionSet(context, ctrl, p),
                     overlay: QrScannerOverlayShape(
                       borderColor: Color(0xFFFAB84C),
                       borderLength: 25,
@@ -87,22 +87,14 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 await controller?.toggleFlash();
                 setState(() {});
               },
-              child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
-                  ),
-                ),
+              child: CircleAvatar(
+                backgroundColor: Color(0xFFFAB84C),
+                radius: 33,
                 child: Center(
                   child: Icon(
                     Icons.highlight,
-                    color: Color(0xFFFAB84C),
-                    size: 45,
+                    color: Colors.white,
+                    size: 35,
                   ),
                 ),
               ),

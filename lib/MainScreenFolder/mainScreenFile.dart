@@ -7,6 +7,7 @@ import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
 import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
+import '../feedback.dart';
 import '../scanner.dart';
 import 'AppBar/AppBarFile.dart';
 import 'Test.dart';

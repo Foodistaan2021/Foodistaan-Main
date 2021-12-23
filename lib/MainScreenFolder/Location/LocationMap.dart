@@ -155,14 +155,16 @@ class _AddLocationState extends State<AddLocation> {
           },
           myLocationEnabled: true,
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Color(0xFFF7C12B),
-          onPressed: () async {
-            await getCurrentLocation(_controller);
-          },
-          label: const Text('Get Location'),
-          icon: const Icon(FontAwesomeIcons.mapMarkerAlt),
-        ),
+        floatingActionButton: !widget.placeSearched
+            ? FloatingActionButton.extended(
+                backgroundColor: Color(0xFFF7C12B),
+                onPressed: () async {
+                  await getCurrentLocation(_controller);
+                },
+                label: const Text('Get Location'),
+                icon: const Icon(FontAwesomeIcons.mapMarkerAlt),
+              )
+            : null,
       ),
     );
   }

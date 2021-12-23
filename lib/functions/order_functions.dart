@@ -51,6 +51,8 @@ class OrderFunction {
         item.reference.delete();
       }
     });
+
+    await _firestore.collection('cart').doc(cartId).update({'coupon-id': ''});
     return id;
   }
 
@@ -176,111 +178,121 @@ class OrderFunction {
                                         builder: (context) => Orders()));
                           },
                           child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1,
-                                  ),
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey.shade300,
+                                  width: 1,
                                 ),
                               ),
-                              child: Stack(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 22,
-                                      ),
-                                      CircleAvatar(
-                                        radius: MediaQuery.of(context).size.height*0.03,
-                                        backgroundColor: Colors.yellow.shade100,
-                                        child: Container(
-                                          height: 33,
-                                          width: 33,
-                                          decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.circular(15),
-                                            border: Border.all(
-                                              color: Color(0xffFAC05E),
-                                              width: 1,
-                                            ),
+                            ),
+                            child: Stack(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 22,
+                                    ),
+                                    CircleAvatar(
+                                      radius:
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
+                                      backgroundColor: Colors.yellow.shade100,
+                                      child: Container(
+                                        height: 33,
+                                        width: 33,
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: Color(0xffFAC05E),
+                                            width: 1,
                                           ),
-                                          child: const Center(
-                                            child: Icon(
-                                              Icons.hot_tub,
-                                              color: Color(0xffFAC05E),
-                                              size: 22,
-                                            ),
+                                        ),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.hot_tub,
+                                            color: Color(0xffFAC05E),
+                                            size: 22,
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 22,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceEvenly,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          onlyOneOrder
+                                    ),
+                                    SizedBox(
+                                      width: 22,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        onlyOneOrder
+                                            ? Text(
+                                                orderData['order-status']
+                                                    .toString()
+                                                    .toUpperCase(),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            : Text(
+                                                'Preparing Your Orders',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                        if (onlyOneOrder)
+                                          Text(orderData['vendor-name'])
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(11),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.3,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(22),
+                                        ),
+                                        child: Center(
+                                          child: onlyOneOrder
                                               ? Text(
-                                            orderData[
-                                            'order-status']
-                                                .toString()
-                                                .toUpperCase(),
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight
-                                                    .bold),
-                                          )
+                                                  'Track Order',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                )
                                               : Text(
-                                            'Preparing Your Orders',
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight
-                                                    .bold),
-                                          ),
-                                          if (onlyOneOrder)
-                                            Text(orderData[
-                                            'vendor-name'])
-                                        ],
+                                                  'Track Orders',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(11),
-                                        child: Container(
-                                          height: MediaQuery.of(context).size.height*0.05,
-                                          width: MediaQuery.of(context).size.width*0.3,
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(22),
-                                          ),
-                                          child: Center(
-                                            child: onlyOneOrder
-                                              ? Text('Track Order',style: TextStyle(
-                                              color: Colors.white,
-                                            ),)
-                                              : Text('Track Orders',style: TextStyle(
-                                              color: Colors.white,
-                                            ),),
-                                        ),),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       });

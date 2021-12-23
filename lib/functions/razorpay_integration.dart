@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class RazorPayScreen extends StatefulWidget {
-  int totalPrice;
+  var totalPrice;
   String cartId, vednorId, vendorName;
   Map<String, dynamic> items;
 
@@ -75,7 +75,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     String paymentId = response.paymentId!;
     OrderFunction()
         .placeOrder(widget.vednorId, widget.vendorName, userNumber, itemMap,
-            totalPriceMain, paymentId, widget.cartId)
+            totalPriceMain.value, paymentId, widget.cartId)
         .then((value) {
       Navigator.push(
           context,

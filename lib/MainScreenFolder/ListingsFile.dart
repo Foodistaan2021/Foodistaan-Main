@@ -47,7 +47,6 @@ fetchData(String category) async {
 }
 
 class Listings extends StatefulWidget {
-
   @override
   _ListingsState createState() => _ListingsState();
 }
@@ -76,13 +75,14 @@ class _ListingsState extends State<Listings> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding:
-                    EdgeInsets.symmetric(
-                      horizontal: 11,
-                      vertical: 11,
-                    ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 11,
+                  vertical: 11,
+                ),
                 child: ListedTile(
-                    details: items[index],Id: vendor_id_list[index],),
+                  details: items[index],
+                  Id: vendor_id_list[index],
+                ),
               );
             },
           )
@@ -123,7 +123,8 @@ class _ListedTileState extends State<ListedTile> {
             BoxShadow(
               color: Colors.grey.shade300,
               blurRadius: 3,
-              spreadRadius: 5,
+              spreadRadius: 1,
+              offset: Offset(0, 3),
             ),
           ],
           borderRadius: BorderRadius.circular(11),
@@ -200,7 +201,7 @@ class leftSide extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on,
-                        size: h1/55,
+                        size: h1 / 55,
                         color: Colors.white,
                       ),
                       SizedBox(
@@ -209,9 +210,9 @@ class leftSide extends StatelessWidget {
                       Text(
                         address,
                         style: TextStyle(
-                          fontSize: h1/77,
-                            color: Colors.white,
-                            // fontWeight: FontWeight.w700,
+                          fontSize: h1 / 77,
+                          color: Colors.white,
+                          // fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -266,8 +267,8 @@ class rightSide extends StatelessWidget {
                     child: Text(
                       name,
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     )),
                 FittedBox(
@@ -337,8 +338,8 @@ class rightSide extends StatelessWidget {
                         ],
                       )
                     : SizedBox(
-                  height: 2,
-                ),
+                        height: 2,
+                      ),
                 takeaway == true
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -382,8 +383,7 @@ class rightSide extends StatelessWidget {
                 child: Text(
                   "Foodistaan Certified",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800),
+                      color: Colors.white, fontWeight: FontWeight.w800),
                 ),
               )),
         )
