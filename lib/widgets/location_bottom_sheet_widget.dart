@@ -71,7 +71,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
         automaticallyImplyLeading: false,
         title: Text(
           'Select Location',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 16),
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,

@@ -75,9 +75,30 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'Images/bottomcart.svg',
-              color: currentIndex == 1 ? selected : unselected,
+            icon: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    'Images/bottomcart.svg',
+                    color: currentIndex == 1 ? selected : unselected,
+                  ),
+                ),
+                Positioned(
+                  left: 20,
+                  bottom: 20,
+                  child: CircleAvatar(
+                    maxRadius: 8,
+                    backgroundColor: Colors.red,
+                    child: Center(
+                        child: Text("4",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10))),
+                  ),
+                ),
+              ],
             ),
             label: 'Cart',
           ),

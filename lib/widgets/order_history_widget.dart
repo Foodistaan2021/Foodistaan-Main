@@ -15,7 +15,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 5, 8, 12),
       child: Container(
-        height: 165,
+        height: 180,
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -160,7 +160,8 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                               height: 2,
                             ),
                             Text(
-                              OrderFunction().orderTime(widget.orderData['time']),
+                              OrderFunction()
+                                  .orderTime(widget.orderData['time']),
                               style: TextStyle(
                                 color: Colors.black,
                               ),

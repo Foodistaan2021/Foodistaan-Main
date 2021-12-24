@@ -50,55 +50,73 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen>
         backgroundColor: Colors.white,
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset('Images/lf20_1mskailz.json',
-                  repeat: false,
-                  controller: _controller, onLoaded: (compostion) {
-                _controller.forward();
-              }),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.width * 1,
+                child: Lottie.asset('Images/lf20_1mskailz.json',
+                    repeat: false,
+                    controller: _controller, onLoaded: (compostion) {
+                  _controller.forward();
+                }),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               _animationComplete
                   ? Container(
                       child: Text("Order Placed",
                           style: TextStyle(
-                              color: Color(0xfff7c12b),
-                              fontSize: 24,
+                              color: Colors.black,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold)))
                   : Container(),
+              SizedBox(
+                height: 10,
+              ),
+              _animationComplete
+                  ? Text(
+                      "Thanks for ordering. Your order will be at your doorsteps shortly",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal))
+                  : Container(),
+              SizedBox(
+                height: 50,
+              ),
               _animationComplete
                   ? Container(
-                      child: Text("At ${widget.vendorName} ${widget.orderId}",
-                          style: TextStyle(
-                              color: Color(0xfff7c12b),
-                              fontSize: 24,
-                              fontWeight: FontWeight.normal)))
-                  : Container(),
-              _animationComplete
-                  ? ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Color(0xFFF)),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color(0xFFF7C12B)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                          ))),
-                      onPressed: () async {
-                        await OrderFunction()
-                            .fetchOrderData(widget.orderId)
-                            .then((value) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AcceptedOrder(orderData: value)));
-                        });
-                      },
-                      child: Text(
-                        'Track Order',
-                        style: TextStyle(color: Colors.white),
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Color(0xFFF)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color(0xFFF7C12B)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                            ))),
+                        onPressed: () async {
+                          await OrderFunction()
+                              .fetchOrderData(widget.orderId)
+                              .then((value) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AcceptedOrder(orderData: value)));
+                          });
+                        },
+                        child: Text(
+                          'Track Order',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     )
                   : Container()

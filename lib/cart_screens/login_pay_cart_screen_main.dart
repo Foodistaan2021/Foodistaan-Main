@@ -63,7 +63,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('You Have Eixsting Orders'),
+                        Text('You Have Existing Orders'),
                         OutlinedButton(
                             style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
