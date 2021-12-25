@@ -10,7 +10,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
+import 'package:foodistan/global/global_variables.dart';
 class RazorPayScreen extends StatefulWidget {
   var totalPrice;
   String cartId, vednorId, vendorName;

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foodistan/auth/autentication.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/global/global_variables.dart';
 import 'package:foodistan/widgets/change_quantity_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
@@ -235,15 +236,16 @@ class CartFunctions {
 
   totalPrice(List<DocumentSnapshot> data) {
     int totalPrice = 0;
+    int totalQuantity = 0;
     for (var item in data) {
       var price = item.get('price');
       var quantity = item.get('quantity');
+      totalQuantity += int.parse(quantity);
       totalPrice += int.parse(pricePerItem(price, quantity));
     }
-
+    totalItemsInCart.value = totalQuantity;
     return totalPrice != 0 ? totalPrice.toString() : '';
   }
-  
 
   // calculateTotalPrice(cartId) {
   //   var stream = _firestore

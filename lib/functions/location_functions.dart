@@ -21,7 +21,7 @@ class LocationFunctions {
     }
   }
 
- Future<GeoPoint?> getUserLocation() async {
+  getUserLocation() async {
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     GeoPoint? userLocation;
     await _firestore.collection('users').doc(userNumber).get().then((v) {

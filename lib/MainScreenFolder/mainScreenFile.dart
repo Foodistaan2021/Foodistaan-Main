@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodistan/MainScreenFolder/address_screen.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/order_functions.dart';
@@ -76,9 +77,41 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'Images/bottomcart.svg',
-              color: currentIndex == 1 ? selected : unselected,
+            icon: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    'Images/bottomcart.svg',
+                    color: currentIndex == 1 ? selected : unselected,
+                  ),
+                ),
+                ValueListenableBuilder(
+                    valueListenable: global.totalItemsInCart,
+                    builder: (context, value, child) {
+                      if (global.totalItemsInCart.value > 0)
+                        return Positioned(
+                          left: 20,
+                          bottom: 20,
+                          child: CircleAvatar(
+                            maxRadius: 8,
+                            backgroundColor: Colors.red,
+                            child: Center(
+                                child: Text(
+                                    global.totalItemsInCart.value.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10))),
+                          ),
+                        );
+                      else
+                        return Container(
+                          height: 0,
+                          width: 0,
+                        );
+                    })
+              ],
             ),
             label: 'Cart',
           ),

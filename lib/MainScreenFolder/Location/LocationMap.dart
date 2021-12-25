@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodistan/functions/address_model.dart';
-
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
@@ -68,104 +68,168 @@ class _AddLocationState extends State<AddLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushReplacementNamed(context, 'H');
-        return true;
-      },
-      child: Scaffold(
-        bottomSheet: Container(
-          width: MediaQuery.of(context).size.width * 1,
-          height: MediaQuery.of(context).size.height * 0.28,
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              AppBar(
-                automaticallyImplyLeading: false,
-                title: Text(
-                  'Select Location',
-                  style: TextStyle(color: Colors.black, fontSize: 25),
-                ),
-                backgroundColor: Colors.white,
-              ),
-              hasAddress != false
-                  ? ListTile(
-                      leading: Icon(
-                        FontAwesomeIcons.streetView,
-                        color: Colors.yellowAccent,
-                        size: 25,
-                      ),
-                      title: Text(
-                        addressModel.name,
-                        style: TextStyle(fontSize: 25),
-                      ),
-                      subtitle: Text(
-                          '${addressModel.street} ${addressModel.locality}'),
-                      trailing: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child:
-                              Text('Change', style: TextStyle(fontSize: 20))),
-                    )
-                  : Text('Set Location'),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: double.infinity,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFFF7C12B),
-                      ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFFF7C12B),
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      await LocationFunctions()
-                          .updateUserLocation(
-                              userLocation.latitude, userLocation.longitude)
-                          .then((value) {
-                        Navigator.pushReplacementNamed(context, 'H');
-                      });
-                    },
-                    child: Text(
-                      'Confirm Location',
-                      style: TextStyle(color: Colors.white, fontSize: 25),
-                    )),
-              )
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text('Location',style: TextStyle(
+          color: Colors.black,
+        ),),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
-        body: GoogleMap(
-          myLocationButtonEnabled: false,
-          markers: Set<Marker>.of(_markers),
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          myLocationEnabled: true,
-        ),
-        floatingActionButton: !widget.placeSearched
-            ? FloatingActionButton.extended(
-                backgroundColor: Color(0xFFF7C12B),
-                onPressed: () async {
-                  await getCurrentLocation(_controller);
-                },
-                label: const Text('Get Location'),
-                icon: const Icon(FontAwesomeIcons.mapMarkerAlt),
-              )
-            : null,
+        centerTitle: true,
+        elevation: 0,
       ),
+      backgroundColor: Colors.grey.shade100,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            GoogleMap(
+              myLocationButtonEnabled: false,
+              markers: Set<Marker>.of(_markers),
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              myLocationEnabled: true,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 11,
+                  ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.25,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: Radius.circular(11),
+                        topEnd: Radius.circular(11),
+                      ),
+                    ),
+                    padding: EdgeInsets.all(11),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Select Location',style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: MediaQuery.of(context).size.width*0.055,
+                                  ),),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.black,
+                                      size: MediaQuery.of(context).size.width*0.055,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                          ),
+                          hasAddress != false ?
+                          ListTile(
+                            leading: Icon(
+                              Icons.location_on,
+                              color: Colors.black,
+                              size: MediaQuery.of(context).size.width*0.037,
+                            ),
+                            title: Text('${addressModel.name}, ${addressModel.street}, ${addressModel.locality}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: MediaQuery.of(context).size.width*0.035,
+                              ),),
+                            trailing: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Change',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                      fontSize: MediaQuery.of(context).size.width*0.031,
+                                    ),),),
+                          ) :
+                          Text('Please Select Your Location',style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width*0.035,
+                          ),),
+                          Divider(
+                            color: Colors.grey,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await LocationFunctions()
+                                  .updateUserLocation(
+                                  userLocation.latitude, userLocation.longitude)
+                                  .then((value) {
+                                Navigator.pushReplacementNamed(context, 'H');
+                              });
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(
+                                child: Text('Confirm Location',style: TextStyle(
+                                  color: Colors.white,
+                                ),),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      // floatingActionButton: !widget.placeSearched
+      //     ? FloatingActionButton.extended(
+      //         backgroundColor: Color(0xFFF7C12B),
+      //         onPressed: () async {
+      //           await getCurrentLocation(_controller);
+      //         },
+      //         label: const Text('Get Location'),
+      //         icon: const Icon(FontAwesomeIcons.mapMarkerAlt),
+      //       )
+      //     : null,
     );
   }
 
