@@ -6,7 +6,7 @@ import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
-import 'package:foodistan/widgets/location_bottom_sheet_widget.dart';
+import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
 import 'package:foodistan/widgets/order_placed_screen.dart';
 import '../feedback.dart';
 import '../scanner.dart';

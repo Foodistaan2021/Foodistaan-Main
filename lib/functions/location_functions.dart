@@ -21,6 +21,8 @@ class LocationFunctions {
     }
   }
 
+  
+
   getUserLocation() async {
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     GeoPoint? userLocation;

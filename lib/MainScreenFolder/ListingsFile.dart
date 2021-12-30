@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
@@ -65,8 +64,8 @@ class _ListingsState extends State<Listings> {
 
   @override
   Widget build(BuildContext context) {
-    var h1 = MediaQuery.of(context).size.height;
-    var w1 = MediaQuery.of(context).size.width;
+    // var h1 = MediaQuery.of(context).size.height;
+    // var w1 = MediaQuery.of(context).size.width;
     return items.isNotEmpty
         ? ListView.builder(
             scrollDirection: Axis.vertical,
@@ -75,10 +74,7 @@ class _ListingsState extends State<Listings> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 11,
-                  vertical: 11,
-                ),
+                padding: EdgeInsets.all(11),
                 child: ListedTile(
                   details: items[index],
                   Id: vendor_id_list[index],
@@ -117,34 +113,42 @@ class _ListedTileState extends State<ListedTile> {
                     )));
       },
       child: Container(
+        height: MediaQuery.of(context).size.height * 0.22,
         width: double.infinity,
         decoration: BoxDecoration(
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade300,
+              spreadRadius: 7,
               blurRadius: 3,
-              spreadRadius: 1,
-              offset: Offset(0, 3),
             ),
           ],
           borderRadius: BorderRadius.circular(11),
         ),
-        child: Row(
-          children: [
-            leftSide(
-              foodImage: StreetFoodDetails['FoodImage'],
-              address: StreetFoodDetails['Address'],
-            ),
-            rightSide(
-              name: StreetFoodDetails['Name'],
-              cuisines: StreetFoodDetails['Cuisines'],
-              stars: StreetFoodDetails['Stars'],
-              cost: StreetFoodDetails['Cost'],
-              delivery: StreetFoodDetails['Delivery'],
-              takeaway: StreetFoodDetails['Takeaway'],
-              foodistaanCertified: StreetFoodDetails['FoodistaanCertified'],
-            ),
-          ],
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              leftSide(
+                foodImage: StreetFoodDetails['FoodImage'],
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              rightSide(
+                name: StreetFoodDetails['Name'],
+                address: StreetFoodDetails['Address'],
+                cuisines: StreetFoodDetails['Cuisines'],
+                stars: StreetFoodDetails['Stars'],
+                cost: StreetFoodDetails['Cost'],
+                delivery: StreetFoodDetails['Delivery'],
+                takeaway: StreetFoodDetails['Takeaway'],
+                foodistaanCertified: StreetFoodDetails['FoodistaanCertified'],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -153,73 +157,89 @@ class _ListedTileState extends State<ListedTile> {
 
 class leftSide extends StatelessWidget {
   String foodImage;
-  String address;
-  leftSide({this.foodImage = 'NA', this.address = 'NA'});
+  // String address;
+  leftSide({this.foodImage = 'NA'});
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(11),
-          bottomLeft: Radius.circular(11),
-        ),
-        color: Color(0xffE43B3B),
-      ),
-      height: h1 / 5,
-      width: 3 * w1 / 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(11),
-            ),
-            child: Image.network(
+    return Padding(
+      padding: const EdgeInsets.all(11),
+      child: Container(
+        width: w1 * 0.4,
+        height: h1 * 0.88,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(11),
+          image: DecorationImage(
+            image: NetworkImage(
               foodImage,
-              height: 10 * h1 / 62,
-              fit: BoxFit.fitWidth,
             ),
+            fit: BoxFit.fitHeight,
+            alignment: FractionalOffset.center,
           ),
-          Container(
-            height: h1 / 26,
-            width: w1 / 3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(11),
-              ),
-              color: Color(0xffE43B3B),
-            ),
-            child: FittedBox(
-                fit: BoxFit.contain,
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: h1 / 55,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 11,
-                      ),
-                      Text(
-                        address,
-                        style: TextStyle(
-                          fontSize: h1 / 77,
-                          color: Colors.white,
-                          // fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-          )
-        ],
+        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.only(
+        //     topLeft: Radius.circular(11),
+        //     bottomLeft: Radius.circular(11),
+        //   ),
+        //   color: Color(0xffE43B3B),
+        // ),
+        // height: h1 / 5,
+        // width: 3 * w1 / 5,
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     ClipRRect(
+        //       borderRadius: BorderRadius.only(
+        //         topLeft: Radius.circular(11),
+        //       ),
+        //       child: Image.network(
+        //         foodImage,
+        //         height: 10 * h1 / 62,
+        //         fit: BoxFit.fitWidth,
+        //       ),
+        //     ),
+        //     Container(
+        //       height: h1 / 26,
+        //       width: w1 / 3,
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.only(
+        //           bottomLeft: Radius.circular(11),
+        //         ),
+        //         color: Color(0xffE43B3B),
+        //       ),
+        //       child: FittedBox(
+        //           fit: BoxFit.contain,
+        //           child: Padding(
+        //             padding: const EdgeInsets.all(5),
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               crossAxisAlignment: CrossAxisAlignment.center,
+        //               children: [
+        //                 Icon(
+        //                   Icons.location_on,
+        //                   size: h1 / 55,
+        //                   color: Colors.white,
+        //                 ),
+        //                 SizedBox(
+        //                   width: 11,
+        //                 ),
+        //                 Text(
+        //                   address,
+        //                   style: TextStyle(
+        //                     fontSize: h1 / 77,
+        //                     color: Colors.white,
+        //                     // fontWeight: FontWeight.w700,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           )),
+        //     )
+        //   ],
+        // ),
       ),
     );
   }
@@ -227,6 +247,7 @@ class leftSide extends StatelessWidget {
 
 class rightSide extends StatelessWidget {
   String name;
+  String address;
   String cuisines;
   int stars;
   int cost;
@@ -236,6 +257,7 @@ class rightSide extends StatelessWidget {
 
   rightSide(
       {this.name = 'NA',
+      this.address = 'NA',
       this.cuisines = 'NA',
       this.stars = 4,
       this.cost = 100,
@@ -247,146 +269,324 @@ class rightSide extends StatelessWidget {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 10 * h1 / 62,
-          width: w1 / 3,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(11),
-            ),
-            color: Colors.white,
-          ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      name,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      cuisines,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: h1 / 65),
-                    )),
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(stars, (index) {
-                        return Image.asset(
-                          'Images/RatingStar.png',
-                          height: h1 / 35,
-                          width: w1 / 35,
-                        );
-                      })),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      "Images/RupeeImage.png",
-                      height: h1 / 50,
-                    ),
-                    SizedBox(
-                      width: w1 / 100,
-                    ),
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        "Cost for two: $cost",
-                        style: TextStyle(
-                            color: Colors.black,
-                            // fontWeight: FontWeight.w600,
-                            fontSize: h1 / 70),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                delivery == true
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "Images/DeliveryImage.png",
-                            height: h1 / 50,
-                          ),
-                          SizedBox(
-                            width: w1 / 100,
-                          ),
-                          Text(
-                            "Delivery",
-                            style: TextStyle(
-                                color: Colors.black,
-                                // fontWeight: FontWeight.w600,
-                                fontSize: h1 / 70),
-                          )
-                        ],
-                      )
-                    : SizedBox(
-                        height: 2,
-                      ),
-                takeaway == true
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "Images/TakeawayImage.png",
-                            height: h1 / 50,
-                          ),
-                          SizedBox(
-                            width: w1 / 100,
-                          ),
-                          Text(
-                            "Takeaway",
-                            style: TextStyle(
-                                color: Colors.black,
-                                // fontWeight: FontWeight.w600,
-                                fontSize: h1 / 70),
-                          )
-                        ],
-                      )
-                    : SizedBox(),
-              ],
-            ),
+        Text(
+          name,
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        Container(
-          height: h1 / 26,
-          width: w1 / 3,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(11),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.place_outlined,
+              color: Colors.black,
+              size: w1 * 0.035,
             ),
-            color:
-                foodistaanCertified == true ? Color(0xffF7C12B) : Colors.white,
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              address,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: w1 * 0.033,
+              ),
+            ),
+          ],
+        ),
+        Text(
+          cuisines,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: w1 * 0.033,
           ),
-          child: FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding:
-                    EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.star,
+                size: w1 * 0.05,
+                color: Theme.of(context).primaryColor,
+              ),
+              Icon(
+                Icons.star,
+                size: w1 * 0.05,
+                color: Theme.of(context).primaryColor,
+              ),
+              Icon(
+                Icons.star,
+                size: w1 * 0.05,
+                color: Theme.of(context).primaryColor,
+              ),
+              Icon(
+                Icons.star,
+                size: w1 * 0.05,
+                color: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.pink,
+              radius: w1 * 0.022,
+              child: Center(
                 child: Text(
-                  "Foodistaan Certified",
+                  '₹',
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w800),
+                    color: Colors.white,
+                    fontSize: w1 * 0.03,
+                  ),
                 ),
-              )),
-        )
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'Cost for Two ₹ $cost',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: w1 * 0.03,
+              ),
+            ),
+          ],
+        ),
+        delivery == true
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.pink,
+                    radius: w1 * 0.022,
+                    child: Center(
+                      child: Icon(
+                        Icons.two_wheeler,
+                        color: Colors.white,
+                        size: w1 * 0.031,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Delivery',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: w1 * 0.03,
+                    ),
+                  ),
+                ],
+              )
+            : SizedBox(),
+        takeaway == true
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.pink,
+                    radius: w1 * 0.022,
+                    child: Center(
+                      child: Icon(
+                        Icons.shopping_bag_outlined,
+                        color: Colors.white,
+                        size: w1 * 0.031,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Takeaway',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: w1 * 0.03,
+                    ),
+                  ),
+                ],
+              )
+            : SizedBox(),
+        foodistaanCertified == true
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'Images/fs_certified.png',
+                    width: w1 * 0.055,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Foodistaan Certified',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: w1 * 0.033,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              )
+            : SizedBox(),
+        // Container(
+        //   height: 10 * h1 / 62,
+        //   width: w1 / 3,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.only(
+        //       topRight: Radius.circular(11),
+        //     ),
+        //     color: Colors.white,
+        //   ),
+        //   child: Padding(
+        //     padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         FittedBox(
+        //             fit: BoxFit.contain,
+        //             child: Text(
+        //               name,
+        //               style: TextStyle(
+        //                 color: Colors.black,
+        //                 fontWeight: FontWeight.bold,
+        //               ),
+        //             )),
+        //         FittedBox(
+        //             fit: BoxFit.contain,
+        //             child: Text(
+        //               cuisines,
+        //               style: TextStyle(
+        //                   color: Colors.grey,
+        //                   fontWeight: FontWeight.w500,
+        //                   fontSize: h1 / 65),
+        //             )),
+        //         FittedBox(
+        //           fit: BoxFit.contain,
+        //           child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.start,
+        //               children: List.generate(stars, (index) {
+        //                 return Image.asset(
+        //                   'Images/RatingStar.png',
+        //                   height: h1 / 35,
+        //                   width: w1 / 35,
+        //                 );
+        //               })),
+        //         ),
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.start,
+        //           children: [
+        //             Image.asset(
+        //               "Images/RupeeImage.png",
+        //               height: h1 / 50,
+        //             ),
+        //             SizedBox(
+        //               width: w1 / 100,
+        //             ),
+        //             FittedBox(
+        //               fit: BoxFit.fitWidth,
+        //               child: Text(
+        //                 "Cost for two: $cost",
+        //                 style: TextStyle(
+        //                     color: Colors.black,
+        //                     // fontWeight: FontWeight.w600,
+        //                     fontSize: h1 / 70),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //         SizedBox(
+        //           height: 2,
+        //         ),
+        //         delivery == true
+        //             ? Row(
+        //                 mainAxisAlignment: MainAxisAlignment.start,
+        //                 children: [
+        //                   Image.asset(
+        //                     "Images/DeliveryImage.png",
+        //                     height: h1 / 50,
+        //                   ),
+        //                   SizedBox(
+        //                     width: w1 / 100,
+        //                   ),
+        //                   Text(
+        //                     "Delivery",
+        //                     style: TextStyle(
+        //                         color: Colors.black,
+        //                         // fontWeight: FontWeight.w600,
+        //                         fontSize: h1 / 70),
+        //                   )
+        //                 ],
+        //               )
+        //             : SizedBox(
+        //                 height: 2,
+        //               ),
+        //         takeaway == true
+        //             ? Row(
+        //                 mainAxisAlignment: MainAxisAlignment.start,
+        //                 children: [
+        //                   Image.asset(
+        //                     "Images/TakeawayImage.png",
+        //                     height: h1 / 50,
+        //                   ),
+        //                   SizedBox(
+        //                     width: w1 / 100,
+        //                   ),
+        //                   Text(
+        //                     "Takeaway",
+        //                     style: TextStyle(
+        //                         color: Colors.black,
+        //                         // fontWeight: FontWeight.w600,
+        //                         fontSize: h1 / 70),
+        //                   )
+        //                 ],
+        //               )
+        //             : SizedBox(),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        // Container(
+        //   height: h1 / 26,
+        //   width: w1 / 3,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.only(
+        //       bottomRight: Radius.circular(11),
+        //     ),
+        //     color:
+        //         foodistaanCertified == true ? Color(0xffF7C12B) : Colors.white,
+        //   ),
+        //   child: FittedBox(
+        //       fit: BoxFit.contain,
+        //       child: Padding(
+        //         padding:
+        //             EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
+        //         child: Text(
+        //           "Foodistaan Certified",
+        //           style: TextStyle(
+        //               color: Colors.white, fontWeight: FontWeight.w800),
+        //         ),
+        //       )),
+        // )
       ],
     );
   }

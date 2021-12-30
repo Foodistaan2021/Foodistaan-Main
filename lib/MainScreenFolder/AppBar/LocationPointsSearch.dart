@@ -63,13 +63,13 @@ class _LocationState extends State<Location> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Home',
+              hasAddress== true ? Text(
+                userAddress!.name!,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: h1 * 0.033,
                 ),
-              ),
+              ) : Text('Select Location'),
               hasAddress == true
                   ? Text(
                       userAddress!.subLocality!,

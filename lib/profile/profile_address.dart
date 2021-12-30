@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodistan/MainScreenFolder/address_screen.dart';
 
 class Address extends StatelessWidget {
   const Address({Key? key}) : super(key: key);
@@ -11,13 +12,17 @@ class Address extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text('My Addresses',style: TextStyle(
-            color: Colors.black,
-          ),),
+          title: const Text(
+            'My Addresses',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
-          leading: IconButton(onPressed: () {
-            Navigator.pop(context);
-          },
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
@@ -35,7 +40,7 @@ class Address extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Icon(
                   Icons.add,
                   size: 17.5,
@@ -44,10 +49,16 @@ class Address extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Text('Add Address',style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                ),),
+                GestureDetector(
+                  onTap: () => AddressScreen(),
+                  child: Text(
+                    'Add Address',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: 15,
                 ),
@@ -72,7 +83,7 @@ class Address extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Icon(
-                        Icons.arrow_forward_ios,
+                      Icons.arrow_forward_ios,
                       color: Colors.grey,
                     ),
                     SizedBox(
@@ -105,21 +116,30 @@ class Address extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Home',style: TextStyle(
-                          color: Colors.black,
-                        ),),
+                        Text(
+                          'Home',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         SizedBox(
                           height: 5,
                         ),
-                        Text('Sector 1, House No.2, Rohini, Delhi',style: TextStyle(
+                        Text(
+                          'Sector 1, House No.2, Rohini, Delhi',
+                          style: TextStyle(
                             color: Colors.grey,
-                        ),),
+                          ),
+                        ),
                         SizedBox(
                           height: 11,
                         ),
-                        Text('Add delivery instruction',style: TextStyle(
+                        Text(
+                          'Add delivery instruction',
+                          style: TextStyle(
                             color: Colors.red,
-                        ),),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -148,7 +168,7 @@ class Address extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Icon(
-                        Icons.arrow_forward_ios,
+                      Icons.arrow_forward_ios,
                       color: Colors.grey,
                     ),
                     SizedBox(
@@ -181,21 +201,30 @@ class Address extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Home',style: TextStyle(
-                          color: Colors.black,
-                        ),),
+                        Text(
+                          'Home',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         SizedBox(
                           height: 5,
                         ),
-                        Text('Sector 1, House No.2, Rohini, Delhi',style: TextStyle(
-                          color: Colors.grey,
-                        ),),
+                        Text(
+                          'Sector 1, House No.2, Rohini, Delhi',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
                         SizedBox(
                           height: 11,
                         ),
-                        Text('Add delivery instruction',style: TextStyle(
-                          color: Colors.red,
-                        ),),
+                        Text(
+                          'Add delivery instruction',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
