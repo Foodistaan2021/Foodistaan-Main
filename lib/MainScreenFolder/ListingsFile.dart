@@ -113,7 +113,7 @@ class _ListedTileState extends State<ListedTile> {
                     )));
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.22,
+        height: MediaQuery.of(context).size.height * 0.28,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -272,34 +272,88 @@ class rightSide extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          name,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.place_outlined,
-              color: Colors.black,
-              size: w1 * 0.035,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              address,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: w1 * 0.033,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.place_outlined,
+                            color: Colors.black,
+                            size: w1 * 0.035,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            address,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: w1 * 0.033,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
               ),
-            ),
-          ],
-        ),
+              foodistaanCertified == true
+                  ? Image.asset(
+                      'Images/fs_certified.png',
+                      // 'Images/certified.svg',
+                      width: 50,
+                      height: 40,
+                    )
+                  : SizedBox(),
+            ]),
+        // : Container(
+        //     child: Column(children: [
+        //     Text(
+        //       name,
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //     SizedBox(height: 5),
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         Icon(
+        //           Icons.place_outlined,
+        //           color: Colors.black,
+        //           size: w1 * 0.035,
+        //         ),
+        //         SizedBox(
+        //           width: 5,
+        //         ),
+        //         Text(
+        //           address,
+        //           style: TextStyle(
+        //             color: Colors.black,
+        //             fontSize: w1 * 0.033,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ])),
+        SizedBox(height: 5),
         Text(
           cuisines,
           style: TextStyle(
@@ -367,6 +421,7 @@ class rightSide extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 5),
         delivery == true
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -396,6 +451,7 @@ class rightSide extends StatelessWidget {
                 ],
               )
             : SizedBox(),
+        SizedBox(height: 5),
         takeaway == true
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -425,29 +481,7 @@ class rightSide extends StatelessWidget {
                 ],
               )
             : SizedBox(),
-        foodistaanCertified == true
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'Images/fs_certified.png',
-                    width: w1 * 0.055,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Foodistaan Certified',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: w1 * 0.033,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
+
         // Container(
         //   height: 10 * h1 / 62,
         //   width: w1 / 3,
