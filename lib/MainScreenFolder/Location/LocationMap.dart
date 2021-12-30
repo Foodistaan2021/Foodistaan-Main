@@ -71,9 +71,12 @@ class _AddLocationState extends State<AddLocation> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Location',style: TextStyle(
-          color: Colors.black,
-        ),),
+        title: Text(
+          'Location',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -109,7 +112,7 @@ class _AddLocationState extends State<AddLocation> {
                     horizontal: 11,
                   ),
                   child: Container(
-                    height: MediaQuery.of(context).size.height*0.25,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -130,10 +133,13 @@ class _AddLocationState extends State<AddLocation> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Select Location',style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: MediaQuery.of(context).size.width*0.055,
-                                  ),),
+                                  Text(
+                                    'Select Location',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Row(
@@ -147,7 +153,7 @@ class _AddLocationState extends State<AddLocation> {
                                     child: Icon(
                                       Icons.close,
                                       color: Colors.black,
-                                      size: MediaQuery.of(context).size.width*0.055,
+                                      size: 18,
                                     ),
                                   ),
                                 ],
@@ -157,56 +163,69 @@ class _AddLocationState extends State<AddLocation> {
                           Divider(
                             color: Colors.grey,
                           ),
-                          hasAddress != false ?
-                          ListTile(
-                            leading: Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                              size: MediaQuery.of(context).size.width*0.037,
-                            ),
-                            title: Text('${addressModel.name}, ${addressModel.street}, ${addressModel.locality}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: MediaQuery.of(context).size.width*0.035,
-                              ),),
-                            trailing: GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('Change',
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      decoration: TextDecoration.underline,
-                                      fontSize: MediaQuery.of(context).size.width*0.031,
-                                    ),),),
-                          ) :
-                          Text('Please Select Your Location',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: MediaQuery.of(context).size.width*0.035,
-                          ),),
+                          hasAddress != false
+                              ? ListTile(
+                                  leading: Icon(
+                                    Icons.location_on,
+                                    color: Colors.black,
+                                    size: 20,
+                                  ),
+                                  title: SafeArea(
+                                    child: Text(
+                                      '${addressModel.name}, ${addressModel.street}, ${addressModel.locality}',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'Change',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  'Please Select Your Location',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
                           Divider(
                             color: Colors.grey,
                           ),
                           GestureDetector(
                             onTap: () async {
                               await LocationFunctions()
-                                  .updateUserLocation(
-                                  userLocation.latitude, userLocation.longitude)
+                                  .updateUserLocation(userLocation.latitude,
+                                      userLocation.longitude)
                                   .then((value) {
                                 Navigator.pushReplacementNamed(context, 'H');
                               });
                             },
                             child: Container(
-                              height: MediaQuery.of(context).size.height*0.05,
+                              height: MediaQuery.of(context).size.height * 0.05,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Colors.green,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Center(
-                                child: Text('Confirm Location',style: TextStyle(
-                                  color: Colors.white,
-                                ),),
+                                child: Text(
+                                  'Confirm Location',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),

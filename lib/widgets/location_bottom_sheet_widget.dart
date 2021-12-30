@@ -71,9 +71,12 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           title: Text(
-            'Select Location',style: TextStyle(
-            color: Colors.black,
-          ),),
+            'Select Location',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+            ),
+          ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(
@@ -86,6 +89,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                 child: Icon(
                   Icons.close,
                   color: Colors.black,
+                  size: 18,
                 ),
               ),
             ),
@@ -100,8 +104,8 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height*0.05,
-                width: MediaQuery.of(context).size.width*0.9,
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(11),
@@ -157,14 +161,16 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
               ),
               GestureDetector(
                 onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddLocation(
-                          placeId: null,
-                          placeSearched: false,
-                        ),),),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddLocation(
+                      placeId: null,
+                      placeSearched: false,
+                    ),
+                  ),
+                ),
                 child: Container(
-                  width: MediaQuery.of(context).size.width*0.9,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   color: Colors.white,
                   child: Center(
                     child: Column(
@@ -186,17 +192,26 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Use Current Location',style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: MediaQuery.of(context).size.width*0.04,
-                                ),),
-                                hasAddress ?
-                                Text(userAddress!.subLocality!,style: TextStyle(
-                                  color: Colors.grey,
-                                ),) :
-                                Text('No Data',style: TextStyle(
-                                  color: Colors.grey,
-                                ),),
+                                Text(
+                                  'Use Current Location',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                hasAddress
+                                    ? Text(
+                                        userAddress!.subLocality!,
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    : Text(
+                                        'No Data',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                               ],
                             ),
                           ],
@@ -209,13 +224,13 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
               SizedBox(
                 height: 25,
               ),
-              searchResult.isNotEmpty ?
-              Center(
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Center(
-                    child: ListView.builder(
+              searchResult.isNotEmpty
+                  ? Center(
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Center(
+                          child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: searchResult.length,
@@ -223,16 +238,18 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                 return GestureDetector(
                                   onTap: () async {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AddLocation(
-                                                  placeId:
-                                                      searchResult[index].placeId,
-                                                  placeSearched: true,
-                                                ),),);
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddLocation(
+                                          placeId: searchResult[index].placeId,
+                                          placeSearched: true,
+                                        ),
+                                      ),
+                                    );
                                   },
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width*0.9,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
                                     color: Colors.white,
                                     child: Center(
                                       child: ListTile(
@@ -240,173 +257,207 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                           Icons.location_on,
                                           color: Colors.grey,
                                         ),
-                                        title: Text(searchResult[index].description,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),),
+                                        title: Text(
+                                          searchResult[index].description,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 );
                               }),
-                  ),),
-              ) :
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width*0.9,
-                      color: Colors.white,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Saved Addresses',style: TextStyle(
-                              color: Colors.black,
-                              fontSize: MediaQuery.of(context).size.width*0.04,
-                            ),),
-                          ],
                         ),
                       ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            color: Colors.white,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Saved Addresses',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 11,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    width: 11,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        '15m',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 11,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'Home',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        'Sector 1, House No.2, Rohini, Delhi',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
+                                      Text(
+                                        'Add delivery instruction',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 11,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    width: 11,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        '15m',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 11,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'Office',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        'Sector 11, House No.22, Rohini, Delhi',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
+                                      Text(
+                                        'Add delivery instruction',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 11,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 11,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: Colors.black,
-                                ),
-                                Text('15m',style: TextStyle(
-                                  color: Colors.black,
-                                ),),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 11,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('Home',style: TextStyle(
-                                  color: Colors.black,
-                                ),),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text('Sector 1, House No.2, Rohini, Delhi',style: TextStyle(
-                                  color: Colors.grey,
-                                ),),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Text('Add delivery instruction',style: TextStyle(
-                                  color: Colors.red,
-                                ),),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 11,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 11,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: Colors.black,
-                                ),
-                                Text('15m',style: TextStyle(
-                                  color: Colors.black,
-                                ),),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 11,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('Office',style: TextStyle(
-                                  color: Colors.black,
-                                ),),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text('Sector 11, House No.22, Rohini, Delhi',style: TextStyle(
-                                  color: Colors.grey,
-                                ),),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Text('Add delivery instruction',style: TextStyle(
-                                  color: Colors.red,
-                                ),),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
