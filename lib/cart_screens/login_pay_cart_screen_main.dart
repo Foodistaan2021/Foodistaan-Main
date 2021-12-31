@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/MainScreenFolder/address_screen.dart';
 import 'package:foodistan/MainScreenFolder/coupon_screen.dart';
+import 'package:foodistan/functions/address_functions.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,24 +11,23 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodistan/functions/razorpay_integration.dart';
 import 'package:foodistan/profile/payment_methods.dart';
 import 'package:foodistan/profile/your_orders.dart';
+import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:foodistan/global/global_variables.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 int maxCouponDiscount = 0;
 String couponCode = '';
 
 Map<String, dynamic> itemMap = {};
 
+final ValueNotifier<Map<String, dynamic>> deliveryAddress =
+    ValueNotifier<Map<String, dynamic>>({});
 
 class CartScreenMainLogin extends StatefulWidget {
-  
-
   @override
   _CartScreenMainLoginState createState() => _CartScreenMainLoginState();
 }
-
-
-
 
 class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
   String? userNumber;
@@ -38,6 +39,12 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
     CartFunctions().getCartId(userNumber).then((value) {
       setState(() {
         cartId = value;
+      });
+    });
+
+    UserAddress().getDeliveryAddress().then((value) {
+      setState(() {
+        deliveryAddress.value = value;
       });
     });
   }
@@ -622,6 +629,46 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                     ),
                   ),
                 ),
+                ValueListenableBuilder(
+                    valueListenable: orderType,
+                    builder: (context, value, widget) {
+                      if (orderType.value == 'delivery') {
+                        return ValueListenableBuilder(
+                            valueListenable: deliveryAddress,
+                            builder:
+                                (context, Map<String, dynamic> value, widget) {
+                              if (value.isEmpty) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AddressScreen()));
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: Text('Add Adress'),
+                                  ),
+                                );
+                              } else {
+                                return ListTile(
+                                  leading: Text(value['category']),
+                                  title: Text(value['house-feild']),
+                                  subtitle: Text(value['street-feild']),
+                                  trailing: TextButton(
+                                      onPressed: null, child: Text('Change')),
+                                );
+                              }
+                            });
+                      } else {
+                        return GestureDetector(
+                          onTap: null,
+                          child: Text('ABCD'),
+                        );
+                      }
+                    }),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 11,

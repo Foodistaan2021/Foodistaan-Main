@@ -6,7 +6,7 @@ import 'package:foodistan/MainScreenFolder/Location/LocationMap.dart';
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/places_search_model.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
-import 'package:foodistan/functions/address_model.dart';
+import 'package:foodistan/functions/address_from_placeId_model.dart';
 
 class LocationBottomSheetWidget extends StatefulWidget {
   const LocationBottomSheetWidget({Key? key}) : super(key: key);

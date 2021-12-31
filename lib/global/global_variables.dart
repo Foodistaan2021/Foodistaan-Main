@@ -9,3 +9,5 @@ final ValueNotifier<double> totalPriceMain = ValueNotifier<double>(0.0);
 final ValueNotifier<int> couponPercentage = ValueNotifier<int>(0);
 
 final ValueNotifier<int> totalItemsInCart = ValueNotifier<int>(0);
+
+final ValueNotifier<String> orderType = ValueNotifier<String>('delivery');

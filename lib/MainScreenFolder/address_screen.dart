@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/Location/LocationMap.dart';
-import 'package:foodistan/functions/address_model.dart';
+import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/functions/address_from_placeId_model.dart';
+import 'package:foodistan/functions/address_functions.dart';
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:foodistan/global/global_variables.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({Key? key}) : super(key: key);
@@ -31,7 +34,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   String categorySelected = 'home';
 
-  getCurrentLocation(controller) async {
+  getCurrentLocation() async {
     final GoogleMapController controller = await _controller.future;
     Location location = new Location();
     bool serviceEnabled;
@@ -50,47 +53,50 @@ class _AddressScreenState extends State<AddressScreen> {
     }
     final locationData = await location.getLocation();
 
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-        bearing: 0,
-        target: LatLng(locationData.latitude!, locationData.longitude!),
-        zoom: 17.0,
-      ),
-    ));
-    setState(() {
-      userLocation = LatLng(locationData.latitude!, locationData.longitude!);
-    });
+    await setLocation(locationData);
+
     return LatLng(locationData.latitude!, locationData.longitude!);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setLocation().then((v) {
-      setState(() {});
-    });
+
+    _asyncFunctions();
   }
 
-  addUserAddress(houseFeild, streetFeild, category, location) async {
-    String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userNumber)
-        .collection('address')
-        .doc()
-        .set({
-      'house-feild': houseFeild,
-      'street-feild': streetFeild,
-      'category': category,
-      'user-location': GeoPoint(location.latitude, location.longitude),
-    });
+  _asyncFunctions() async {
+    var userLocation = await LocationFunctions().getUserLocation();
+    if (userLocation != null) {
+      await setLocation(userLocation).then(() {
+        pointToLocation(userLocation);
+        setState(() {
+          userLocation = userLocation;
+        });
+      });
+    } else {
+      await getCurrentLocation().then((currentLocation) {
+        setLocation(currentLocation);
+      });
+    }
   }
 
-  setLocation() async {
-    LatLng currentLocation = await getCurrentLocation(_controller);
-    LocationFunctions()
-        .getAddress(currentLocation.latitude, currentLocation.longitude)
+  pointToLocation(location) async {
+    final GoogleMapController controller = await _controller.future;
+    await controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 0,
+        target: LatLng(location.latitude!, location.longitude!),
+        zoom: 17.0,
+      ),
+    ));
+  }
+
+  setLocation(location) async {
+    await pointToLocation(location);
+
+    await LocationFunctions()
+        .getAddress(location.latitude, location.longitude)
         .then((value) {
       setState(() {
         addressModel = value;
@@ -158,7 +164,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await setLocation();
+                      await getCurrentLocation();
                     },
                     child: Text(
                       'Current Location',
@@ -441,11 +447,13 @@ class _AddressScreenState extends State<AddressScreen> {
                 padding: const EdgeInsets.all(15),
                 child: GestureDetector(
                   onTap: () async {
-                    await addUserAddress(
-                        houseFeildController.text,
-                        streetFeildController.text,
-                        categorySelected,
-                        userLocation);
+                    await UserAddress()
+                        .addUserAddress(
+                            houseFeildController.text,
+                            streetFeildController.text,
+                            categorySelected,
+                            )
+                        .then({Navigator.pop(context)});
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.066,

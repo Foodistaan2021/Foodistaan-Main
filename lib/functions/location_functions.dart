@@ -6,7 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'places_search_model.dart';
-import 'address_model.dart';
+import 'address_from_placeId_model.dart';
 
 class LocationFunctions {
   final _firestore = FirebaseFirestore.instance;

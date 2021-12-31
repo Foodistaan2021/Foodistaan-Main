@@ -215,6 +215,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               ],
             ),
           ),
+          
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.7,

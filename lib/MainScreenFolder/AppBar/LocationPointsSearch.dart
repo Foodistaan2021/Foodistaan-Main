@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
-import 'package:foodistan/functions/address_model.dart';
+import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
 
 class Location extends StatefulWidget {
