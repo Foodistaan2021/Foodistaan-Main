@@ -279,6 +279,11 @@ class rightSide extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        foodistaanCertified == true
+            ? SizedBox()
+            : SizedBox(
+                height: 3,
+              ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -300,6 +305,11 @@ class rightSide extends StatelessWidget {
             ),
           ],
         ),
+        foodistaanCertified == true
+            ? SizedBox()
+            : SizedBox(
+                height: 3,
+              ),
         Text(
           cuisines,
           style: TextStyle(
@@ -447,7 +457,9 @@ class rightSide extends StatelessWidget {
                   ),
                 ],
               )
-            : SizedBox(),
+            : SizedBox(
+                height: 11,
+              ),
         // Container(
         //   height: 10 * h1 / 62,
         //   width: w1 / 3,

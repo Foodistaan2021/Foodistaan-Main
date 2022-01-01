@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/accepted_order.dart';
+import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
+import 'package:foodistan/global/global_variables.dart';
 import 'package:foodistan/profile/your_orders.dart';
 import 'package:foodistan/widgets/order_history_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderFunction {
   final _firestore = FirebaseFirestore.instance;
@@ -22,6 +22,8 @@ class OrderFunction {
       'customer-id': userNumber,
       'time': time,
       'payment-id': paymentId,
+      'order-type': orderType.value,
+      'delivery-address': deliveryAddress.value
     }).then((value) {
       _firestore
           .collection('users')
@@ -38,6 +40,8 @@ class OrderFunction {
         'time': time,
         'payment-id': paymentId,
         'live-order': true,
+        'order-type': orderType.value,
+        'delivery-address': deliveryAddress.value
       });
     });
 
@@ -196,7 +200,8 @@ class OrderFunction {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: 22,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.025,
                                     ),
                                     CircleAvatar(
                                       radius:
@@ -225,7 +230,8 @@ class OrderFunction {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 22,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.025,
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -239,14 +245,22 @@ class OrderFunction {
                                                     .toString()
                                                     .toUpperCase(),
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.037),
                                               )
                                             : Text(
                                                 'Preparing Your Orders',
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.037),
                                               ),
                                         if (onlyOneOrder)
                                           Text(orderData['vendor-name'])

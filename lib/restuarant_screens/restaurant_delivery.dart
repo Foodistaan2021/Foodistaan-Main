@@ -1,13 +1,10 @@
-import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodistan/auth/autentication.dart';
-import 'package:foodistan/functions/cart_functions.dart';
+
 import 'package:foodistan/restuarant_screens/restaurant_delivery_review.dart';
 import 'package:foodistan/restuarant_screens/restaurant_main.dart';
 import 'package:foodistan/restuarant_screens/restaurant_overview.dart';
 import 'package:foodistan/restuarant_screens/restuarant_delivery_menu.dart';
-import 'package:foodistan/widgets/bottom_navbar.dart';
+
 import 'package:foodistan/widgets/total_bill_bottam_widget.dart';
 
 class RestaurantDelivery extends StatefulWidget {
@@ -97,7 +94,7 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 11),
-                      margin: EdgeInsets.only(top: 15),
+                      // margin: EdgeInsets.only(top: 15),
                       height: MediaQuery.of(context).size.height * 0.1,
                       child: TextFormField(
                           decoration: InputDecoration(

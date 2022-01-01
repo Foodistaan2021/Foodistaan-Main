@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/cart_functions.dart';
@@ -80,14 +79,22 @@ class _TotalBillBottomWidgetState extends State<TotalBillBottomWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("$itemsNumber Items in the Cart",
-                                          style:
-                                              TextStyle(color: Colors.white)),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.044)),
                                       SizedBox(
                                         height: 3,
                                       ),
                                       Text("Extra charges may apply",
-                                          style:
-                                              TextStyle(color: Colors.white)),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.035)),
                                     ],
                                   ),
                                 ],
@@ -126,7 +133,12 @@ class _TotalBillBottomWidgetState extends State<TotalBillBottomWidget> {
                                             child: Text(
                                               "View Bill",
                                               style: TextStyle(
-                                                  color: Colors.green),
+                                                color: Colors.green,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.035,
+                                              ),
                                             ),
                                           ),
                                         ),
