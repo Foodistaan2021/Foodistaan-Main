@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/UserLogin/OTPScreen.dart';
@@ -10,6 +9,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _phoneNumberController = TextEditingController();
+
+  bool text = false;
 
   getMobileFormWidget(context) {
     return Column(
@@ -32,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w600,
                       color: Color(0xFFF7C12B),
                       fontSize: MediaQuery.of(context).size.width * 0.077,
-                      letterSpacing: MediaQuery.of(context).size.width * 0.0075),
+                      letterSpacing:
+                          MediaQuery.of(context).size.width * 0.0075),
                 ),
                 Text(
                   "FOODISTAAN",
@@ -40,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF0F1B2B),
-                      fontSize: MediaQuery.of(context).size.width* 0.099,
+                      fontSize: MediaQuery.of(context).size.width * 0.099,
                       letterSpacing: MediaQuery.of(context).size.width * 0.01),
                 ),
               ],
@@ -54,28 +56,38 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.symmetric(
             horizontal: 11,
           ),
-          child: TextFormField(
-            keyboardType: TextInputType.number,
-            maxLength: 10,
-            textAlign: TextAlign.center,
-            controller: _phoneNumberController,
-            decoration: const InputDecoration(
-              focusColor: Color(0xFFF7C12B),
-              hintText: 'Phone Number',
-              prefix: Text(
-                '+91',
-                // textAlign: TextAlign.end,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(7.5),),
-                borderSide: BorderSide(color: Color(0xFFF7C12B),
-                    width: 3),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(7.5),),
-                borderSide: BorderSide(
-                  color: Color(0xFFF7C12B),
-                  width: 3,
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                text = true;
+              });
+            },
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              maxLength: 10,
+              textAlign: TextAlign.center,
+              controller: _phoneNumberController,
+              decoration: const InputDecoration(
+                focusColor: Color(0xFFF7C12B),
+                hintText: 'Phone Number',
+                prefix: Text(
+                  '+91',
+                  // textAlign: TextAlign.end,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(7.5),
+                  ),
+                  borderSide: BorderSide(color: Color(0xFFF7C12B), width: 3),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(7.5),
+                  ),
+                  borderSide: BorderSide(
+                    color: Color(0xFFF7C12B),
+                    width: 3,
+                  ),
                 ),
               ),
             ),
@@ -113,14 +125,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xFFF7C12B),),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xFFF7C12B),),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7.5),),
-                  ),),),
+                foregroundColor: MaterialStateProperty.all<Color>(
+                  Color(0xFFF7C12B),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Color(0xFFF7C12B),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(7.5),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -138,8 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset('Images/welcometopleft.svg',
-                  width: MediaQuery.of(context).size.width*0.44,
+                SvgPicture.asset(
+                  'Images/welcometopleft.svg',
+                  width: MediaQuery.of(context).size.width * 0.44,
                 ),
               ],
             ),
@@ -154,8 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 11,
                     ),
-                    Image.asset('Images/welcometopright.png',
-                      width: MediaQuery.of(context).size.width*0.33,
+                    Image.asset(
+                      'Images/welcometopright.png',
+                      width: MediaQuery.of(context).size.width * 0.33,
                     ),
                   ],
                 ),
@@ -165,8 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('Images/welcomebottomleft.png',
-                  width: MediaQuery.of(context).size.width*0.33,
+                Image.asset(
+                  'Images/welcomebottomleft.png',
+                  width: MediaQuery.of(context).size.width * 0.33,
                 ),
                 SizedBox(
                   height: 11,
@@ -181,8 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SvgPicture.asset('Images/welcomebottomright.svg',
-                      width: MediaQuery.of(context).size.width*0.44,
+                    SvgPicture.asset(
+                      'Images/welcomebottomright.svg',
+                      width: MediaQuery.of(context).size.width * 0.44,
                     ),
                   ],
                 ),

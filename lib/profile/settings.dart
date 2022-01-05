@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/UserLogin/LoginScreen.dart';
 
 class ProfileSettings extends StatelessWidget {
   const ProfileSettings({Key? key}) : super(key: key);
@@ -12,9 +13,10 @@ class ProfileSettings extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          leading: IconButton(onPressed: () {
-            Navigator.pop(context);
-          },
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
@@ -141,8 +143,13 @@ class ProfileSettings extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                FirebaseAuth.instance.signOut().whenComplete(() =>
-                {Navigator.pushReplacementNamed(context, 'L')});
+                FirebaseAuth.instance.signOut().whenComplete(() => {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                          (route) => false)
+                    });
               },
               child: Row(
                 mainAxisSize: MainAxisSize.max,

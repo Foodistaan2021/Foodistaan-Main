@@ -7,6 +7,7 @@ import 'package:foodistan/functions/address_functions.dart';
 
 class Address extends StatefulWidget {
   const Address({Key? key}) : super(key: key);
+  static String routeName = "/savedAddress";
 
   @override
   State<Address> createState() => _AddressState();
@@ -74,7 +75,8 @@ class _AddressState extends State<Address> {
                   width: 5,
                 ),
                 GestureDetector(
-                  onTap: () => AddressScreen(),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddressScreen())),
                   child: Text(
                     'Add Address',
                     style: TextStyle(

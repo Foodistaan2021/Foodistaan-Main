@@ -21,8 +21,6 @@ class LocationFunctions {
     }
   }
 
-  
-
   getUserLocation() async {
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     GeoPoint? userLocation;
@@ -32,7 +30,6 @@ class LocationFunctions {
       });
     });
     if (userLocation != null) {
-      print('Fetcehed');
       return userLocation;
     }
     return null;
@@ -58,7 +55,7 @@ class LocationFunctions {
   }
 
   final API_KEY = 'AIzaSyA2D_qJoq8XQ6DRIo9wSfzelarrEm-ARZM';
-  
+
   Future<List<PlaceSearch>> getAutocomplete(searchQuery, sessionToken) async {
     var url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchQuery&language=en&types=geocode&key=$API_KEY&sessiontoken=$sessionToken';

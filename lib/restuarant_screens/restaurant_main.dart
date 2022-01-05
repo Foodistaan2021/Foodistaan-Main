@@ -409,7 +409,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize:
-                                    MediaQuery.of(context).size.width * 0.03,
+                                    MediaQuery.of(context).size.width * 0.027,
                               ),
                             ),
                           ),
@@ -422,7 +422,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                                 style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            0.031,
+                                            0.03,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -465,7 +465,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize:
-                                    MediaQuery.of(context).size.width * 0.03,
+                                    MediaQuery.of(context).size.width * 0.027,
                               ),
                             ),
                           ),
@@ -478,7 +478,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                                 style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            0.031,
+                                            0.03,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),

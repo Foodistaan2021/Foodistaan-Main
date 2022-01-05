@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/UserLogin/user_detail_form.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -52,16 +53,25 @@ class _OTPScreenState extends State<OTPScreen> {
                 .then((value) {
               if (value.exists) {
                 if (value.data()!.containsKey('cart-id')) {
-                  Navigator.pushNamed(context, 'H');
+                  //check if cart-id exixts for a user or not
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainScreen()),
+                      (route) => false);
                 } else {
+                  //if cart-id D.N.E than creates a cart-id then pushes main screen
                   String uId = user!.uid;
                   CartFunctions()
                       .createCartFeild(uId, widget.phone)
                       .then((value) {
-                    Navigator.pushNamed(context, 'H');
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainScreen()),
+                        (route) => false);
                   });
                 }
               } else {
+                //if the user itself is new then proceed to user details
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -105,7 +115,7 @@ class _OTPScreenState extends State<OTPScreen> {
       children: [
         SvgPicture.asset(
           'Images/otpimage.svg',
-          height: MediaQuery.of(context).size.width*0.33,
+          height: MediaQuery.of(context).size.width * 0.33,
         ),
         SizedBox(
           height: 15,
@@ -113,9 +123,9 @@ class _OTPScreenState extends State<OTPScreen> {
         Text(
           "OTP Sent to ${widget.phone}",
           style: TextStyle(
-            color: Colors.black,
+              color: Colors.black,
               fontWeight: FontWeight.w700,
-              fontSize: MediaQuery.of(context).size.width*0.05),
+              fontSize: MediaQuery.of(context).size.width * 0.05),
         ),
         SizedBox(
           height: 15,
@@ -127,9 +137,10 @@ class _OTPScreenState extends State<OTPScreen> {
           child: PinPut(
             fieldsCount: 6,
             withCursor: true,
-            textStyle:
-                const TextStyle(fontSize: 25,
-                    color: Color(0xffF7C12B),),
+            textStyle: const TextStyle(
+              fontSize: 25,
+              color: Color(0xffF7C12B),
+            ),
             eachFieldWidth: MediaQuery.of(context).size.width * 0.1,
             eachFieldHeight: MediaQuery.of(context).size.height * 0.05,
             onSubmit: (pin) async {
@@ -188,7 +199,9 @@ class _OTPScreenState extends State<OTPScreen> {
                 FocusScope.of(context).unfocus();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
-                  duration: Duration(seconds: 3,),
+                  duration: Duration(
+                    seconds: 3,
+                  ),
                 ));
               }
             },
@@ -215,8 +228,9 @@ class _OTPScreenState extends State<OTPScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset('Images/welcometopleft.svg',
-                    width: MediaQuery.of(context).size.width*0.44,
+                  SvgPicture.asset(
+                    'Images/welcometopleft.svg',
+                    width: MediaQuery.of(context).size.width * 0.44,
                   ),
                 ],
               ),
@@ -228,8 +242,9 @@ class _OTPScreenState extends State<OTPScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SvgPicture.asset('Images/welcomebottomright.svg',
-                        width: MediaQuery.of(context).size.width*0.44,
+                      SvgPicture.asset(
+                        'Images/welcomebottomright.svg',
+                        width: MediaQuery.of(context).size.width * 0.44,
                       ),
                     ],
                   ),

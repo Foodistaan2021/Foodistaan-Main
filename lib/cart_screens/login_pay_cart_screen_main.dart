@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodistan/functions/razorpay_integration.dart';
 import 'package:foodistan/profile/payment_methods.dart';
+import 'package:foodistan/profile/profile_address.dart';
 import 'package:foodistan/profile/your_orders.dart';
 import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -680,7 +681,14 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                   title: Text(value['house-feild']),
                                   subtitle: Text(value['street-feild']),
                                   trailing: TextButton(
-                                      onPressed: null, child: Text('Change')),
+                                      onPressed: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Address()));
+                                      },
+                                      child: Text('Change')),
                                 );
                               }
                             });

@@ -55,8 +55,8 @@ class _UserDetailState extends State<UserDetail> {
             Container(
                 width: MediaQuery.of(context).size.width * 1,
                 height: MediaQuery.of(context).size.height * 0.3,
-                child:
-                    Image.asset('Images/top.jpeg', height: 20, fit: BoxFit.fill)),
+                child: Image.asset('Images/top.jpeg',
+                    height: 20, fit: BoxFit.fill)),
             Container(
               width: MediaQuery.of(context).size.width * 1,
               height: MediaQuery.of(context).size.height * 0.15,
@@ -134,8 +134,8 @@ class _UserDetailState extends State<UserDetail> {
                     _userData['phoneNumber'] = widget.phone_number;
                     _userData['dateAndTime'] = DateTime.now().toString();
                     addUser(_userData).then((v) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MainScreen()));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          'H', (Route<dynamic> route) => false);
                     });
                   },
                   child: Text(
