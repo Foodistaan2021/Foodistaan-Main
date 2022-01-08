@@ -420,9 +420,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               Text(
                                 "20% OFF UPTO ₹300",
                                 style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.03,
+                                    fontSize: 12,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -476,9 +474,7 @@ class _RestaurantMainState extends State<RestaurantMain> {
                               Text(
                                 "20% OFF UPTO ₹300",
                                 style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.03,
+                                    fontSize: 12,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),

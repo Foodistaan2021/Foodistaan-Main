@@ -31,13 +31,14 @@ class MyOptionListView extends StatelessWidget {
                 Icon(
                   myIcon,
                   color: iconColor,
-                  size: MediaQuery.of(context).size.width * 0.05,
+                  size: 16,
                 ),
-                Text(
-                  myText,
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: MediaQuery.of(context).size.width * 0.025),
+                SafeArea(
+                  child: Text(" $myText",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 9,
+                      )),
                 )
               ],
             ),
