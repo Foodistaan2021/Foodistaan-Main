@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
 import 'package:uuid/uuid.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:foodistan/functions/places_search_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import '../HomeScreenFile.dart';
 
 class AddLocation extends StatefulWidget {
   var placeId;
@@ -216,7 +218,8 @@ class _AddLocationState extends State<AddLocation> {
                                   .updateUserLocation(userLocation.latitude,
                                       userLocation.longitude)
                                   .then((value) {
-                                Navigator.pushReplacementNamed(context, 'H');
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, 'H', (route) => false);
                               });
                             },
                             child: Container(

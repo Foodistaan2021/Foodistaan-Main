@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/address_screen.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/address_functions.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
 
 class Address extends StatefulWidget {
   const Address({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class Address extends StatefulWidget {
 
 class _AddressState extends State<Address> {
   List<Map<String, dynamic>> addressList = [];
+  List<String> addressIdList = [];
   bool hasData = false;
 
   @override
@@ -23,7 +25,8 @@ class _AddressState extends State<Address> {
     super.initState();
     UserAddress().fetchAllAddresses().then((value) {
       setState(() {
-        addressList = value;
+        addressList = value[0];
+        addressIdList = value[1];
         hasData = true;
       });
     });
@@ -113,9 +116,11 @@ class _AddressState extends State<Address> {
                         itemCount: addressList.length,
                         itemBuilder: (context, index) {
                           Map<String, dynamic> data = addressList[index];
+                          String addressId = addressIdList[index];
                           return GestureDetector(
                             onTap: () async {
-                              deliveryAddress.value = data;
+                              await UserAddressProvider().selectAddress(
+                                  addressId, data);
                               Navigator.pop(context);
                             },
                             child: Stack(

@@ -113,7 +113,7 @@ class _ListedTileState extends State<ListedTile> {
                     )));
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.22,
+        height: MediaQuery.of(context).size.height * 0.25,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -277,6 +277,7 @@ class rightSide extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
         ),
         foodistaanCertified == true
@@ -291,16 +292,18 @@ class rightSide extends StatelessWidget {
             Icon(
               Icons.place_outlined,
               color: Colors.black,
-              size: w1 * 0.035,
+              size: 12,
             ),
             SizedBox(
               width: 5,
             ),
-            Text(
-              address,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: w1 * 0.033,
+            SafeArea(
+              child: Text(
+                address,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],
@@ -314,7 +317,7 @@ class rightSide extends StatelessWidget {
           cuisines,
           style: TextStyle(
             color: Colors.grey,
-            fontSize: w1 * 0.033,
+            fontSize: 12,
           ),
         ),
         Padding(
@@ -327,22 +330,22 @@ class rightSide extends StatelessWidget {
             children: [
               Icon(
                 Icons.star,
-                size: w1 * 0.05,
+                size: 15,
                 color: Theme.of(context).primaryColor,
               ),
               Icon(
                 Icons.star,
-                size: w1 * 0.05,
+                size: 15,
                 color: Theme.of(context).primaryColor,
               ),
               Icon(
                 Icons.star,
-                size: w1 * 0.05,
+                size: 15,
                 color: Theme.of(context).primaryColor,
               ),
               Icon(
                 Icons.star,
-                size: w1 * 0.05,
+                size: 15,
                 color: Theme.of(context).primaryColor,
               ),
             ],
@@ -354,13 +357,13 @@ class rightSide extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Colors.pink,
-              radius: w1 * 0.022,
+              radius: 8,
               child: Center(
                 child: Text(
                   '₹',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: w1 * 0.03,
+                    fontSize: 10,
                   ),
                 ),
               ),
@@ -372,10 +375,13 @@ class rightSide extends StatelessWidget {
               'Cost for Two ₹ $cost',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: w1 * 0.03,
+                fontSize: 10,
               ),
             ),
           ],
+        ),
+        SizedBox(
+          height: 2,
         ),
         delivery == true
             ? Row(
@@ -384,12 +390,12 @@ class rightSide extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.pink,
-                    radius: w1 * 0.022,
+                    radius: 8,
                     child: Center(
                       child: Icon(
                         Icons.two_wheeler,
                         color: Colors.white,
-                        size: w1 * 0.031,
+                        size: 10,
                       ),
                     ),
                   ),
@@ -400,12 +406,15 @@ class rightSide extends StatelessWidget {
                     'Delivery',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: w1 * 0.03,
+                      fontSize: 12,
                     ),
                   ),
                 ],
               )
             : SizedBox(),
+        SizedBox(
+          height: 2,
+        ),
         takeaway == true
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -413,12 +422,12 @@ class rightSide extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.pink,
-                    radius: w1 * 0.022,
+                    radius: 8,
                     child: Center(
                       child: Icon(
                         Icons.shopping_bag_outlined,
                         color: Colors.white,
-                        size: w1 * 0.031,
+                        size: 10,
                       ),
                     ),
                   ),
@@ -429,12 +438,15 @@ class rightSide extends StatelessWidget {
                     'Takeaway',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: w1 * 0.03,
+                      fontSize: 12,
                     ),
                   ),
                 ],
               )
             : SizedBox(),
+        SizedBox(
+          height: 2,
+        ),
         foodistaanCertified == true
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -442,7 +454,7 @@ class rightSide extends StatelessWidget {
                 children: [
                   Image.asset(
                     'Images/fs_certified.png',
-                    width: w1 * 0.055,
+                    width: 20,
                   ),
                   SizedBox(
                     width: 5,
@@ -451,15 +463,13 @@ class rightSide extends StatelessWidget {
                     'Foodistaan Certified',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
-                      fontSize: w1 * 0.033,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               )
-            : SizedBox(
-                height: 11,
-              ),
+            : SizedBox(),
         // Container(
         //   height: 10 * h1 / 62,
         //   width: w1 / 3,

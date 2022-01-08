@@ -35,15 +35,25 @@ class _MainScreenState extends State<MainScreen> {
   bool once = false;
   String? userNumber = '';
 
+  PageController _pageController = PageController();
+
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: currentIndex);
     LocationFunctions().getUserLocation().then((value) {
       setState(() {
         global.currentLocation = value;
         userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _pageController.dispose();
+    super.dispose();
   }
 
   var Screens = [
@@ -61,7 +71,10 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
+        onTap: (index) => setState(() {
+          currentIndex = index;
+          _pageController.jumpToPage(currentIndex);
+        }),
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: unselected,
         selectedItemColor: selected,
@@ -188,27 +201,21 @@ class _MainScreenState extends State<MainScreen> {
             )
           : null,
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-                // decoration: BoxDecoration(
-                //   image: DecorationImage(
-                //     image: AssetImage("Images/BgSmiley.png"),
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                child: Screens[currentIndex]),
-            userNumber != ''
-                ? Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: OrderFunction().fetchCurrentOrder(userNumber),
-                    ),
-                  )
-                : Center(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          PageView(
+            controller: _pageController,
+            children: Screens,
+          ),
+          userNumber != ''
+              ? Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: OrderFunction().fetchCurrentOrder(userNumber),
+                  ),
+                )
+              : Center(),
+        ],
       ),
     );
   }

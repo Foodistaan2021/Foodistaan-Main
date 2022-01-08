@@ -9,6 +9,7 @@ import 'package:foodistan/functions/location_functions.dart';
 import 'package:foodistan/functions/places_search_model.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
 import 'package:foodistan/functions/address_from_placeId_model.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
 
 class LocationBottomSheetWidget extends StatefulWidget {
   const LocationBottomSheetWidget({Key? key}) : super(key: key);
@@ -326,13 +327,15 @@ class SavedAddressWidget extends StatefulWidget {
 class _SavedAddressWidgetState extends State<SavedAddressWidget> {
   @override
   List<Map<String, dynamic>> addressList = [];
+  List<String> addressIdList = [];
   bool hasData = false;
 
   void initState() {
     super.initState();
     UserAddress().fetchAllAddresses().then((value) {
       setState(() {
-        addressList = value;
+        addressList = value[0];
+        addressIdList = value[1];
         hasData = true;
       });
     });
@@ -351,9 +354,11 @@ class _SavedAddressWidgetState extends State<SavedAddressWidget> {
                 itemCount: addressList.length,
                 itemBuilder: (context, index) {
                   Map<String, dynamic> data = addressList[index];
+                  String addressId = addressIdList[index];
                   return GestureDetector(
                     onTap: () async {
-                      deliveryAddress.value = data;
+                      await UserAddressProvider()
+                          .selectAddress(addressId, data);
                       Navigator.pop(context);
                     },
                     child: Stack(

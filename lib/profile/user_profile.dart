@@ -17,13 +17,17 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _UserProfileState extends State<UserProfile>
+    with AutomaticKeepAliveClientMixin {
   Map items = {
     "name": "",
     "email": "",
     "number": "",
     "pic": "",
   };
+
+  @override
+  bool get wantKeepAlive => true;
   fetchData() async {
     final _firestore = FirebaseFirestore.instance;
 
@@ -56,6 +60,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -212,7 +217,8 @@ class _UserProfileState extends State<UserProfile> {
                             'Bookmarks',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.033,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.033,
                               color: Colors.black,
                             ),
                           ),
@@ -247,7 +253,8 @@ class _UserProfileState extends State<UserProfile> {
                             'Notifications',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.033,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.033,
                               color: Colors.black,
                             ),
                           ),
@@ -282,7 +289,8 @@ class _UserProfileState extends State<UserProfile> {
                             'Settings',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.033,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.033,
                               color: Colors.black,
                             ),
                           ),
@@ -317,7 +325,8 @@ class _UserProfileState extends State<UserProfile> {
                             'Payments',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.033,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.033,
                               color: Colors.black,
                             ),
                           ),
@@ -367,7 +376,7 @@ class _UserProfileState extends State<UserProfile> {
                       'Order History',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width*0.044,
+                        fontSize: MediaQuery.of(context).size.width * 0.044,
                       ),
                     ),
                   ],
@@ -413,7 +422,7 @@ class _UserProfileState extends State<UserProfile> {
                       'Saved Address Book',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width*0.044,
+                        fontSize: MediaQuery.of(context).size.width * 0.044,
                       ),
                     ),
                   ],
@@ -459,7 +468,7 @@ class _UserProfileState extends State<UserProfile> {
                       'About Foodistaan Pro',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width*0.044,
+                        fontSize: MediaQuery.of(context).size.width * 0.044,
                       ),
                     ),
                   ],
@@ -505,7 +514,7 @@ class _UserProfileState extends State<UserProfile> {
                       'Offers & Deals of the Day',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width*0.044,
+                        fontSize: MediaQuery.of(context).size.width * 0.044,
                       ),
                     ),
                   ],
@@ -551,7 +560,7 @@ class _UserProfileState extends State<UserProfile> {
                       'Help',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width*0.044,
+                        fontSize: MediaQuery.of(context).size.width * 0.044,
                       ),
                     ),
                   ],

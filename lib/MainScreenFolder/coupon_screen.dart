@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/cart_screens/total_price_screen.dart';
 import 'package:foodistan/global/global_variables.dart';
+import 'package:foodistan/providers/cart_id_provider.dart';
+import 'package:foodistan/providers/restaurant_data_provider.dart';
+import 'package:provider/provider.dart';
+
 class CouponScreen extends StatefulWidget {
-  var cartId;
   var totalPrice;
-  CouponScreen({required this.cartId, required this.totalPrice});
+  CouponScreen({required this.totalPrice});
 
   @override
   State<CouponScreen> createState() => _CouponScreenState();
@@ -47,9 +50,12 @@ class _CouponScreenState extends State<CouponScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Coupon Selection',style: TextStyle(
-          color: Colors.black,
-        ),),
+        title: Text(
+          'Coupon Selection',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
         leading: GestureDetector(
@@ -64,101 +70,126 @@ class _CouponScreenState extends State<CouponScreen> {
       ),
       backgroundColor: Colors.grey.shade100,
       body: coupons.isEmpty
-      ? Center(child: CircularProgressIndicator(
-        color: Colors.yellow.shade700,
-      ),)
-      : ListView.builder(
-          itemCount: coupons.length,
-          itemBuilder: (BuildContext context, int index) {
-            Map<String, dynamic> couponData = coupons[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 11,
-                vertical: 5.5,
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.yellow.shade700,
               ),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          contentPadding: EdgeInsets.all(0),
-                          title: Text(
-                            couponData['code'],
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width*0.05,
+            )
+          : ListView.builder(
+              itemCount: coupons.length,
+              itemBuilder: (BuildContext context, int index) {
+                Map<String, dynamic> couponData = coupons[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 11,
+                    vertical: 5.5,
+                  ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.all(0),
+                              title: Text(
+                                couponData['code'],
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                ),
+                              ),
+                              trailing: Consumer<CartIdProvider>(
+                                builder: (context, value, buttonWidget) {
+                                  return TextButton(
+                                    onPressed: () async {
+                                      if (widget.totalPrice <
+                                          couponData['min-price']) {
+                                        return null;
+                                      } else {
+                                        value.hasData
+                                            ? await RestaurantDataProvider()
+                                                .addCoupon(value.cartId,
+                                                    couponData['id'])
+                                                .then((v) {
+                                                Navigator.pop(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            CartScreenMainLogin()));
+                                              })
+                                            : null;
+                                      }
+                                    },
+                                    child: Text(
+                                      'Apply',
+                                      style: TextStyle(
+                                        color: Colors.yellow.shade700,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.05,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              subtitle: widget.totalPrice <
+                                      couponData['min-price']
+                                  ? Text(
+                                      'Add items worth ₹ ' +
+                                          (couponData['min-price'] -
+                                                  widget.totalPrice)
+                                              .toString() +
+                                          ' to avail this offer!',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : Text(
+                                      'You will save ' +
+                                          (widget.totalPrice *
+                                                  (couponData['percentage'] /
+                                                      100))
+                                              .toString() +
+                                          ' with this coupon!',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                             ),
-                          ),
-                          trailing: TextButton(
-                              onPressed: () async {
-                                if (widget.totalPrice <
-                                    couponData['min-price']) {
-                                  return null;
-                                } else {
-                                  await FirebaseFirestore.instance
-                                      .collection('cart')
-                                      .doc(widget.cartId)
-                                      .update({
-                                    'coupon-id': couponData['id']
-                                  }).then((value) {
-                                    couponCode = couponData['code'];
-                                    maxCouponDiscount =
-                                    couponData['max-discount'];
-                                    couponPercentage.value =
-                                    couponData['percentage'];
-                                    Navigator.pop(context);
-                                  });
-                                }
-                              },
-                              child: Text('Apply',style: TextStyle(
-                                color: Colors.yellow.shade700,
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width*0.05,
-                              ),),),
-                          subtitle: widget.totalPrice < couponData['min-price']
-                              ? Text('Add items worth ₹ ' +
-                              ( couponData['min-price']-widget.totalPrice)
-                                  .toString() +
-                              ' to avail this offer!',style: TextStyle(
-                            color: Colors.grey,
-                          ),)
-                              : Text('You will save ' +
-                              (widget.totalPrice *
-                                  (couponData['percentage'] / 100))
-                                  .toString() +
-                              ' with this coupon!',style: TextStyle(
-                            color: Colors.grey,
-                          ),),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Get ${couponData['percentage']}% off upto ${couponData['max-discount']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              'Valid on orders with items worth Rs. ${couponData['min-price']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                            'Get ${couponData['percentage']}% off upto ${couponData['max-discount']}',style: TextStyle(
-                          color: Colors.black,
-                        ),),
-                        Text(
-                            'Valid on orders with items worth Rs. ${couponData['min-price']}',style: TextStyle(
-                          color: Colors.black,
-                        ),),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              }),
     );
   }
 }

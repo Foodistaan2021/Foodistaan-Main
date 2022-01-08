@@ -1,21 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/address_screen.dart';
 import 'package:foodistan/MainScreenFolder/coupon_screen.dart';
-import 'package:foodistan/functions/address_functions.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodistan/functions/razorpay_integration.dart';
-import 'package:foodistan/profile/payment_methods.dart';
 import 'package:foodistan/profile/profile_address.dart';
 import 'package:foodistan/profile/your_orders.dart';
-import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:foodistan/providers/cart_id_provider.dart';
+import 'package:foodistan/providers/restaurant_data_provider.dart';
 import 'package:foodistan/global/global_variables.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:foodistan/providers/total_price_provider.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
+import 'package:provider/provider.dart';
 
 int maxCouponDiscount = 0;
 String couponCode = '';
@@ -27,28 +26,13 @@ final ValueNotifier<Map<String, dynamic>> deliveryAddress =
 
 class CartScreenMainLogin extends StatefulWidget {
   @override
-  _CartScreenMainLoginState createState() => _CartScreenMainLoginState();
+  State<CartScreenMainLogin> createState() => _CartScreenMainLoginState();
 }
 
-class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
-  String? userNumber;
-  String cartId = '';
+class _CartScreenMainLoginState extends State<CartScreenMainLogin>
+    with AutomaticKeepAliveClientMixin {
   @override
-  void initState() {
-    super.initState();
-    userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
-    CartFunctions().getCartId(userNumber).then((value) {
-      setState(() {
-        cartId = value;
-      });
-    });
-
-    UserAddress().getDeliveryAddress().then((value) {
-      setState(() {
-        deliveryAddress.value = value;
-      });
-    });
-  }
+  bool get wantKeepAlive => true;
 
   Widget checkIfAnyOrders(userNumber) {
     var stream = FirebaseFirestore.instance
@@ -56,7 +40,7 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
         .doc(userNumber)
         .collection('orders')
         .snapshots();
-
+    print('Number $userNumber');
     return StreamBuilder(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -217,12 +201,15 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
               return CartItemsWidget(data: snapshot.data!.docs, cartId: cartId);
             }
           }
+          String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
           return checkIfAnyOrders(userNumber);
         });
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<CartIdProvider>().getCartId();
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -230,19 +217,22 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin> {
           alignment: Alignment.topCenter,
           child: Column(
             children: [
-              cartId != ''
-                  ? cartItems(cartId)
-                  : Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(11),
-                        child: Text(
-                          'Loading...',
-                          style: TextStyle(
-                            color: Colors.black,
+              Consumer<CartIdProvider>(builder: (context, value, child) {
+                print('Cart id ${value.cartId}');
+                return value.hasData == false
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(11),
+                          child: Text(
+                            'Loading...',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      )
+                    : cartItems(value.cartId);
+              })
             ],
           ),
         ),
@@ -261,49 +251,7 @@ class CartItemsWidget extends StatefulWidget {
 }
 
 class _CartItemsWidgetState extends State<CartItemsWidget> {
-  Map<String, dynamic> restaurantData = {};
   @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection('cart')
-        .doc(widget.cartId)
-        .get()
-        .then((value) {
-      String vendorId = value.data()!['vendor-id'];
-      FirebaseFirestore.instance
-          .collection('DummyData')
-          .doc(vendorId)
-          .get()
-          .then((value) {
-        setState(() {
-          restaurantData = value.data()!;
-        });
-      });
-
-      String couponId = value.data()!['coupon-id'];
-
-      if (couponId != '') {
-        FirebaseFirestore.instance
-            .collection('coupons')
-            .doc(couponId)
-            .get()
-            .then((value) {
-          couponPercentage.value = value.data()!['percentage'];
-          couponCode = value.data()!['code'];
-          minCouponValue = value.data()!['min-price'];
-        });
-      }
-    });
-    getPrice(widget.data);
-  }
-
-  getPrice(itemData) {
-    int totalPriceTemp = int.parse(CartFunctions().totalPrice(itemData));
-    totalPrice.value = totalPriceTemp;
-    return totalPriceTemp;
-  }
-
   Widget menuItemWidget(itemData) {
     itemMap[itemData['id']] = itemData['quantity'];
 
@@ -423,335 +371,266 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
     );
   }
 
-  calculateCouponDiscount(couponPercentage, maxDiscount) {
-    double discount = ((couponPercentage / 100) * totalPrice.value);
-    if (minCouponValue > totalPrice.value)
-      totalPriceMain.value = double.parse(totalPrice.value.toString());
-    else if (discount > maxDiscount)
-      totalPriceMain.value =
-          totalPrice.value - double.parse(maxDiscount.toString());
-    else
-      totalPriceMain.value = totalPrice.value - discount;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (restaurantData.isNotEmpty) {
-      return SafeArea(
+  couponWidget(bool hasCoupon, couponCode, minCouponValue, totalPrice, cartId) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: Center(
         child: Container(
+          height: MediaQuery.of(context).size.height * 0.077,
+          width: double.infinity,
+          color: Colors.white,
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
               children: [
-                ListTile(
-                  leading: Image.network(restaurantData['FoodImage']),
-                  title: Text(
-                    restaurantData['Name'],
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                  ),
-                  subtitle: Text(
-                    restaurantData['Address'],
-                    style: TextStyle(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Icon(
+                      Icons.local_offer_outlined,
                       color: Colors.black,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return menuItemWidget(widget.data[index].data());
-                      }),
-                ),
-                ValueListenableBuilder(
-                    valueListenable: totalPrice,
-                    builder: (context, value, child) {
-                      return Padding(
-                        padding: const EdgeInsets.all(11),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Cart Total - ₹ ',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              getPrice(widget.data).toString(),
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CouponScreen(
-                          cartId: widget.cartId, totalPrice: totalPrice.value),
+                    SizedBox(
+                      width: 15,
                     ),
-                  ).then((value) {
-                    setState(() {});
-                  }),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Center(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.077,
-                        width: double.infinity,
-                        color: Colors.white,
-                        child: Center(
-                          child: Stack(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(
-                                    Icons.local_offer_outlined,
-                                    color: Colors.black,
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  ValueListenableBuilder(
-                                      valueListenable: totalPrice,
-                                      builder: (context, value, child) {
-                                        return ValueListenableBuilder<int>(
-                                            valueListenable: couponPercentage,
-                                            builder: (BuildContext context,
-                                                int value, Widget? child) {
-                                              if (couponPercentage.value == 0) {
-                                                totalPriceMain.value =
-                                                    double.parse(totalPrice
-                                                        .value
-                                                        .toString());
-                                                return Text(
-                                                  'Apply Coupon',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.045,
-                                                  ),
-                                                );
-                                              } else if (minCouponValue >
-                                                  totalPrice.value) {
-                                                calculateCouponDiscount(
-                                                    couponPercentage.value,
-                                                    maxCouponDiscount);
-                                                return Text(
-                                                  'Add More',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.045,
-                                                  ),
-                                                );
-                                              } else {
-                                                calculateCouponDiscount(
-                                                    couponPercentage.value,
-                                                    maxCouponDiscount);
-                                                return Text(
-                                                  couponCode,
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.045,
-                                                  ),
-                                                );
-                                              }
-                                            });
-                                      }),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ValueListenableBuilder(
-                                      valueListenable: totalPrice,
-                                      builder: (context, value, child) {
-                                        return ValueListenableBuilder<int>(
-                                            valueListenable: couponPercentage,
-                                            builder: (BuildContext context,
-                                                int value, Widget? child) {
-                                              if (couponPercentage.value == 0) {
-                                                totalPriceMain.value =
-                                                    double.parse(totalPrice
-                                                        .value
-                                                        .toString());
-                                                return Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: Colors.black,
-                                                );
-                                              } else {
-                                                calculateCouponDiscount(
-                                                    couponPercentage.value,
-                                                    maxCouponDiscount);
-                                                return TextButton(
-                                                    onPressed: () async {
-                                                      FirebaseFirestore.instance
-                                                          .collection('cart')
-                                                          .doc(widget.cartId)
-                                                          .update({
-                                                        'coupon-id': ''
-                                                      }).then((value) {
-                                                        couponPercentage.value =
-                                                            0;
-
-                                                        setState(() {});
-                                                      });
-                                                    },
-                                                    child: Text(
-                                                        'Remove ${couponPercentage.value}% Off',
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xfff7c12b),
-                                                          // fontSize: MediaQuery.of(context).size.width*0.03,
-                                                        )));
-                                              }
-                                            });
-                                      }),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ValueListenableBuilder(
-                    valueListenable: orderType,
-                    builder: (context, value, widget) {
-                      if (orderType.value == 'delivery') {
-                        return ValueListenableBuilder(
-                            valueListenable: deliveryAddress,
-                            builder:
-                                (context, Map<String, dynamic> value, widget) {
-                              if (value.isEmpty) {
-                                return GestureDetector(
-                                  onTap: () async {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AddressScreen()));
-                                  },
-                                  child: Center(
-                                    child: Text('Add Adress'),
-                                  ),
-                                );
-                              } else {
-                                return ListTile(
-                                  leading: Text(value['category']),
-                                  title: Text(value['house-feild']),
-                                  subtitle: Text(value['street-feild']),
-                                  trailing: TextButton(
-                                      onPressed: () async {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Address()));
-                                      },
-                                      child: Text('Change')),
-                                );
-                              }
-                            });
-                      } else {
-                        return GestureDetector(
-                          onTap: null,
-                          child: Text('ABCD'),
-                        );
-                      }
-                    }),
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 11,
-                      vertical: 15,
-                    ),
-                    child: ValueListenableBuilder<double>(
-                        valueListenable: totalPriceMain,
-                        builder: (context, value, child) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RazorPayScreen(
-                                    totalPrice: totalPriceMain.value,
-                                    items: itemMap,
-                                    cartId: widget.cartId,
-                                    vednorId: restaurantData['id'],
-                                    vendorName: restaurantData['Name'],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 35,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.yellow.shade700,
-                                  width: 1.5,
-                                ),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
+                    hasCoupon == true && minCouponValue < totalPrice
+                        ? Text(
+                            couponCode.toString(),
+                            style: TextStyle(color: Colors.black),
+                          )
+                        : hasCoupon == true && minCouponValue > totalPrice
+                            ? Text('Add More To cart')
+                            : Text('Apply Coupn'),
+                    hasCoupon == true
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                                onPressed: () async {
+                                  Provider.of<RestaurantDataProvider>(context,
+                                          listen: false)
+                                      .removeCoupon(cartId);
+                                },
                                 child: Text(
-                                  'Proceed To Pay ₹ ${totalPriceMain.value}',
-                                  style: TextStyle(
-                                    color: Colors.yellow.shade700,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        })),
+                                  'Remove Coupon',
+                                  textAlign: TextAlign.end,
+                                )),
+                          )
+                        : GestureDetector(
+                            onTap: () async {
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CouponScreen(
+                                              totalPrice: totalPrice)))
+                                  .then((value) {
+                                setState(() {});
+                              });
+                            },
+                            child: Icon(Icons.arrow_right_sharp))
+                  ],
+                ),
               ],
             ),
           ),
         ),
-      );
-    } else {
-      return CircularProgressIndicator();
-    }
+      ),
+    );
+  }
+
+  calculateCouponDiscount(totalPrice, couponPercentage, maxDiscount) {
+    double discount = ((couponPercentage / 100) * totalPrice);
+
+    return discount < maxDiscount
+        ? (totalPrice.toDouble() - discount).ceil()
+        : totalPrice - maxDiscount;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.read<TotalPriceProvider>().getTotalPrice(widget.data);
+    context.read<RestaurantDataProvider>().getRestaurantData(widget.cartId);
+    context.read<UserAddressProvider>().checkDefaultDeliveryAddress();
+
+    return SafeArea(
+      child: Container(
+        child: Center(child:
+            Consumer<RestaurantDataProvider>(builder: (context, value, child) {
+          return value.hasData == false
+              ? CircularProgressIndicator(
+                  color: Colors.yellow,
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      leading: Image.network(value.restaurantData['FoodImage']),
+                      title: Text(
+                        value.restaurantData['Name'],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        value.restaurantData['Address'],
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15,
+                      ),
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return menuItemWidget(widget.data[index].data());
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(11),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Cart Total - ₹ ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          Consumer<TotalPriceProvider>(
+                              builder: (context, value, widget) {
+                            return Text(value.totalPriceProvider.toString());
+                          }),
+                        ],
+                      ),
+                    ),
+                    Consumer<TotalPriceProvider>(
+                        builder: (context, totalPriceValue, totalPricewidget) {
+                      return couponWidget(
+                          value.hasCoupon,
+                          value.couponCode,
+                          value.minCouponValue,
+                          totalPriceValue.totalPriceProvider,
+                          widget.cartId);
+                    }),
+                    Consumer<UserAddressProvider>(builder:
+                        (context, userAddressValue, userAddressWidget) {
+                      return userAddressValue.hasDeafultAddress
+                          ? ListTile(
+                              leading: Text(
+                                  userAddressValue.addressData['category']),
+                              title: Text(
+                                  userAddressValue.addressData['house-feild']),
+                              subtitle: Text(
+                                  userAddressValue.addressData['street-feild']),
+                              trailing: TextButton(
+                                  onPressed: () async {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Address())).then((value) {
+                                      setState(() {});
+                                    });
+                                  },
+                                  child: Text('Change')),
+                            )
+                          : TextButton(
+                              onPressed: () async {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => AddressScreen()));
+
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return LocationBottomSheetWidget();
+                                    });
+                              },
+                              child: Text('Add Address'));
+                    }),
+                    Consumer<TotalPriceProvider>(
+                        builder: (context, totalPriceValue, payWidget) {
+                      return Container(
+                          height: 35,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.yellow.shade700,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                          child: Consumer<UserAddressProvider>(builder:
+                              (context, userAddressValue, userAddressWidget) {
+                            return GestureDetector(
+                              onTap: () async {
+                                userAddressValue.hasDeafultAddress == true
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => RazorPayScreen(
+                                                totalPriceFinal:
+                                                    calculateCouponDiscount(
+                                                        totalPriceValue
+                                                            .totalPriceProvider,
+                                                        value.couponPercentage,
+                                                        value
+                                                            .maxCouponDiscount),
+                                                items: itemMap,
+                                                cartId: widget.cartId,
+                                                vednorId:
+                                                    RestaurantDataProvider()
+                                                        .restaurantData['id'],
+                                                vendorName:
+                                                    RestaurantDataProvider()
+                                                            .restaurantData[
+                                                        'Name'])))
+                                    : showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return LocationBottomSheetWidget();
+                                        });
+                              },
+                              child: Center(
+                                child: value.hasCoupon &&
+                                        value.minCouponValue <
+                                            totalPriceValue.totalPriceProvider
+                                    ? Text(
+                                        'Proceed To Pay ₹ ${calculateCouponDiscount(totalPriceValue.totalPriceProvider, value.couponPercentage, value.maxCouponDiscount).toString()}',
+                                        style: TextStyle(
+                                          color: Colors.yellow.shade700,
+                                          fontSize: 15,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Proceed To Pay ₹ ${totalPriceValue.totalPriceProvider}',
+                                        style: TextStyle(
+                                          color: Colors.yellow.shade700,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                              ),
+                            );
+                          }));
+                    })
+                  ],
+                );
+        })),
+      ),
+    );
   }
 }

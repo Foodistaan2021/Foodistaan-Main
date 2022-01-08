@@ -11,11 +11,16 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   bool selectStreetStyle = true;
   bool selectTiffinServices = false;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
     return SingleChildScrollView(

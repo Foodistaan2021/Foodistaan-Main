@@ -2,6 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodistan/profile/profile_address.dart';
+import 'package:foodistan/providers/cart_id_provider.dart';
+import 'package:foodistan/providers/restaurant_data_provider.dart';
+import 'package:foodistan/providers/total_price_provider.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:provider/provider.dart';
 import 'scanner.dart';
 import 'MainScreenFolder/mainScreenFile.dart';
 import 'optionScreenFile.dart';
@@ -25,22 +30,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: FirebaseAuth.instance.currentUser != null ? 'H' : 'L',
-      routes: {
-        'S': (context) => ScannerScreen(),
-        'L': (context) => LoginScreen(),
-        'H': (context) => MainScreen(),
-        'O': (context) => OptionScreen(),
-      },
-      debugShowCheckedModeBanner: false,
-      title: 'Foodistaan',
-      theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(
-          Theme.of(context).textTheme,
-        ),
-        primaryColor: Colors.yellow.shade700,
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CartIdProvider>(
+              create: (_) => CartIdProvider()),
+          ChangeNotifierProvider<RestaurantDataProvider>(
+              create: (_) => RestaurantDataProvider()),
+          ChangeNotifierProvider<TotalPriceProvider>(
+              create: (_) => TotalPriceProvider()),
+          ChangeNotifierProvider<UserAddressProvider>(
+              create: (_) => UserAddressProvider())
+        ],
+        builder: (context, child) {
+          return MaterialApp(
+            initialRoute: FirebaseAuth.instance.currentUser != null ? 'H' : 'L',
+            routes: {
+              'S': (context) => ScannerScreen(),
+              'L': (context) => LoginScreen(),
+              'H': (context) => MainScreen(),
+              'O': (context) => OptionScreen(),
+            },
+            debugShowCheckedModeBanner: false,
+            title: 'Foodistaan',
+            theme: ThemeData(
+              textTheme: GoogleFonts.montserratTextTheme(
+                Theme.of(context).textTheme,
+              ),
+              primaryColor: Colors.yellow.shade700,
+            ),
+          );
+        });
   }
 }

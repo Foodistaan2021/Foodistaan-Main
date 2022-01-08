@@ -11,13 +11,14 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:foodistan/global/global_variables.dart';
+
 class RazorPayScreen extends StatefulWidget {
-  var totalPrice;
+  var totalPriceFinal;
   String cartId, vednorId, vendorName;
   Map<String, dynamic> items;
 
   RazorPayScreen(
-      {required this.totalPrice,
+      {required this.totalPriceFinal,
       required this.items,
       required this.cartId,
       required this.vednorId,
@@ -54,7 +55,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
   void openCheckout() {
     var options = {
       "key": "rzp_test_GjPw97IIEcO9oU",
-      "amount": widget.totalPrice * 100,
+      "amount": widget.totalPriceFinal * 100,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "$userNumber", "email": "akshat@gmail.com"},
@@ -104,8 +105,8 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             onPressed: () async {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (c) => CartScreenMainLogin()));
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (c) => CartScreenMainLogin()));
             },
             color: Color.fromRGBO(0, 179, 134, 1.0),
           ),

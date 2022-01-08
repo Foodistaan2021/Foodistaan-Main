@@ -9,6 +9,7 @@ class UserAddress {
 
   fetchAllAddresses() async {
     List<Map<String, dynamic>> addressList = [];
+    List<String> addressIdList = [];
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     await FirebaseFirestore.instance
         .collection('users')
@@ -18,9 +19,10 @@ class UserAddress {
         .then((value) {
       for (var item in value.docs) {
         addressList.add(item.data());
+        addressIdList.add(item.id);
       }
     });
-    return addressList;
+    return [addressList, addressIdList];
   }
 
   getDeliveryAddress() async {
@@ -57,7 +59,6 @@ class UserAddress {
         .collection('address')
         .doc()
         .id;
-    print('IDD $id');
     await _firestore
         .collection('users')
         .doc(userNumber)
