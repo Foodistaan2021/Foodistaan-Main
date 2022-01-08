@@ -12,7 +12,8 @@ import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
 
 class LocationBottomSheetWidget extends StatefulWidget {
-  const LocationBottomSheetWidget({Key? key}) : super(key: key);
+  bool isAddingAddress;
+  LocationBottomSheetWidget({required this.isAddingAddress});
 
   @override
   State<LocationBottomSheetWidget> createState() =>
@@ -169,6 +170,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                     builder: (context) => AddLocation(
                       placeId: null,
                       placeSearched: false,
+                      isAddingAddress: widget.isAddingAddress,
                     ),
                   ),
                 ),
@@ -248,6 +250,8 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                         builder: (context) => AddLocation(
                                           placeId: searchResult[index].placeId,
                                           placeSearched: true,
+                                          isAddingAddress:
+                                              widget.isAddingAddress,
                                         ),
                                       ),
                                     );

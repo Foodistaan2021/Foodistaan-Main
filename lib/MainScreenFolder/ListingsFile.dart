@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:foodistan/providers/restaurant_list_provider.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
+import 'package:provider/provider.dart';
 
 List items = [];
 List sortItems = [];
@@ -55,34 +57,40 @@ class _ListingsState extends State<Listings> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchData('DummyData').then((value) {
-      setState(() {
-        items = value;
-      });
-    });
+    // fetchData('DummyData').then((value) {
+    //   setState(() {
+    //     items = value;
+    //   });
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     // var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
-    return items.isNotEmpty
-        ? ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.all(11),
-                child: ListedTile(
-                  details: items[index],
-                  Id: vendor_id_list[index],
-                ),
-              );
-            },
-          )
-        : CircularProgressIndicator();
+    context.read<RestaurantListProvider>().fetchData('DummyData', null);
+    return Consumer<RestaurantListProvider>(
+        builder: (context, restaurantListValue, restaurantListWidget) {
+      return restaurantListValue.hasData
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: restaurantListValue.items.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.all(11),
+                  child: ListedTile(
+                    details: restaurantListValue.items[index],
+                    Id: restaurantListValue.vendor_id_list[index],
+                  ),
+                );
+              },
+            )
+          : CircularProgressIndicator(
+              color: Colors.yellow,
+            );
+    });
   }
 }
 

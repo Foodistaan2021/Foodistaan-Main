@@ -4,8 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:foodistan/profile/profile_address.dart';
 import 'package:foodistan/providers/cart_id_provider.dart';
 import 'package:foodistan/providers/restaurant_data_provider.dart';
+import 'package:foodistan/providers/restaurant_list_provider.dart';
+
 import 'package:foodistan/providers/total_price_provider.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:foodistan/providers/user_location_provider.dart';
+
 import 'package:provider/provider.dart';
 import 'scanner.dart';
 import 'MainScreenFolder/mainScreenFile.dart';
@@ -39,7 +43,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<TotalPriceProvider>(
               create: (_) => TotalPriceProvider()),
           ChangeNotifierProvider<UserAddressProvider>(
-              create: (_) => UserAddressProvider())
+              create: (_) => UserAddressProvider()),
+          ChangeNotifierProvider<RestaurantListProvider>(
+              create: (_) => RestaurantListProvider()),
+          ChangeNotifierProvider<UserLocationProvider>(
+              create: (_) => UserLocationProvider())
         ],
         builder: (context, child) {
           return MaterialApp(

@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   int inx = 0;
   bool once = false;
-  String? userNumber = '';
+  String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
 
   PageController _pageController = PageController();
 
@@ -41,17 +41,15 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: currentIndex);
-    LocationFunctions().getUserLocation().then((value) {
-      setState(() {
-        global.currentLocation = value;
-        userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
-      });
-    });
+    // LocationFunctions().getUserLocation().then((value) {
+    //   setState(() {
+    //     global.currentLocation = value;
+    //   });
+    // });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _pageController.dispose();
     super.dispose();
   }
@@ -178,8 +176,9 @@ class _MainScreenState extends State<MainScreen> {
                                                     .size
                                                     .height *
                                                 0.7,
-                                            child:
-                                                LocationBottomSheetWidget()));
+                                            child: LocationBottomSheetWidget(
+                                              isAddingAddress: false,
+                                            )));
                                   },
                                   child: Location(),
                                 )),
@@ -207,14 +206,12 @@ class _MainScreenState extends State<MainScreen> {
             controller: _pageController,
             children: Screens,
           ),
-          userNumber != ''
-              ? Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: OrderFunction().fetchCurrentOrder(userNumber),
-                  ),
-                )
-              : Center(),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: OrderFunction().fetchCurrentOrder(userNumber),
+            ),
+          )
         ],
       ),
     );

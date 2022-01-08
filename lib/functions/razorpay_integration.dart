@@ -13,12 +13,12 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:foodistan/global/global_variables.dart';
 
 class RazorPayScreen extends StatefulWidget {
-  var totalPriceFinal;
+  double finalPrice;
   String cartId, vednorId, vendorName;
   Map<String, dynamic> items;
 
   RazorPayScreen(
-      {required this.totalPriceFinal,
+      {required this.finalPrice,
       required this.items,
       required this.cartId,
       required this.vednorId,
@@ -55,7 +55,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
   void openCheckout() {
     var options = {
       "key": "rzp_test_GjPw97IIEcO9oU",
-      "amount": widget.totalPriceFinal * 100,
+      "amount": widget.finalPrice * 100,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "$userNumber", "email": "akshat@gmail.com"},

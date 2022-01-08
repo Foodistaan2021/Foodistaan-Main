@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodistan/MainScreenFolder/address_screen.dart';
 
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
@@ -13,9 +14,13 @@ import 'package:location/location.dart';
 import '../HomeScreenFile.dart';
 
 class AddLocation extends StatefulWidget {
+  bool isAddingAddress;
   var placeId;
   var placeSearched;
-  AddLocation({required this.placeId, required this.placeSearched});
+  AddLocation(
+      {required this.placeId,
+      required this.placeSearched,
+      required this.isAddingAddress});
 
   @override
   _AddLocationState createState() => _AddLocationState();
@@ -218,8 +223,14 @@ class _AddLocationState extends State<AddLocation> {
                                   .updateUserLocation(userLocation.latitude,
                                       userLocation.longitude)
                                   .then((value) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, 'H', (route) => false);
+                                widget.isAddingAddress == false
+                                    ? Navigator.pushNamedAndRemoveUntil(
+                                        context, 'H', (route) => false)
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AddressScreen()));
                               });
                             },
                             child: Container(

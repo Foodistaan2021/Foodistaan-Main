@@ -445,7 +445,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
     );
   }
 
-  calculateCouponDiscount(totalPrice, couponPercentage, maxDiscount) {
+  int calculateCouponDiscount(totalPrice, couponPercentage, maxDiscount) {
     double discount = ((couponPercentage / 100) * totalPrice);
 
     return discount < maxDiscount
@@ -548,16 +548,15 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                             )
                           : TextButton(
                               onPressed: () async {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => AddressScreen()));
-
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
-                                      return LocationBottomSheetWidget();
-                                    });
+                                      return LocationBottomSheetWidget(
+                                        isAddingAddress: true,
+                                      );
+                                    }).then((value) {
+                                  setState(() {});
+                                });
                               },
                               child: Text('Add Address'));
                     }),
@@ -583,27 +582,27 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => RazorPayScreen(
-                                                totalPriceFinal:
-                                                    calculateCouponDiscount(
+                                                finalPrice: calculateCouponDiscount(
                                                         totalPriceValue
                                                             .totalPriceProvider,
                                                         value.couponPercentage,
-                                                        value
-                                                            .maxCouponDiscount),
+                                                        value.maxCouponDiscount)
+                                                    .toDouble(),
                                                 items: itemMap,
                                                 cartId: widget.cartId,
                                                 vednorId:
-                                                    RestaurantDataProvider()
-                                                        .restaurantData['id'],
-                                                vendorName:
-                                                    RestaurantDataProvider()
-                                                            .restaurantData[
-                                                        'Name'])))
+                                                    value.restaurantData['id'],
+                                                vendorName: value
+                                                    .restaurantData['Name'])))
                                     : showModalBottomSheet(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return LocationBottomSheetWidget();
-                                        });
+                                          return LocationBottomSheetWidget(
+                                            isAddingAddress: true,
+                                          );
+                                        }).then((value) {
+                                        setState(() {});
+                                      });
                               },
                               child: Center(
                                 child: value.hasCoupon &&

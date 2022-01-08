@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
+import 'package:foodistan/providers/user_location_provider.dart';
+import 'package:provider/provider.dart';
 
 class Location extends StatefulWidget {
   @override
@@ -16,17 +18,6 @@ class _LocationState extends State<Location> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _asyncFunctions().then((value) {
-      if (value) {
-        setState(() {
-          hasAddress = true;
-        });
-      } else {
-        setState(() {
-          hasAddress = false;
-        });
-      }
-    });
   }
 
   _asyncFunctions() async {
@@ -44,6 +35,8 @@ class _LocationState extends State<Location> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<UserLocationProvider>().getUserLocation();
+
     var h1 = MediaQuery.of(context).size.height;
     return FittedBox(
       alignment: Alignment.bottomLeft,
@@ -59,28 +52,31 @@ class _LocationState extends State<Location> {
           SizedBox(
             width: 11,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              hasAddress== true ? Text(
-                userAddress!.name!,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: h1 * 0.033,
-                ),
-              ) : Text('Select Location'),
-              hasAddress == true
-                  ? Text(
-                      userAddress!.subLocality!,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: h1 * 0.03,
+          Consumer<UserLocationProvider>(
+              builder: (context, userLocationValue, userLocationWidget) {
+            return userLocationValue.hasUserLocation
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userLocationValue.userAddress!.name!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: h1 * 0.033,
+                        ),
                       ),
-                    )
-                  : Text('data'),
-            ],
-          ),
+                      Text(
+                        userLocationValue.userAddress!.subLocality!,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: h1 * 0.03,
+                        ),
+                      )
+                    ],
+                  )
+                : Text('Select Location');
+          }),
         ],
       ),
     );
@@ -168,7 +164,7 @@ class _SearchState extends State<Search> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-               color: Color.fromRGBO(0, 0, 0, 0.15),
+              color: Color.fromRGBO(0, 0, 0, 0.15),
               spreadRadius: 3,
               blurRadius: 5,
             ),
