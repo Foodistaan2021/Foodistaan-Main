@@ -44,7 +44,7 @@ class _TotalBillBottomWidgetState extends State<TotalBillBottomWidget> {
               if (snapshot.hasData) {
                 if (snapshot.data!.docs.length != 0) {
                   var itemsNumber = snapshot.data!.docs.length;
-                  totalItemsInCart.value = itemsNumber;
+
                   return Container(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.09,

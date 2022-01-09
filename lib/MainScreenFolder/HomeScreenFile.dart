@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/functions/location_functions.dart';
 import 'Crousel.dart';
 import 'CategoryTile.dart';
 import 'CuisineTile.dart';
@@ -18,6 +19,20 @@ class _HomeScreenState extends State<HomeScreen>
 
   bool selectStreetStyle = true;
   bool selectTiffinServices = false;
+  var userLocation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    LocationFunctions().getUserLocation().then((value) {
+      setState(() {
+        userLocation = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -44,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   child: GestureDetector(
                     onTap: () async {
-                      await fetchData('DummyData');
                       selectStreetStyle = true;
                       selectTiffinServices = false;
                       setState(() {});
@@ -68,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   child: GestureDetector(
                     onTap: () async {
-                      await fetchData('TiffinServices');
                       selectStreetStyle = false;
                       selectTiffinServices = true;
                       setState(() {});
@@ -105,7 +118,9 @@ class _HomeScreenState extends State<HomeScreen>
             ],
           ),
           CuisineTileList(),
-          Listings(),
+          Listings(
+            userLocation: userLocation,
+          ),
           SizedBox(
             height: 33,
           ),

@@ -76,7 +76,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     String paymentId = response.paymentId!;
     OrderFunction()
         .placeOrder(widget.vednorId, widget.vendorName, userNumber, itemMap,
-            totalPriceMain.value, paymentId, widget.cartId)
+            widget.finalPrice, paymentId, widget.cartId)
         .then((value) {
       Navigator.push(
           context,

@@ -240,7 +240,7 @@ class CartFunctions {
       totalQuantity += int.parse(quantity);
       totalPrice += int.parse(pricePerItem(price, quantity));
     }
-    totalItemsInCart.value = totalQuantity;
+
     return totalPrice != 0 ? totalPrice.toString() : '';
   }
 

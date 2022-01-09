@@ -2,82 +2,77 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodistan/providers/restaurant_list_provider.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:foodistan/providers/user_location_provider.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
 import 'package:provider/provider.dart';
 
-List items = [];
-List sortItems = [];
-List vendor_id_list = [];
+// List items = [];
+// List sortItems = [];
+// List vendor_id_list = [];
 
-fetchData(String category) async {
-  final CollectionReference StreetFoodList =
-      FirebaseFirestore.instance.collection(category);
-  try {
-    items = [];
-    sortItems = [];
-    await StreetFoodList.get().then((querySnapshot) => {
-          querySnapshot.docs.forEach((element) {
-            items.add(element.data());
-            vendor_id_list.add(element.id);
-          })
-        });
-    if (global.currentLocation == null) {
-      for (int i = 0; i < items.length; i++) {
-        sortItems.add(items[i]);
-        sortItems[i]['Distance'] = (items[i]['Location'].latitude - 0).abs() +
-            (items[i]['Location'].longitude - 0).abs();
-      }
-      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
-    } else {
-      for (int i = 0; i < items.length; i++) {
-        sortItems.add(items[i]);
-        sortItems[i]['Distance'] = (items[i]['Location'].latitude -
-                    global.currentLocation!.latitude)
-                .abs() +
-            (items[i]['Location'].longitude - global.currentLocation!.longitude)
-                .abs();
-      }
-      sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
-    }
-  } catch (e) {
-    print(e.toString());
-  }
-  return sortItems;
-}
+// fetchData(String category) async {
+//   final CollectionReference StreetFoodList =
+//       FirebaseFirestore.instance.collection(category);
+//   try {
+//     items = [];
+//     sortItems = [];
+//     await StreetFoodList.get().then((querySnapshot) => {
+//           querySnapshot.docs.forEach((element) {
+//             items.add(element.data());
+//             vendor_id_list.add(element.id);
+//           })
+//         });
+//     if (global.currentLocation == null) {
+//       for (int i = 0; i < items.length; i++) {
+//         sortItems.add(items[i]);
+//         sortItems[i]['Distance'] = (items[i]['Location'].latitude - 0).abs() +
+//             (items[i]['Location'].longitude - 0).abs();
+//       }
+//       sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+//     } else {
+//       for (int i = 0; i < items.length; i++) {
+//         sortItems.add(items[i]);
+//         sortItems[i]['Distance'] = (items[i]['Location'].latitude -
+//                     global.currentLocation!.latitude)
+//                 .abs() +
+//             (items[i]['Location'].longitude - global.currentLocation!.longitude)
+//                 .abs();
+//       }
+//       sortItems.sort((a, b) => a["Distance"].compareTo(b["Distance"]));
+//     }
+//   } catch (e) {
+//     print(e.toString());
+//   }
+//   return sortItems;
+// }
 
 class Listings extends StatefulWidget {
+  var userLocation = null;
+
+  Listings({this.userLocation});
+
   @override
   _ListingsState createState() => _ListingsState();
 }
 
 class _ListingsState extends State<Listings> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // fetchData('DummyData').then((value) {
-    //   setState(() {
-    //     items = value;
-    //   });
-    // });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // var h1 = MediaQuery.of(context).size.height;
-    // var w1 = MediaQuery.of(context).size.width;
-    context.read<RestaurantListProvider>().fetchData('DummyData', null);
-    return Consumer<RestaurantListProvider>(
-        builder: (context, restaurantListValue, restaurantListWidget) {
+    context
+        .read<RestaurantListProvider>()
+        .fetchData('DummyData', widget.userLocation);
+    return Consumer<RestaurantListProvider>(builder:
+        (restaurantDatacontext, restaurantListValue, restaurantListWidget) {
       return restaurantListValue.hasData
           ? ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: restaurantListValue.items.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (restaurantDatacontext, index) {
                 return Padding(
                   padding: EdgeInsets.all(11),
                   child: ListedTile(

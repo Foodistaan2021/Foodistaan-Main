@@ -24,11 +24,10 @@ class UserLocationProvider extends ChangeNotifier {
       });
     });
     if (_userLocation != null) {
-      _hasUserLocation = true;
-      
       _userAddress =
           await getAddress(_userLocation!.latitude, _userLocation!.longitude);
     }
+    _hasUserLocation = true;
     notifyListeners();
   }
 

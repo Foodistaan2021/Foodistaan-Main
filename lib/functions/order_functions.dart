@@ -22,7 +22,7 @@ class OrderFunction {
       'customer-id': userNumber,
       'time': time,
       'payment-id': paymentId,
-      'order-type': orderType.value,
+      'order-type': 'Delivery',
       'delivery-address': deliveryAddress.value
     }).then((value) {
       _firestore
@@ -40,7 +40,7 @@ class OrderFunction {
         'time': time,
         'payment-id': paymentId,
         'live-order': true,
-        'order-type': orderType.value,
+        'order-type': 'Delivery',
         'delivery-address': deliveryAddress.value
       });
     });

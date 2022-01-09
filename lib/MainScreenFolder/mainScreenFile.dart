@@ -41,11 +41,6 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: currentIndex);
-    // LocationFunctions().getUserLocation().then((value) {
-    //   setState(() {
-    //     global.currentLocation = value;
-    //   });
-    // });
   }
 
   @override
@@ -98,31 +93,31 @@ class _MainScreenState extends State<MainScreen> {
                     color: currentIndex == 1 ? selected : unselected,
                   ),
                 ),
-                ValueListenableBuilder(
-                    valueListenable: global.totalItemsInCart,
-                    builder: (context, value, child) {
-                      if (global.totalItemsInCart.value > 0)
-                        return Positioned(
-                          left: 20,
-                          bottom: 20,
-                          child: CircleAvatar(
-                            maxRadius: 8,
-                            backgroundColor: Colors.red,
-                            child: Center(
-                                child: Text(
-                                    global.totalItemsInCart.value.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10))),
-                          ),
-                        );
-                      else
-                        return Container(
-                          height: 0,
-                          width: 0,
-                        );
-                    })
+                // ValueListenableBuilder(
+                //     valueListenable: global.totalItemsInCart,
+                //     builder: (context, value, child) {
+                //       if (global.totalItemsInCart.value > 0)
+                //         return Positioned(
+                //           left: 20,
+                //           bottom: 20,
+                //           child: CircleAvatar(
+                //             maxRadius: 8,
+                //             backgroundColor: Colors.red,
+                //             child: Center(
+                //                 child: Text(
+                //                     global.totalItemsInCart.value.toString(),
+                //                     style: TextStyle(
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.bold,
+                //                         fontSize: 10))),
+                //           ),
+                //         );
+                //       else
+                //         return Container(
+                //           height: 0,
+                //           width: 0,
+                //         );
+                //     })
               ],
             ),
             label: 'Cart',
