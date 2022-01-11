@@ -50,7 +50,7 @@ import 'package:provider/provider.dart';
 // }
 
 class Listings extends StatefulWidget {
-  var userLocation = null;
+  var userLocation;
 
   Listings({this.userLocation});
 

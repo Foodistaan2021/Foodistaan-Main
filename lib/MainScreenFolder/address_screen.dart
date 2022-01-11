@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodistan/MainScreenFolder/Location/LocationMap.dart';
+import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/address_functions.dart';
@@ -455,7 +456,15 @@ class _AddressScreenState extends State<AddressScreen> {
                       categorySelected,
                       userLocation,
                     )
-                        .then({Navigator.pop(context)});
+                        .then({
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MainScreen(
+                                    currentIndex: 1,
+                                  )),
+                          (route) => false)
+                    });
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.066,

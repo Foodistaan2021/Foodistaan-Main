@@ -10,6 +10,21 @@ class OrderHistoryWidget extends StatefulWidget {
 }
 
 class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
+  Widget itemsList(Map orderItems) {
+    if (orderItems.length != 0) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: orderItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            String key = orderItems.keys.elementAt(index);
+            String menuItem = key.replaceAll('-', ' ').toUpperCase();
+            return Text("${orderItems[key]} X $menuItem",
+                style: TextStyle(fontSize: 14));
+          });
+    } else
+      return Text('Some Eror');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,9 +50,6 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 5,
-                ),
                 Stack(
                   children: [
                     Row(
@@ -104,36 +116,32 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
+                const SizedBox(
+                  width: 5,
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      width: 5,
+                    Text(
+                      'Items',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Items',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          '1x Masala Dosa',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 2,
                     ),
+
+                    // Text(
+                    //   '1x Masala Dosa',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
                   ],
                 ),
+                itemsList(widget.orderData['items']),
                 const SizedBox(
                   height: 5,
                 ),

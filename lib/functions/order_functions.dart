@@ -157,7 +157,7 @@ class OrderFunction {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Center();
             default:
               if (snapshot.hasData) {
                 int totalDocs = snapshot.data!.docs.length;

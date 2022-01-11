@@ -25,6 +25,8 @@ final ValueNotifier<Map<String, dynamic>> deliveryAddress =
     ValueNotifier<Map<String, dynamic>>({});
 
 class CartScreenMainLogin extends StatefulWidget {
+  String routeName = 'cart';
+
   @override
   State<CartScreenMainLogin> createState() => _CartScreenMainLoginState();
 }
@@ -401,7 +403,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                     SizedBox(
                       width: 15,
                     ),
-                    hasCoupon == true && minCouponValue < totalPrice
+                    hasCoupon == true && minCouponValue <= totalPrice
                         ? Text(
                             couponCode.toString(),
                             style: TextStyle(color: Colors.black),
@@ -606,7 +608,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                               },
                               child: Center(
                                 child: value.hasCoupon &&
-                                        value.minCouponValue <
+                                        value.minCouponValue <=
                                             totalPriceValue.totalPriceProvider
                                     ? Text(
                                         'Proceed To Pay ₹ ${calculateCouponDiscount(totalPriceValue.totalPriceProvider, value.couponPercentage, value.maxCouponDiscount).toString()}',

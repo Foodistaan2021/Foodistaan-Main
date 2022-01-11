@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/profile/profile_address.dart';
 import 'package:foodistan/providers/cart_id_provider.dart';
 import 'package:foodistan/providers/restaurant_data_provider.dart';
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
               'L': (context) => LoginScreen(),
               'H': (context) => MainScreen(),
               'O': (context) => OptionScreen(),
+              CartScreenMainLogin().routeName: (context) =>
+                  CartScreenMainLogin(),
             },
             debugShowCheckedModeBanner: false,
             title: 'Foodistaan',
