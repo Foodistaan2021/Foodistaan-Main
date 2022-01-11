@@ -16,13 +16,15 @@ class RazorPayScreen extends StatefulWidget {
   double finalPrice;
   String cartId, vednorId, vendorName;
   Map<String, dynamic> items;
+  Map<String, dynamic> deliveryAddress;
 
   RazorPayScreen(
       {required this.finalPrice,
       required this.items,
       required this.cartId,
       required this.vednorId,
-      required this.vendorName});
+      required this.vendorName,
+      required this.deliveryAddress});
 
   @override
   _RazorPayScreenState createState() => _RazorPayScreenState();
@@ -76,7 +78,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     String paymentId = response.paymentId!;
     OrderFunction()
         .placeOrder(widget.vednorId, widget.vendorName, userNumber, itemMap,
-            widget.finalPrice, paymentId, widget.cartId)
+            widget.finalPrice, paymentId, widget.cartId, widget.deliveryAddress)
         .then((value) {
       Navigator.push(
           context,

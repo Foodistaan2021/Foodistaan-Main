@@ -584,6 +584,9 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => RazorPayScreen(
+                                                deliveryAddress:
+                                                    userAddressValue
+                                                        .addressData,
                                                 finalPrice: calculateCouponDiscount(
                                                         totalPriceValue
                                                             .totalPriceProvider,

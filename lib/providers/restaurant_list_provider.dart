@@ -4,12 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class RestaurantListProvider extends ChangeNotifier {
   List _items = [];
   List _sort_items = [];
-  List _vendor_id_list = [];
+
   bool _hasData = false;
 
   List get items => _items;
   List get sort_items => _sort_items;
-  List get vendor_id_list => _vendor_id_list;
+
   bool get hasData => _hasData;
 
   fetchData(String category, location) async {
@@ -21,7 +21,6 @@ class RestaurantListProvider extends ChangeNotifier {
       await StreetFoodList.get().then((querySnapshot) => {
             querySnapshot.docs.forEach((element) {
               _items.add(element.data());
-              _vendor_id_list.add(element.id);
             })
           });
       if (location == null) {

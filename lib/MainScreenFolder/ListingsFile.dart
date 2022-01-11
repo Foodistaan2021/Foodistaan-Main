@@ -77,7 +77,7 @@ class _ListingsState extends State<Listings> {
                   padding: EdgeInsets.all(11),
                   child: ListedTile(
                     details: restaurantListValue.items[index],
-                    Id: restaurantListValue.vendor_id_list[index],
+                    Id: restaurantListValue.items[index]['id'],
                   ),
                 );
               },
