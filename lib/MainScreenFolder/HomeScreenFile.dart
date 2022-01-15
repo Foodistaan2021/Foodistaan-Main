@@ -20,16 +20,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
   bool selectStreetStyle = true;
   bool selectTiffinServices = false;
   var userLocation;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     LocationFunctions().getUserLocation().then((value) {
@@ -43,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
     var h1 = MediaQuery.of(context).size.height;
-
     var w1 = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h1 * 0.15), // here the desired height
@@ -189,4 +185,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

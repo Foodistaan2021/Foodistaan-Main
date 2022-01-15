@@ -134,13 +134,13 @@ class _ListedTileState extends State<ListedTile> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              leftSide(
+              LeftSide(
                 foodImage: StreetFoodDetails['FoodImage'],
               ),
               SizedBox(
                 width: 5,
               ),
-              rightSide(
+              RightSide(
                 name: StreetFoodDetails['Name'],
                 address: StreetFoodDetails['Address'],
                 cuisines: StreetFoodDetails['Cuisines'],
@@ -158,10 +158,10 @@ class _ListedTileState extends State<ListedTile> {
   }
 }
 
-class leftSide extends StatelessWidget {
+class LeftSide extends StatelessWidget {
   String foodImage;
   // String address;
-  leftSide({this.foodImage = 'NA'});
+  LeftSide({this.foodImage = 'NA'});
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
@@ -248,17 +248,17 @@ class leftSide extends StatelessWidget {
   }
 }
 
-class rightSide extends StatelessWidget {
+class RightSide extends StatelessWidget {
   String name;
   String address;
   String cuisines;
-  int stars;
-  int cost;
+  var stars;
+  var cost;
   bool delivery;
   bool takeaway;
-  bool foodistaanCertified;
+  var foodistaanCertified;
 
-  rightSide(
+  RightSide(
       {this.name = 'NA',
       this.address = 'NA',
       this.cuisines = 'NA',
