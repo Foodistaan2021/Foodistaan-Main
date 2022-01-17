@@ -12,6 +12,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
 import '../scanner.dart';
 
+//First Welcome screen 1/4
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
@@ -19,14 +21,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin
+//AutomaticKeepAliveClientMixin preserves the state of the screen
+// and prevents it from reloading every time
+{
   bool selectStreetStyle = true;
   bool selectTiffinServices = false;
-  var userLocation;
+  var userLocation; //var for user Location
 
   @override
   void initState() {
     super.initState();
+
+    //fetching user location from firebase...if exits then rebuilds the Home screen
+    // with restaurants sorted according to the user location
 
     LocationFunctions().getUserLocation().then((value) {
       setState(() {
@@ -63,6 +71,9 @@ class _HomeScreenState extends State<HomeScreen>
                           flex: 3,
                           child: GestureDetector(
                             onTap: () async {
+                              //modal bottom sheet for select location option on top left of the mains screen
+                              //basicaly shows a pop-up for selecting user location
+
                               showBarModalBottomSheet(
                                   duration: Duration(milliseconds: 300),
                                   bounce: true,
@@ -73,10 +84,13 @@ class _HomeScreenState extends State<HomeScreen>
                                           MediaQuery.of(context).size.height *
                                               0.7,
                                       child: LocationBottomSheetWidget(
+                                        //user is not adding a new address from the cart
+                                        //hence will ask user to only select the location
+                                        //if set true will ask the user to add address after confirm location screen
                                         isAddingAddress: false,
                                       )));
                             },
-                            child: Location(),
+                            child: Location(), // Top Left Widget
                           )),
                       Expanded(flex: 1, child: Points()),
                     ],
@@ -174,6 +188,10 @@ class _HomeScreenState extends State<HomeScreen>
               ],
             ),
             CuisineTileList(),
+
+            //builds the list of all the in the database
+            //takes user location as a reuired parameter
+            //to sort the rest. Data according to user location
             Listings(
               userLocation: userLocation,
             ),
@@ -188,4 +206,5 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   bool get wantKeepAlive => true;
+  //set true to preseve the state
 }

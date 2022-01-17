@@ -38,28 +38,41 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<CartIdProvider>(
-              create: (_) => CartIdProvider()),
+              create: (_) =>
+                  CartIdProvider()), //provides cart-id for all cart functions
           ChangeNotifierProvider<RestaurantDataProvider>(
-              create: (_) => RestaurantDataProvider()),
+              create: (_) =>
+                  RestaurantDataProvider()), //provides data for the cart...rename it to cart data provider
+
           ChangeNotifierProvider<TotalPriceProvider>(
-              create: (_) => TotalPriceProvider()),
+              create: (_) =>
+                  TotalPriceProvider()), //provides total price for all items in the cart
+
           ChangeNotifierProvider<UserAddressProvider>(
-              create: (_) => UserAddressProvider()),
+              create: (_) => UserAddressProvider()), //provides delivery address
+
           ChangeNotifierProvider<RestaurantListProvider>(
-              create: (_) => RestaurantListProvider()),
+              create: (_) =>
+                  RestaurantListProvider()), //provides list of all the restaurants on the home page
+          //also sort them according to the user locations
+
           ChangeNotifierProvider<UserLocationProvider>(
-              create: (_) => UserLocationProvider())
+              create: (_) =>
+                  UserLocationProvider()) // provides a GEOPOINT of user location from firebase
         ],
         builder: (context, child) {
           return MaterialApp(
+            // check if the user has already logged in
+
+            // if not redirects to login screen
             initialRoute: FirebaseAuth.instance.currentUser != null ? 'H' : 'L',
             routes: {
               'S': (context) => ScannerScreen(),
-              'L': (context) => LoginScreen(),
-              'H': (context) => MainScreen(),
+              'L': (context) => LoginScreen(), //login Screen
+              'H': (context) => MainScreen(), // Welcome Screen
               'O': (context) => OptionScreen(),
               CartScreenMainLogin().routeName: (context) =>
-                  CartScreenMainLogin(),
+                  CartScreenMainLogin(), // main Cart screen on home page
             },
             debugShowCheckedModeBanner: false,
             title: 'Foodistaan',

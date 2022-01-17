@@ -12,6 +12,9 @@ import 'package:foodistan/Data/data.dart';
 import 'AppBar/LocationPointsSearch.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+//Main screen contains bottom nav bar
+//which contains all the main screens
+
 class MainScreen extends StatefulWidget {
   int currentIndex;
   MainScreen({this.currentIndex = 0});
@@ -106,6 +109,10 @@ class _MainScreenState extends State<MainScreen> {
             controller: _pageController,
             children: screens,
           ),
+
+          //Checks if any current orders exists for the current user
+          //uses Stream Builder for live updates
+          //returns a widget like a bottom NAVBAR
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomCenter,

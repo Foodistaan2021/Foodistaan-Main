@@ -9,6 +9,11 @@ import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
 import 'package:provider/provider.dart';
 
+//Lists all restaurants in the database and sorts them according to the user
+//location
+
+//Restaurant List Provider provides all the data
+
 // List items = [];
 // List sortItems = [];
 // List vendor_id_list = [];
@@ -60,10 +65,18 @@ class Listings extends StatefulWidget {
 
 class _ListingsState extends State<Listings> {
   @override
-  Widget build(BuildContext context) {
-    context
-        .read<RestaurantListProvider>()
+  void initState() {
+    super.initState();
+
+    //calling RestaurntListProvider fetchData functions
+    //to fetch all the restaurants in the database
+    //and sorting them according to the user location
+    Provider.of<RestaurantListProvider>(context, listen: false)
         .fetchData('DummyData', widget.userLocation);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Consumer<RestaurantListProvider>(builder:
         (restaurantDatacontext, restaurantListValue, restaurantListWidget) {
       return restaurantListValue.hasData
