@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+        // list of all the providers
         providers: [
           ChangeNotifierProvider<CartIdProvider>(
-              create: (_) =>
-                  CartIdProvider()), 
-                  //provides cart-id for all cart functions
+              create: (_) => CartIdProvider()),
+          //provides cart-id for all cart functions
           ChangeNotifierProvider<RestaurantDataProvider>(
               create: (_) =>
                   RestaurantDataProvider()), //provides data for the cart...rename it to cart data provider
