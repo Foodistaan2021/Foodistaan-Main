@@ -24,6 +24,13 @@ class _RestaurantMainState extends State<RestaurantMain> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            spreadRadius: 7,
+            blurRadius: 3,
+          ),
+        ],
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
       ),
@@ -31,7 +38,6 @@ class _RestaurantMainState extends State<RestaurantMain> {
         top: MediaQuery.of(context).size.height * 0.2,
       ),
       width: MediaQuery.of(context).size.width * 0.97,
-      height: MediaQuery.of(context).size.height * 0.45,
       child: Column(
         children: [
           Row(
@@ -500,10 +506,13 @@ class _RestaurantMainState extends State<RestaurantMain> {
                           )
                         ]),
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
+          SizedBox(
+            height: 15,
+          ),
         ],
       ),
     );

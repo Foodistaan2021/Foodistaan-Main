@@ -49,6 +49,7 @@ dependencies:
   sizer: ^2.0.15
   solid_bottom_sheet: ^0.1.10
   uuid: ^3.0.5
+  titled_navigation_bar: ^4.1.0
 
 dev_dependencies:
   flutter_test:

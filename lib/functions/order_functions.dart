@@ -182,7 +182,7 @@ class OrderFunction {
                                         builder: (context) => Orders()));
                           },
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
+                            height: MediaQuery.of(context).size.height * 0.08,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -273,31 +273,34 @@ class OrderFunction {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(11),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.05,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
+                                        padding: EdgeInsets.all(10),
+                                        // height:
+                                        //     MediaQuery.of(context).size.height *
+                                        //         0.05,
+                                        // width:
+                                        //     MediaQuery.of(context).size.width *
+                                        //         0.3,
                                         decoration: BoxDecoration(
                                           color: Colors.blue,
                                           borderRadius:
-                                              BorderRadius.circular(22),
+                                              BorderRadius.circular(5),
                                         ),
                                         child: Center(
                                           child: onlyOneOrder
                                               ? Text(
-                                                  'Track Order',
+                                                  'Track your order',
                                                   style: TextStyle(
+                                                    fontSize: 12,
                                                     color: Colors.white,
                                                   ),
                                                 )
                                               : Text(
-                                                  'Track Orders',
+                                                  'Track your orders',
                                                   style: TextStyle(
                                                     color: Colors.white,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
                                         ),
