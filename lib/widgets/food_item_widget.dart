@@ -90,7 +90,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                             fontSize: 15, fontWeight: FontWeight.w700)),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.033,
+                    height: MediaQuery.of(context).size.height * 0.04,
                     child: Center(
                       child: CartFunctions().quantityWidgetInRestaurant(
                           widget.cartId,
@@ -100,9 +100,9 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                           widget.vendorName),
                     ),
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
+                  // SizedBox(
+                  //   height: 3,
+                  // ),
                 ],
               ),
             ),
