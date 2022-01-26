@@ -58,7 +58,7 @@ class _AcceptedOrderState extends State<AcceptedOrder> {
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(13),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,7 +103,7 @@ class _AcceptedOrderState extends State<AcceptedOrder> {
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(13),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +148,7 @@ class _AcceptedOrderState extends State<AcceptedOrder> {
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(13),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,7 +193,7 @@ class _AcceptedOrderState extends State<AcceptedOrder> {
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(13),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

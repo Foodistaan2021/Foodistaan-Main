@@ -19,7 +19,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
             String key = orderItems.keys.elementAt(index);
             String menuItem = key.replaceAll('-', ' ').toUpperCase();
             return Text("${orderItems[key]} X $menuItem",
-                style: TextStyle(fontSize: 14));
+                style: TextStyle(fontSize: 12));
           });
     } else
       return Text('Some Eror');
@@ -28,9 +28,9 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 5, 8, 12),
+      padding: const EdgeInsets.all(10),
       child: Container(
-        height: 180,
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -44,24 +44,23 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
             Radius.circular(11),
           ),
         ),
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Row(
                       children: [
-                        const SizedBox(
-                          width: 5,
-                        ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(8),
                             image: const DecorationImage(
                               image: AssetImage('assets/images/dosa.png'),
                               fit: BoxFit.cover,
@@ -71,16 +70,17 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                           height: 50,
                         ),
                         const SizedBox(
-                          width: 5,
+                          width: 10,
                         ),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               widget.orderData['vendor-name'],
                               style: TextStyle(
                                 color: Colors.black,
+                                fontSize: 14,
                               ),
                             ),
                             SizedBox(
@@ -90,176 +90,190 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                               'Rohini, New Delhi',
                               style: TextStyle(
                                 color: Colors.grey,
+                                fontSize: 12,
                               ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.orderData['total-bill'].toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                      ],
+                  ),
+                  Text(
+                    widget.orderData['total-bill'].toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Items',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(
+            //       widget.orderData['total-bill'].toString(),
+            //       style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         fontSize: 14,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: 11,
+            //     ),
+            //   ],
+            // ),
 
-                    // Text(
-                    //   '1x Masala Dosa',
-                    //   style: TextStyle(
-                    //     color: Colors.black,
-                    //   ),
-                    // ),
-                  ],
-                ),
-                itemsList(widget.orderData['items']),
-                const SizedBox(
-                  height: 5,
-                ),
-                Stack(
-                  children: [
-                    Row(
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Items',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  itemsList(widget.orderData['items']),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  // Text(
+                  //   '1x Masala Dosa',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          width: 5,
+                        Text(
+                          'Ordered On',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Ordered On',
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              OrderFunction()
-                                  .orderTime(widget.orderData['time']),
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          OrderFunction().orderTime(widget.orderData['time']),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
-                    Row(
+                  ),
+                  // SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                  Container(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Status: ${widget.orderData['order-status']}',
                           style: TextStyle(
                             color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        SizedBox(
-                          width: 5,
                         ),
                       ],
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 7,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 252, 222, 1),
-                    borderRadius: BorderRadius.circular(11),
-                    boxShadow: const [
-                      BoxShadow(
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.05,
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(255, 252, 222, 1),
+                borderRadius: BorderRadius.circular(11),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.yellowAccent,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: const [
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        'You Rated',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '4.5  ',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
                         color: Colors.yellowAccent,
-                        spreadRadius: 1,
                       ),
                     ],
                   ),
-                  child: Stack(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: const [
-                              SizedBox(
-                                width: 11,
-                              ),
-                              Text('You Rated'),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('4.5  '),
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.yellowAccent,
-                              ),
-                            ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(
+                            Icons.refresh,
+                            size: 15,
+                            color: Colors.yellowAccent,
                           ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
-                              Icon(
-                                Icons.refresh,
-                                size: 15,
-                                color: Colors.yellowAccent,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('Repeat Order'),
-                              SizedBox(
-                                width: 11,
-                              ),
-                            ],
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Repeat Order',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          SizedBox(
+                            width: 11,
                           ),
                         ],
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

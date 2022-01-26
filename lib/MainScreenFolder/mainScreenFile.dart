@@ -51,62 +51,55 @@ class _MainScreenState extends State<MainScreen> {
     final Color selected = Color.fromRGBO(247, 193, 43, 1);
     final Color unselected = Colors.grey;
     return Scaffold(
-      bottomNavigationBar: TitledBottomNavigationBar(
-          activeColor: selected,
-          inactiveColor: unselected,
-          enableShadow: true,
+      bottomNavigationBar: BottomNavigationBar(
           currentIndex: widget.currentIndex,
           onTap: (index) => setState(() {
                 widget.currentIndex = index;
                 _pageController.jumpToPage(widget.currentIndex);
               }),
-          // type: BottomNavigationBarType.fixed,
-          // iconSize: 16,
-          // unselectedItemColor: unselected,
-          // selectedItemColor: selected,
-          // backgroundColor: Colors.white,
-          // showUnselectedLabels: false,
-          // showSelectedLabels: true,
-          // elevation: 0,
-          items: [
-            TitledNavigationBarItem(title: Text('Home'), icon: Icons.home),
-            TitledNavigationBarItem(
-                title: Text('Cart'), icon: Icons.shopping_bag),
-            TitledNavigationBarItem(
-                title: Text('Scan'), icon: Icons.fit_screen),
-            TitledNavigationBarItem(title: Text('Profile'), icon: Icons.person)
-          ]
-          // items: [
-          //   TitledNavigationBarItem(
-          //     icon: SvgPicture.asset(
-          //       'Images/bottomhome.svg',
-          //       color: widget.currentIndex == 0 ? selected : unselected,
-          //     ),
-          //     title: Text("Home"),
-          //   ),
-          //   TitledNavigationBarItem(
-          //     icon: SvgPicture.asset(
-          //       'Images/bottomcart.svg',
-          //       color: widget.currentIndex == 1 ? selected : unselected,
-          //     ),
-          //     title: Text("Cart"),
-          //   ),
-          //   TitledNavigationBarItem(
-          //     icon: SvgPicture.asset(
-          //       'Images/bottomscan.svg',
-          //       color: widget.currentIndex == 2 ? selected : unselected,
-          //     ),
-          //     title: Text("Scan"),
-          //   ),
-          //   TitledNavigationBarItem(
-          //     icon: SvgPicture.asset(
-          //       'Images/bottomprofile.svg',
-          //       color: widget.currentIndex == 3 ? selected : unselected,
-          //     ),
-          //     title: 'PrText("file"),
-          //   ),
-          // ],
-          ),
+          type: BottomNavigationBarType.fixed,
+          iconSize: 16,
+          unselectedItemColor: unselected,
+          selectedItemColor: selected,
+          backgroundColor: Colors.white,
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+          elevation: 2,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Column(children: [
+                Divider(
+                  color: Colors.red,
+                ),
+                SvgPicture.asset(
+                  'Images/bottomhome.svg',
+                  color: widget.currentIndex == 0 ? selected : unselected,
+                ),
+              ]),
+            ),
+            BottomNavigationBarItem(
+              label: 'Cart',
+              icon: SvgPicture.asset(
+                'Images/bottomcart.svg',
+                color: widget.currentIndex == 1 ? selected : unselected,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Scan',
+              icon: SvgPicture.asset(
+                'Images/bottomscan.svg',
+                color: widget.currentIndex == 2 ? selected : unselected,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Profile',
+              icon: SvgPicture.asset(
+                'Images/bottomprofile.svg',
+                color: widget.currentIndex == 3 ? selected : unselected,
+              ),
+            ),
+          ]),
       body: Stack(
         children: [
           PageView(
