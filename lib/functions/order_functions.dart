@@ -245,22 +245,16 @@ class OrderFunction {
                                                     .toString()
                                                     .toUpperCase(),
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.037),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
                                               )
                                             : Text(
                                                 'Preparing Your Orders',
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.037),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
                                               ),
                                         if (onlyOneOrder)
                                           Text(orderData['vendor-name'])
