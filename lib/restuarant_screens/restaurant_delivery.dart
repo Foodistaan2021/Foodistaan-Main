@@ -69,6 +69,10 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                       padding: EdgeInsets.all(7.5),
                       child: GestureDetector(
                         onTap: () async {
+                          //function for bookmarking the current restaurant
+                          //simply adds the vendor id to the bookmarks array in the user data base
+                          //and then fetches restaurant id from the bookmarks array
+                          //using the vendor id in the bookmarks page
                           String? userNumber =
                               FirebaseAuth.instance.currentUser!.phoneNumber;
                           await FirebaseFirestore.instance

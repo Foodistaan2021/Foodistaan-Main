@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
+
+//same widgets used as lisitng_file.dart
 
 class Bookmarks extends StatefulWidget {
   const Bookmarks({Key? key}) : super(key: key);
@@ -16,7 +19,10 @@ class _BookmarksState extends State<Bookmarks> {
   List bookMarkRestaurantData = [];
   fetchAllBookmarks() async {
     String? userNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
-
+    //first checking and fetching the bookmark array in the user database
+    //if exits set hasBookMarks to true
+    //bookmarks array stores the rest. id from the user database
+    //bookMarkRestaurantData stores the restaurant data from the array
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userNumber)
@@ -129,50 +135,69 @@ class _BookmarksState extends State<Bookmarks> {
                         scrollDirection: Axis.vertical,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            // height: MediaQuery.of(context).size.height * 0.5,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade300,
-                                  spreadRadius: 7,
-                                  blurRadius: 3,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(11),
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  LeftSide(
-                                    foodImage: bookMarkRestaurantData[index]
-                                        ['FoodImage'],
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  RightSide(
-                                    name: bookMarkRestaurantData[index]['Name'],
-                                    address: bookMarkRestaurantData[index]
-                                        ['Address'],
-                                    cuisines: bookMarkRestaurantData[index]
-                                        ['Cuisines'],
-                                    stars: bookMarkRestaurantData[index]
-                                        ['Stars'],
-                                    cost: bookMarkRestaurantData[index]['Cost'],
-                                    delivery: bookMarkRestaurantData[index]
-                                        ['Delivery'],
-                                    takeaway: bookMarkRestaurantData[index]
-                                        ['Takeaway'],
-                                    foodistaanCertified:
-                                        bookMarkRestaurantData[index]
-                                            ['FoodistaanCertified'],
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RestaurantDelivery(
+                                            items:
+                                                bookMarkRestaurantData[index],
+                                            vendor_id:
+                                                bookMarkRestaurantData[index]
+                                                    ['id'],
+                                            vendorName:
+                                                bookMarkRestaurantData[index]
+                                                    ['Name'],
+                                          )));
+                            },
+                            child: Container(
+                              // height: MediaQuery.of(context).size.height * 0.5,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade300,
+                                    spreadRadius: 7,
+                                    blurRadius: 3,
                                   ),
                                 ],
+                                borderRadius: BorderRadius.circular(11),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    LeftSide(
+                                      foodImage: bookMarkRestaurantData[index]
+                                          ['FoodImage'],
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    RightSide(
+                                      name: bookMarkRestaurantData[index]
+                                          ['Name'],
+                                      address: bookMarkRestaurantData[index]
+                                          ['Address'],
+                                      cuisines: bookMarkRestaurantData[index]
+                                          ['Cuisines'],
+                                      stars: bookMarkRestaurantData[index]
+                                          ['Stars'],
+                                      cost: bookMarkRestaurantData[index]
+                                          ['Cost'],
+                                      delivery: bookMarkRestaurantData[index]
+                                          ['Delivery'],
+                                      takeaway: bookMarkRestaurantData[index]
+                                          ['Takeaway'],
+                                      foodistaanCertified:
+                                          bookMarkRestaurantData[index]
+                                              ['FoodistaanCertified'],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );

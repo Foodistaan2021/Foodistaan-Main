@@ -196,7 +196,7 @@ class LeftSide extends StatelessWidget {
               image: NetworkImage(
                 foodImage,
               ),
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.cover,
               alignment: FractionalOffset.center,
             ),
           ),
