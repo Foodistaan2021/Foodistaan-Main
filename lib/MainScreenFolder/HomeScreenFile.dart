@@ -97,13 +97,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
-              Search(
-                searchTask: () {
-                  showSearch(
-                      context: context,
-                      delegate: DataSearch(file: Data.restaurants));
-                },
-              ),
+              Search(),
             ],
           ),
         ),

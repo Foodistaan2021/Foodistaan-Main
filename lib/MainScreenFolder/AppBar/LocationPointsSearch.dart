@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
@@ -138,17 +139,28 @@ class _PointsState extends State<Points> {
   }
 }
 
-class Search extends StatefulWidget {
-  @override
-  Function? searchTask;
-  Search({required this.searchTask});
-  _SearchState createState() => _SearchState(SearchTask: searchTask!);
-}
+class Search extends StatelessWidget {
+  final _searchController = TextEditingController();
 
-class _SearchState extends State<Search> {
+  searchQuery(String query) async {
+    final _firestore = FirebaseFirestore.instance;
+
+    await _firestore
+        .collection('DummyData')
+        .where(
+          'search',
+          isGreaterThanOrEqualTo: query.toLowerCase(),
+        )
+        .get()
+        .then((value) {
+      QuerySnapshot<Map<String, dynamic>> v = value;
+      for (var item in v.docs) {
+        print(item.data());
+      }
+    });
+  }
+
   @override
-  Function SearchTask;
-  _SearchState({required this.SearchTask});
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
@@ -156,60 +168,87 @@ class _SearchState extends State<Search> {
       padding: EdgeInsets.symmetric(
         horizontal: 15,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(11),
-          ),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.15),
-              spreadRadius: 3,
-              blurRadius: 5,
-            ),
-          ],
-        ),
+      child: SizedBox(
         height: h1 * 0.05,
-        width: double.infinity,
-        alignment: Alignment.centerLeft,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: GestureDetector(
-            // onTap: () {
-            //   SearchTask();
-            // },
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Icon(
-                    Icons.search,
-                    color: Color(0xFFFAB84C),
-                    size: h1 / 33,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "Search Cuisines",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: h1 * 0.023,
-                      //fontFamily: 'Segoe UI'
-                    ),
-                  ),
-                ],
+        child: TextFormField(
+          controller: _searchController,
+          onChanged: (v) async {
+            await searchQuery(_searchController.text);
+          },
+          textAlign: TextAlign.start,
+          obscureText: false,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(0),
+              hintText: 'Search Cuisines',
+              hintStyle: TextStyle(color: Colors.grey),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Color(0xFFFAB84C),
               ),
-            ),
-          ),
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFFAB84C), width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(11))),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(11),
+                ),
+                borderSide: BorderSide(
+                  color: Color(0xFFFAB84C),
+                  width: 1,
+                ),
+              )),
         ),
       ),
     );
   }
 }
+
+// Container(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.all(
+//             Radius.circular(11),
+//           ),
+//           color: Colors.white,
+//           boxShadow: [
+//             BoxShadow(
+//               color: Color.fromRGBO(0, 0, 0, 0.15),
+//               spreadRadius: 3,
+//               blurRadius: 5,
+//             ),
+//           ],
+//         ),
+//         height: h1 * 0.05,
+//         width: double.infinity,
+//         alignment: Alignment.centerLeft,
+//         child: FittedBox(
+//           fit: BoxFit.contain,
+//           child: Center(
+//             child: Row(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 SizedBox(
+//                   width: 15,
+//                 ),
+//                 Icon(
+//                   Icons.search,
+//                   color: Color(0xFFFAB84C),
+//                   size: h1 / 33,
+//                 ),
+//                 SizedBox(
+//                   width: 15,
+//                 ),
+//                 Text(
+//                   "Search Cuisines",
+//                   style: TextStyle(
+//                     color: Colors.grey,
+//                     fontSize: h1 * 0.023,
+//                     //fontFamily: 'Segoe UI'
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       )

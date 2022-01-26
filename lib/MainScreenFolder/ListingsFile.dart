@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodistan/providers/restaurant_list_provider.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
 import 'package:foodistan/providers/user_location_provider.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 //Lists all restaurants in the database and sorts them according to the user
@@ -129,7 +131,7 @@ class _ListedTileState extends State<ListedTile> {
                     )));
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.25,
+        // height: MediaQuery.of(context).size.height * 0.5,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -143,7 +145,7 @@ class _ListedTileState extends State<ListedTile> {
           borderRadius: BorderRadius.circular(11),
         ),
         child: Center(
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -151,7 +153,7 @@ class _ListedTileState extends State<ListedTile> {
                 foodImage: StreetFoodDetails['FoodImage'],
               ),
               SizedBox(
-                width: 5,
+                width: 10,
               ),
               RightSide(
                 name: StreetFoodDetails['Name'],
@@ -173,90 +175,139 @@ class _ListedTileState extends State<ListedTile> {
 
 class LeftSide extends StatelessWidget {
   String foodImage;
+  var foodistaanCertified;
   // String address;
-  LeftSide({this.foodImage = 'NA'});
+  LeftSide({this.foodImage = 'NA', this.foodistaanCertified = true});
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(11),
-      child: Container(
-        width: w1 * 0.4,
-        height: h1 * 0.88,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(11),
-          image: DecorationImage(
-            image: NetworkImage(
-              foodImage,
+      padding: const EdgeInsets.all(0),
+      child: Stack(clipBehavior: Clip.none, children: [
+        Container(
+          width: w1 * 1,
+          height: h1 * 0.3,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(11), topRight: Radius.circular(11)),
+            image: DecorationImage(
+              image: NetworkImage(
+                foodImage,
+              ),
+              fit: BoxFit.fitWidth,
+              alignment: FractionalOffset.center,
             ),
-            fit: BoxFit.fitHeight,
-            alignment: FractionalOffset.center,
           ),
         ),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.only(
-        //     topLeft: Radius.circular(11),
-        //     bottomLeft: Radius.circular(11),
-        //   ),
-        //   color: Color(0xffE43B3B),
-        // ),
-        // height: h1 / 5,
-        // width: 3 * w1 / 5,
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.stretch,
-        //   children: [
-        //     ClipRRect(
-        //       borderRadius: BorderRadius.only(
-        //         topLeft: Radius.circular(11),
-        //       ),
-        //       child: Image.network(
-        //         foodImage,
-        //         height: 10 * h1 / 62,
-        //         fit: BoxFit.fitWidth,
-        //       ),
-        //     ),
-        //     Container(
-        //       height: h1 / 26,
-        //       width: w1 / 3,
-        //       decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.only(
-        //           bottomLeft: Radius.circular(11),
-        //         ),
-        //         color: Color(0xffE43B3B),
-        //       ),
-        //       child: FittedBox(
-        //           fit: BoxFit.contain,
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(5),
-        //             child: Row(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               crossAxisAlignment: CrossAxisAlignment.center,
-        //               children: [
-        //                 Icon(
-        //                   Icons.location_on,
-        //                   size: h1 / 55,
-        //                   color: Colors.white,
-        //                 ),
-        //                 SizedBox(
-        //                   width: 11,
-        //                 ),
-        //                 Text(
-        //                   address,
-        //                   style: TextStyle(
-        //                     fontSize: h1 / 77,
-        //                     color: Colors.white,
-        //                     // fontWeight: FontWeight.w700,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           )),
-        //     )
-        //   ],
-        // ),
-      ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.17,
+          right: MediaQuery.of(context).size.width * 0.69,
+
+          // child: Container(
+          //     width: MediaQuery.of(context).size.width * 0.25,
+          //     padding: EdgeInsets.all(6),
+          //     decoration: BoxDecoration(
+          //         color: Colors.blue[700],
+
+          //         // gradient: LinearGradient(
+          //         //   colors: [
+          //         //     Color.fromRGBO(100, 200, 300, 1),
+          //         //     Color.fromRGBO(200, 100, 100, 1),
+          //         //     Color.fromRGBO(200, 300, 100, 1),
+          //         //     Color.fromRGBO(300, 100, 200, 1),
+          //         //   ],
+          //         // ),
+          //         borderRadius: BorderRadius.all(Radius.circular(4))),
+          child: Stack(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  'Images/tag.svg',
+                  height: MediaQuery.of(context).size.width * 0.33,
+                ),
+              ),
+              Positioned(
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  top: MediaQuery.of(context).size.width * 0.12,
+                  child: Row(children: [
+                    Image.asset(
+                      'Images/discount.png',
+                      height: 14,
+                      width: 14,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      " 20% OFF",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ]))
+            ],
+          ),
+        ),
+        Positioned(
+          right: MediaQuery.of(context).size.width * 0.68,
+          bottom: MediaQuery.of(context).size.height * 0.18,
+          child: foodistaanCertified == true
+              ? SvgPicture.asset(
+                  'Images/streatoplus.svg',
+                  height: MediaQuery.of(context).size.width * 0.33,
+                )
+              // ? Padding(
+              //     padding: const EdgeInsets.only(left: 10.0, top: 10),
+              //     child: Container(
+              //         padding: EdgeInsets.all(6),
+              //         decoration: BoxDecoration(
+              //             // color: Colors.black,
+              //             gradient: LinearGradient(
+              //               colors: [
+              //                 Color.fromRGBO(191, 149, 63, 1),
+              //                 Color.fromRGBO(252, 246, 186, 1),
+              //                 Color.fromRGBO(179, 135, 40, 1),
+              //                 Color.fromRGBO(251, 245, 183, 1),
+              //               ],
+              //             ),
+              //             borderRadius: BorderRadius.all(Radius.circular(4))),
+              //         child: Text.rich(
+              //           TextSpan(
+              //             children: [
+              //               TextSpan(
+              //                   text: 'STREAT',
+              //                   style: TextStyle(
+              //                       fontWeight: FontWeight.bold,
+              //                       color: Colors.white,
+              //                       fontSize: 14)),
+              //               TextSpan(
+              //                   text: 'O',
+              //                   style: TextStyle(
+              //                       fontWeight: FontWeight.bold,
+              //                       color: Colors.red,
+              //                       fontSize: 14)),
+              //               TextSpan(
+              //                   text: '+',
+              //                   style: TextStyle(
+              //                       fontWeight: FontWeight.bold,
+              //                       color: Colors.green,
+              //                       fontSize: 14)),
+              //             ],
+              //           ),
+              //         )),
+              //     // Text(
+              //     //   "CERTIFIED",
+              //     //   style: TextStyle(
+              //     //       fontSize: 14,
+              //     //       color: Colors.black,
+              //     //       fontWeight: FontWeight.bold),
+              //     // )),
+              //   )
+              : SizedBox(),
+        )
+      ]),
     );
   }
 }
@@ -284,348 +335,392 @@ class RightSide extends StatelessWidget {
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          name,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        foodistaanCertified == true
-            ? SizedBox()
-            : SizedBox(
-                height: 3,
-              ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.place_outlined,
-              color: Colors.black,
-              size: 12,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            SafeArea(
+    return Container(
+      padding: EdgeInsets.all(4),
+      width: w1 * 0.9,
+      margin: EdgeInsets.only(top: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Container(
+              width: w1 * 0.7,
               child: Text(
-                address,
+                name,
+                textAlign: TextAlign.start,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
               ),
             ),
-          ],
-        ),
-        foodistaanCertified == true
-            ? SizedBox()
-            : SizedBox(
-                height: 3,
+            Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.green,
               ),
-        Text(
-          cuisines,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 5,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.star,
-                size: 15,
-                color: Theme.of(context).primaryColor,
-              ),
-              Icon(
-                Icons.star,
-                size: 15,
-                color: Theme.of(context).primaryColor,
-              ),
-              Icon(
-                Icons.star,
-                size: 15,
-                color: Theme.of(context).primaryColor,
-              ),
-              Icon(
-                Icons.star,
-                size: 15,
-                color: Theme.of(context).primaryColor,
-              ),
-            ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.pink,
-              radius: 8,
-              child: Center(
-                child: Text(
-                  '₹',
-                  style: TextStyle(
+              child: Row(
+                children: [
+                  Text(
+                    "4.7",
+                    style: TextStyle(fontSize: 10, color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 12,
                     color: Colors.white,
+                  ),
+                ],
+              ),
+            )
+          ]),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.grey[200],
+                ),
+                child: Text(
+                  cuisines.length > 25
+                      ? cuisines.substring(0, 25) + '...'
+                      : cuisines,
+                  style: TextStyle(
+                    color: Colors.black,
                     fontSize: 10,
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              'Cost for Two ₹ $cost',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 10,
+              Container(
+                padding: EdgeInsets.all(5),
+                child: Text(
+                  'Cost for Two ₹ $cost',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 10,
+                  ),
+                ),
               ),
+            ],
+          )),
+
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     CircleAvatar(
+          //       backgroundColor: Colors.pink,
+          //       radius: 8,
+          //       child: Center(
+          //         child: Text(
+          //           '₹',
+          //           style: TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 10,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       width: 5,
+          //     ),
+          //     Text(
+          //       'Cost for Two ₹ $cost',
+          //       style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 10,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          Divider(
+            height: 10,
+            thickness: 1,
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: w1 * 0.4,
+                  child: Row(
+                    children: [
+                      delivery == true
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.pink,
+                                  radius: 8,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.two_wheeler,
+                                      color: Colors.white,
+                                      size: 10,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  'Delivery',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      takeaway == true
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.pink,
+                                  radius: 8,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.shopping_bag_outlined,
+                                      color: Colors.white,
+                                      size: 10,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  'Takeaway',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.place_outlined,
+                        color: Colors.black,
+                        size: 12,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Container(
+                        child: Text(
+                          address.length > 25
+                              ? address.substring(0, 25) + '...'
+                              : address,
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        SizedBox(
-          height: 2,
-        ),
-        delivery == true
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.pink,
-                    radius: 8,
-                    child: Center(
-                      child: Icon(
-                        Icons.two_wheeler,
-                        color: Colors.white,
-                        size: 10,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Delivery',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
-        SizedBox(
-          height: 2,
-        ),
-        takeaway == true
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.pink,
-                    radius: 8,
-                    child: Center(
-                      child: Icon(
-                        Icons.shopping_bag_outlined,
-                        color: Colors.white,
-                        size: 10,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Takeaway',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
-        SizedBox(
-          height: 2,
-        ),
-        foodistaanCertified == true
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'Images/fs_certified.png',
-                    width: 20,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Foodistaan Certified',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
-        // Container(
-        //   height: 10 * h1 / 62,
-        //   width: w1 / 3,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.only(
-        //       topRight: Radius.circular(11),
-        //     ),
-        //     color: Colors.white,
-        //   ),
-        //   child: Padding(
-        //     padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         FittedBox(
-        //             fit: BoxFit.contain,
-        //             child: Text(
-        //               name,
-        //               style: TextStyle(
-        //                 color: Colors.black,
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //             )),
-        //         FittedBox(
-        //             fit: BoxFit.contain,
-        //             child: Text(
-        //               cuisines,
-        //               style: TextStyle(
-        //                   color: Colors.grey,
-        //                   fontWeight: FontWeight.w500,
-        //                   fontSize: h1 / 65),
-        //             )),
-        //         FittedBox(
-        //           fit: BoxFit.contain,
-        //           child: Row(
-        //               mainAxisAlignment: MainAxisAlignment.start,
-        //               children: List.generate(stars, (index) {
-        //                 return Image.asset(
-        //                   'Images/RatingStar.png',
-        //                   height: h1 / 35,
-        //                   width: w1 / 35,
-        //                 );
-        //               })),
-        //         ),
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.start,
-        //           children: [
-        //             Image.asset(
-        //               "Images/RupeeImage.png",
-        //               height: h1 / 50,
-        //             ),
-        //             SizedBox(
-        //               width: w1 / 100,
-        //             ),
-        //             FittedBox(
-        //               fit: BoxFit.fitWidth,
-        //               child: Text(
-        //                 "Cost for two: $cost",
-        //                 style: TextStyle(
-        //                     color: Colors.black,
-        //                     // fontWeight: FontWeight.w600,
-        //                     fontSize: h1 / 70),
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //         SizedBox(
-        //           height: 2,
-        //         ),
-        //         delivery == true
-        //             ? Row(
-        //                 mainAxisAlignment: MainAxisAlignment.start,
-        //                 children: [
-        //                   Image.asset(
-        //                     "Images/DeliveryImage.png",
-        //                     height: h1 / 50,
-        //                   ),
-        //                   SizedBox(
-        //                     width: w1 / 100,
-        //                   ),
-        //                   Text(
-        //                     "Delivery",
-        //                     style: TextStyle(
-        //                         color: Colors.black,
-        //                         // fontWeight: FontWeight.w600,
-        //                         fontSize: h1 / 70),
-        //                   )
-        //                 ],
-        //               )
-        //             : SizedBox(
-        //                 height: 2,
-        //               ),
-        //         takeaway == true
-        //             ? Row(
-        //                 mainAxisAlignment: MainAxisAlignment.start,
-        //                 children: [
-        //                   Image.asset(
-        //                     "Images/TakeawayImage.png",
-        //                     height: h1 / 50,
-        //                   ),
-        //                   SizedBox(
-        //                     width: w1 / 100,
-        //                   ),
-        //                   Text(
-        //                     "Takeaway",
-        //                     style: TextStyle(
-        //                         color: Colors.black,
-        //                         // fontWeight: FontWeight.w600,
-        //                         fontSize: h1 / 70),
-        //                   )
-        //                 ],
-        //               )
-        //             : SizedBox(),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // Container(
-        //   height: h1 / 26,
-        //   width: w1 / 3,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.only(
-        //       bottomRight: Radius.circular(11),
-        //     ),
-        //     color:
-        //         foodistaanCertified == true ? Color(0xffF7C12B) : Colors.white,
-        //   ),
-        //   child: FittedBox(
-        //       fit: BoxFit.contain,
-        //       child: Padding(
-        //         padding:
-        //             EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
-        //         child: Text(
-        //           "Foodistaan Certified",
-        //           style: TextStyle(
-        //               color: Colors.white, fontWeight: FontWeight.w800),
-        //         ),
-        //       )),
-        // )
-      ],
+          ),
+
+          SizedBox(
+            height: 10,
+          ),
+          // foodistaanCertified == true
+          //     ? Row(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Image.asset(
+          //             'Images/fs_certified.png',
+          //             width: 20,
+          //           ),
+          //           SizedBox(
+          //             width: 5,
+          //           ),
+          //           Text(
+          //             'Foodistaan Certified',
+          //             style: TextStyle(
+          //               color: Theme.of(context).primaryColor,
+          //               fontSize: 10,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //         ],
+          //       )
+          //     : SizedBox(),
+          // Container(
+          //   height: 10 * h1 / 62,
+          //   width: w1 / 3,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.only(
+          //       topRight: Radius.circular(11),
+          //     ),
+          //     color: Colors.white,
+          //   ),
+          //   child: Padding(
+          //     padding: EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         FittedBox(
+          //             fit: BoxFit.contain,
+          //             child: Text(
+          //               name,
+          //               style: TextStyle(
+          //                 color: Colors.black,
+          //                 fontWeight: FontWeight.bold,
+          //               ),
+          //             )),
+          //         FittedBox(
+          //             fit: BoxFit.contain,
+          //             child: Text(
+          //               cuisines,
+          //               style: TextStyle(
+          //                   color: Colors.grey,
+          //                   fontWeight: FontWeight.w500,
+          //                   fontSize: h1 / 65),
+          //             )),
+          //         FittedBox(
+          //           fit: BoxFit.contain,
+          //           child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.start,
+          //               children: List.generate(stars, (index) {
+          //                 return Image.asset(
+          //                   'Images/RatingStar.png',
+          //                   height: h1 / 35,
+          //                   width: w1 / 35,
+          //                 );
+          //               })),
+          //         ),
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.start,
+          //           children: [
+          //             Image.asset(
+          //               "Images/RupeeImage.png",
+          //               height: h1 / 50,
+          //             ),
+          //             SizedBox(
+          //               width: w1 / 100,
+          //             ),
+          //             FittedBox(
+          //               fit: BoxFit.fitWidth,
+          //               child: Text(
+          //                 "Cost for two: $cost",
+          //                 style: TextStyle(
+          //                     color: Colors.black,
+          //                     // fontWeight: FontWeight.w600,
+          //                     fontSize: h1 / 70),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         SizedBox(
+          //           height: 2,
+          //         ),
+          //         delivery == true
+          //             ? Row(
+          //                 mainAxisAlignment: MainAxisAlignment.start,
+          //                 children: [
+          //                   Image.asset(
+          //                     "Images/DeliveryImage.png",
+          //                     height: h1 / 50,
+          //                   ),
+          //                   SizedBox(
+          //                     width: w1 / 100,
+          //                   ),
+          //                   Text(
+          //                     "Delivery",
+          //                     style: TextStyle(
+          //                         color: Colors.black,
+          //                         // fontWeight: FontWeight.w600,
+          //                         fontSize: h1 / 70),
+          //                   )
+          //                 ],
+          //               )
+          //             : SizedBox(
+          //                 height: 2,
+          //               ),
+          //         takeaway == true
+          //             ? Row(
+          //                 mainAxisAlignment: MainAxisAlignment.start,
+          //                 children: [
+          //                   Image.asset(
+          //                     "Images/TakeawayImage.png",
+          //                     height: h1 / 50,
+          //                   ),
+          //                   SizedBox(
+          //                     width: w1 / 100,
+          //                   ),
+          //                   Text(
+          //                     "Takeaway",
+          //                     style: TextStyle(
+          //                         color: Colors.black,
+          //                         // fontWeight: FontWeight.w600,
+          //                         fontSize: h1 / 70),
+          //                   )
+          //                 ],
+          //               )
+          //             : SizedBox(),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Container(
+          //   height: h1 / 26,
+          //   width: w1 / 3,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.only(
+          //       bottomRight: Radius.circular(11),
+          //     ),
+          //     color:
+          //         foodistaanCertified == true ? Color(0xffF7C12B) : Colors.white,
+          //   ),
+          //   child: FittedBox(
+          //       fit: BoxFit.contain,
+          //       child: Padding(
+          //         padding:
+          //             EdgeInsets.fromLTRB(w1 / 50, h1 / 200, w1 / 50, h1 / 200),
+          //         child: Text(
+          //           "Foodistaan Certified",
+          //           style: TextStyle(
+          //               color: Colors.white, fontWeight: FontWeight.w800),
+          //         ),
+          //       )),
+          // )
+        ],
+      ),
     );
   }
 }
