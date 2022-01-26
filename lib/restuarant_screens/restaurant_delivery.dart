@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:foodistan/restuarant_screens/restaurant_delivery_review.dart';
@@ -59,6 +61,26 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                         },
                         child: Icon(
                           Icons.share,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                      )),
+                  Container(
+                      padding: EdgeInsets.all(7.5),
+                      child: GestureDetector(
+                        onTap: () async {
+                          String? userNumber =
+                              FirebaseAuth.instance.currentUser!.phoneNumber;
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(userNumber)
+                              .update({
+                            'bookmarks':
+                                FieldValue.arrayUnion([widget.vendor_id])
+                          });
+                        },
+                        child: Icon(
+                          Icons.bookmark_outline,
                           color: Colors.black,
                           size: 25,
                         ),
