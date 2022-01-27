@@ -865,7 +865,7 @@ class _OverviewSelectedWidgetState extends State<OverviewSelectedWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 1.8,
+      height: MediaQuery.of(context).size.height * 1.5,
       child: TestRestaurantOverview(),
       // RestaurantOverview(),
     );
