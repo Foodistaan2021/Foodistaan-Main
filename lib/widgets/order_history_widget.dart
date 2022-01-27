@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodistan/functions/order_functions.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 
 class OrderHistoryWidget extends StatefulWidget {
   var orderData;
@@ -61,8 +62,10 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            image: const DecorationImage(
+                            image: DecorationImage(
                               image: AssetImage('assets/images/dosa.png'),
+                              // image: CachedNetworkImageProvider('assets/images/dosa.png'),
+
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -99,7 +102,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                     ),
                   ),
                   Text(
-                    widget.orderData['total-bill'].toString(),
+                    '\u{20B9}${widget.orderData['total-bill'].toString()}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -215,7 +218,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                 borderRadius: BorderRadius.circular(11),
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.yellowAccent,
+                    color: Color.fromRGBO(223, 195, 11, 1),
                     spreadRadius: 1,
                   ),
                 ],
@@ -225,7 +228,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
-                    children: const [
+                    children: <Widget>[
                       SizedBox(
                         width: 11,
                       ),
@@ -236,41 +239,70 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        '4.5  ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      Icon(
-                        Icons.star,
-                        size: 15,
-                        color: Colors.yellowAccent,
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.width * 0.011,
+                          bottom: MediaQuery.of(context).size.width * 0.011,
+                          left: MediaQuery.of(context).size.width * 0.005,
+                          right: MediaQuery.of(context).size.width * 0.005,
+                        ),
+                        // height: 20,
+                        width: MediaQuery.of(context).size.width * 0.11,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Color.fromRGBO(247, 193, 43, 1),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '4.5',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 14,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width * 0.005,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color.fromRGBO(247, 193, 43, 1),
+                          ),
+                          child: Icon(
                             Icons.refresh,
                             size: 15,
-                            color: Colors.yellowAccent,
+                            color: Colors.white,
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Repeat Order',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          SizedBox(
-                            width: 11,
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Repeat Order',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

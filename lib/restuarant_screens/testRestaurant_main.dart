@@ -627,7 +627,9 @@ class _DeliverySelectedWidgetState extends State<DeliverySelectedWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 22),
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.03,
+                      ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -655,7 +657,7 @@ class _DeliverySelectedWidgetState extends State<DeliverySelectedWidget> {
                               ),
                             ),
                             SizedBox(
-                              width: 33,
+                              width: MediaQuery.of(context).size.width * 0.04,
                             ),
                             GestureDetector(
                               onTap: () {
@@ -767,7 +769,9 @@ class _PickupSelectedWidgetState extends State<PickupSelectedWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 22),
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.03,
+                      ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -795,7 +799,7 @@ class _PickupSelectedWidgetState extends State<PickupSelectedWidget> {
                               ),
                             ),
                             SizedBox(
-                              width: 33,
+                              width: MediaQuery.of(context).size.width * 0.04,
                             ),
                             GestureDetector(
                               onTap: () {
