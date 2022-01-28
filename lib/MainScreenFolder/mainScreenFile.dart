@@ -1,19 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
-import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
 import '../scanner.dart';
-import 'AppBar/AppBarFile.dart';
 import 'HomeScreenFile.dart';
-import 'package:foodistan/Data/data.dart';
-import 'AppBar/LocationPointsSearch.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
 
 //Main screen contains bottom nav bar
 //which contains all the main screens
@@ -69,7 +61,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             controller: tabController,
             indicator: UnderlineTabIndicator(
               insets: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 60.0),
-              borderSide: BorderSide(color: selected, width: 1),
+              borderSide: BorderSide(color: selected, width: 1.5),
             ),
             onTap: (value) {
               widget.currentIndex = value;

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantDataProvider extends ChangeNotifier {
+class CartDataProvider extends ChangeNotifier {
   Map<String, dynamic> _restaurantData = {};
   final _firestore = FirebaseFirestore.instance;
   String _vendorId = '';
@@ -57,6 +57,7 @@ class RestaurantDataProvider extends ChangeNotifier {
     _couponId = couponId;
     _hasCouponData = true;
     _hasCoupon = true;
+    notifyListeners();
   }
 
   removeCoupon(cartId) async {

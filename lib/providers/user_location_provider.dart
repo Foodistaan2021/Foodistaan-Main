@@ -20,14 +20,21 @@ class UserLocationProvider extends ChangeNotifier {
   getUserLocation() async {
     await _firestore.collection('users').doc(userNumber).get().then((v) {
       v.data()!.forEach((key, value) {
+        //if 'user-location' exists in the database
+        //stores it in the database
         if (key == 'user-location') _userLocation = value;
       });
     });
+
     if (_userLocation != null) {
       _userAddress =
           await getAddress(_userLocation!.latitude, _userLocation!.longitude);
+      _hasUserLocation = true;
+      _userLocationIsNull = false;
+    } else {
+      _userLocationIsNull = true;
     }
-    _hasUserLocation = true;
+
     notifyListeners();
   }
 

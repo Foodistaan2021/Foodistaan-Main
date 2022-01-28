@@ -10,6 +10,8 @@ import 'package:foodistan/functions/places_search_model.dart';
 import 'package:foodistan/global/global_variables.dart' as global;
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:foodistan/providers/user_location_provider.dart';
+import 'package:provider/provider.dart';
 
 class LocationBottomSheetWidget extends StatefulWidget {
   bool isAddingAddress;
@@ -29,17 +31,17 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _asyncFunctions().then((value) {
-      if (value) {
-        setState(() {
-          hasAddress = true;
-        });
-      } else {
-        setState(() {
-          hasAddress = false;
-        });
-      }
-    });
+    // _asyncFunctions().then((value) {
+    //   if (value) {
+    //     setState(() {
+    //       hasAddress = true;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       hasAddress = false;
+    //     });
+    //   }
+    // });
   }
 
   asyncFunctionSearch(query) async {
@@ -143,18 +145,6 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                               asyncFunctionSearch(searchFeildController.text);
                           },
                         ),
-                        // prefixIcon: IconButton(
-                        //     onPressed: () async {
-                        //       if (searchFeildController.text.length > 3)
-                        //         asyncFunctionSearch(searchFeildController.text);
-                        //     },
-                        //     icon: Icon(
-                        //       FontAwesomeIcons.search,
-                        //       color: Color(0xfff7c12b),
-                        //     ),),
-                        // focusColor: Color(0xfff7c12b),
-                        // hoverColor: Color(0xfff7c12b),
-                        // fillColor: Color(0xfff7c12b),
                       ),
                     ),
                   ),
@@ -163,71 +153,78 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
               SizedBox(
                 height: 25,
               ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddLocation(
-                      placeId: null,
-                      placeSearched: false,
-                      isAddingAddress: widget.isAddingAddress,
+              Consumer<UserLocationProvider>(
+                  builder: (_, userLocationValue, __) {
+                return GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddLocation(
+                        placeId: null,
+                        placeSearched: false,
+                        isAddingAddress: widget.isAddingAddress,
+                      ),
                     ),
                   ),
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  color: Colors.white,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.gps_fixed,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Use Current Location',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.gps_fixed,
+                                color: Colors.black,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Use Current Location',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04,
+                                    ),
                                   ),
-                                ),
-                                hasAddress
-                                    ? Text(
-                                        userAddress!.subLocality!,
-                                        style: TextStyle(
-                                          color: Colors.grey,
+                                  userLocationValue.hasUserLocation == true &&
+                                          userLocationValue
+                                                  .userLocationIsNull ==
+                                              false
+                                      ? Text(
+                                          userLocationValue
+                                              .userAddress!.locality!,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        )
+                                      : Text(
+                                          'No Selected Location',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
                                         ),
-                                      )
-                                    : Text(
-                                        'No Data',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
               SizedBox(
                 height: 25,
               ),

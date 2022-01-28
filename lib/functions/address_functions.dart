@@ -70,13 +70,6 @@ class UserAddress {
       'category': category,
       'user-location': GeoPoint(location.latitude, location.longitude),
     }).then((value) {
-      deliveryAddress.value = {
-        'house-feild': houseFeild,
-        'street-feild': streetFeild,
-        'category': category,
-        'user-location': GeoPoint(location.latitude, location.longitude)
-      };
-    }).then((value) {
       _firestore.collection('users').doc(userNumber).update({'address-id': id});
     });
   }

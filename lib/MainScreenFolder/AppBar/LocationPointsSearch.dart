@@ -17,21 +17,7 @@ class _LocationState extends State<Location> {
   bool hasAddress = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-  }
-
-  _asyncFunctions() async {
-    var userLocation = await LocationFunctions().getUserLocation();
-    if (userLocation != null) {
-      var address = await LocationFunctions()
-          .getAddress(userLocation.latitude, userLocation.longitude);
-      setState(() {
-        userAddress = address;
-      });
-      return true;
-    }
-    return false;
   }
 
   @override
@@ -55,7 +41,8 @@ class _LocationState extends State<Location> {
           ),
           Consumer<UserLocationProvider>(
               builder: (context, userLocationValue, userLocationWidget) {
-            return userLocationValue.hasUserLocation
+            return userLocationValue.hasUserLocation == true &&
+                    userLocationValue.userLocationIsNull == false
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +63,10 @@ class _LocationState extends State<Location> {
                       )
                     ],
                   )
-                : Text('Select Location');
+                : Text(
+                    'Select Location',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  );
           }),
         ],
       ),

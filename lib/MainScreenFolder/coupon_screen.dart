@@ -31,7 +31,7 @@ class _CouponScreenState extends State<CouponScreen> {
   asyncGetCoupons() async {
     List coupons = [];
     final CollectionReference couponsList =
-        await FirebaseFirestore.instance.collection('coupons');
+        FirebaseFirestore.instance.collection('coupons');
 
     try {
       await couponsList.get().then((querySnapshot) => {
@@ -115,20 +115,19 @@ class _CouponScreenState extends State<CouponScreen> {
                                     onPressed: () async {
                                       if (widget.totalPrice <
                                           couponData['min-price']) {
-                                        return null;
+                                        return;
                                       } else {
-                                        value.hasData
-                                            ? await RestaurantDataProvider()
-                                                .addCoupon(value.cartId,
-                                                    couponData['id'])
-                                                .then((v) {
-                                                Navigator.pop(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            CartScreenMainLogin()));
-                                              })
-                                            : null;
+                                        if (value.hasData) {
+                                          await CartDataProvider().addCoupon(
+                                              value.cartId, couponData['id']);
+
+                                          await CartDataProvider()
+                                              .getRestaurantData(value.cartId);
+
+                                          Navigator.pop(
+                                            context,
+                                          );
+                                        }
                                       }
                                     },
                                     child: Text(

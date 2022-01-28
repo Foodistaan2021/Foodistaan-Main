@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodistan/MainScreenFolder/address_screen.dart';
 import 'package:foodistan/MainScreenFolder/coupon_screen.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +11,6 @@ import 'package:foodistan/profile/profile_address.dart';
 import 'package:foodistan/profile/your_orders.dart';
 import 'package:foodistan/providers/cart_id_provider.dart';
 import 'package:foodistan/providers/restaurant_data_provider.dart';
-import 'package:foodistan/global/global_variables.dart';
 import 'package:foodistan/providers/total_price_provider.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
 import 'package:foodistan/widgets/location_bottam_sheet_widget.dart';
@@ -20,9 +20,6 @@ int maxCouponDiscount = 0;
 String couponCode = '';
 int minCouponValue = 0;
 Map<String, dynamic> itemMap = {};
-
-final ValueNotifier<Map<String, dynamic>> deliveryAddress =
-    ValueNotifier<Map<String, dynamic>>({});
 
 class CartScreenMainLogin extends StatefulWidget {
   String routeName = 'cart';
@@ -42,7 +39,6 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin>
         .doc(userNumber)
         .collection('orders')
         .snapshots();
-    print('Number $userNumber');
     return StreamBuilder(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -199,6 +195,10 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin>
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
+            //if already items exists in the cart it will display cart items
+            //if there are no items in the cart
+            //it will see if there exits any order
+            //then render the widget accordingly
             if (snapshot.data!.docs.length != 0) {
               return CartItemsWidget(data: snapshot.data!.docs, cartId: cartId);
             }
@@ -209,8 +209,13 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin>
   }
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<CartIdProvider>(context, listen: false).getCartId();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context.read<CartIdProvider>().getCartId();
     super.build(context);
     return Scaffold(
       body: SafeArea(
@@ -220,7 +225,6 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin>
           child: Column(
             children: [
               Consumer<CartIdProvider>(builder: (context, value, child) {
-                print('Cart id ${value.cartId}');
                 return value.hasData == false
                     ? Center(
                         child: Padding(
@@ -244,6 +248,8 @@ class _CartScreenMainLoginState extends State<CartScreenMainLogin>
 }
 
 class CartItemsWidget extends StatefulWidget {
+  //receving menu items data before hand
+  //becoz of the stream
   List<DocumentSnapshot> data;
   String cartId;
   CartItemsWidget({required this.data, required this.cartId});
@@ -253,7 +259,6 @@ class CartItemsWidget extends StatefulWidget {
 }
 
 class _CartItemsWidgetState extends State<CartItemsWidget> {
-  @override
   Widget menuItemWidget(itemData) {
     itemMap[itemData['id']] = itemData['quantity'];
 
@@ -416,7 +421,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                             alignment: Alignment.centerRight,
                             child: TextButton(
                                 onPressed: () async {
-                                  Provider.of<RestaurantDataProvider>(context,
+                                  Provider.of<CartDataProvider>(context,
                                           listen: false)
                                       .removeCoupon(cartId);
                                 },
@@ -427,7 +432,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                           )
                         : GestureDetector(
                             onTap: () async {
-                              Navigator.push(
+                              await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => CouponScreen(
@@ -456,15 +461,31 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    context.read<TotalPriceProvider>().getTotalPrice(widget.data);
-    context.read<RestaurantDataProvider>().getRestaurantData(widget.cartId);
-    context.read<UserAddressProvider>().checkDefaultDeliveryAddress();
+  void initState() {
+    super.initState();
 
+    // //calling cart data provider which provides all the relevent data for the cart
+    // Provider.of<CartDataProvider>(context, listen: true)
+    //     .getRestaurantData(widget.cartId);
+
+    //Provides data for delivery location to the cart
+    Provider.of<UserAddressProvider>(context, listen: false)
+        .checkDefaultDeliveryAddress();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //Provides total price for the items present in the cart
+    Timer(const Duration(milliseconds: 300), () async {
+      Provider.of<TotalPriceProvider>(context, listen: false)
+          .getTotalPrice(widget.data);
+    });
+
+    context.read<CartDataProvider>().getRestaurantData(widget.cartId);
     return SafeArea(
       child: Container(
-        child: Center(child:
-            Consumer<RestaurantDataProvider>(builder: (context, value, child) {
+        child: Center(
+            child: Consumer<CartDataProvider>(builder: (context, value, child) {
           return value.hasData == false
               ? CircularProgressIndicator(
                   color: Colors.yellow,
@@ -498,33 +519,35 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                             return menuItemWidget(widget.data[index].data());
                           }),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(11),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    Consumer<TotalPriceProvider>(
+                        builder: (_, totalPriceValue, __) {
+                      return Column(
                         children: [
-                          Text(
-                            'Cart Total - ₹ ',
-                            style: TextStyle(
-                              color: Colors.black,
+                          Padding(
+                            padding: const EdgeInsets.all(11),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Cart Total - ₹ ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(totalPriceValue.totalPriceProvider
+                                    .toString())
+                              ],
                             ),
                           ),
-                          Consumer<TotalPriceProvider>(
-                              builder: (context, value, widget) {
-                            return Text(value.totalPriceProvider.toString());
-                          }),
+                          couponWidget(
+                              value.hasCoupon,
+                              value.couponCode,
+                              value.minCouponValue,
+                              totalPriceValue.totalPriceProvider,
+                              widget.cartId)
                         ],
-                      ),
-                    ),
-                    Consumer<TotalPriceProvider>(
-                        builder: (context, totalPriceValue, totalPricewidget) {
-                      return couponWidget(
-                          value.hasCoupon,
-                          value.couponCode,
-                          value.minCouponValue,
-                          totalPriceValue.totalPriceProvider,
-                          widget.cartId);
+                      );
                     }),
                     Consumer<UserAddressProvider>(builder:
                         (context, userAddressValue, userAddressWidget) {

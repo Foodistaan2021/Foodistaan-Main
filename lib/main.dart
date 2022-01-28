@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<CartIdProvider>(
               create: (_) => CartIdProvider()),
           //provides cart-id for all cart functions
-          ChangeNotifierProvider<RestaurantDataProvider>(
+          ChangeNotifierProvider<CartDataProvider>(
               create: (_) =>
-                  RestaurantDataProvider()), //provides data for the cart...rename it to cart data provider
+                  CartDataProvider()), //provides data for the cart...rename it to cart data provider
 
           ChangeNotifierProvider<TotalPriceProvider>(
               create: (_) =>
