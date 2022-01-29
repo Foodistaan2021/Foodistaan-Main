@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -136,17 +138,21 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
-  searchQuery(String query, List items) async {
+  searchQuery(String query, List items) {
+    List searchResults = [];
     for (var item in items) {
       RegExp regExp = new RegExp(query, caseSensitive: false);
       bool containe = regExp.hasMatch(item['search']);
       if (containe) {
-        print(item['Name']);
+        searchResults.add(item);
       }
     }
+    return searchResults;
   }
+
+  List searchResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +170,10 @@ class _SearchState extends State<Search> {
               child: TextFormField(
                 controller: _searchController,
                 onChanged: (v) async {
-                  await searchQuery(_searchController.text, value.items);
+                  setState(() {
+                    searchResults =
+                        searchQuery(_searchController.text, value.items);
+                  });
                 },
                 textAlign: TextAlign.start,
                 obscureText: false,
@@ -192,7 +201,11 @@ class _SearchState extends State<Search> {
               ),
             ),
           ),
-          _searchController.text.isNotEmpty ? SearchItemList() : Container(),
+          _searchController.text.isNotEmpty && searchResults.isNotEmpty
+              ? SearchItemList(
+                  serachResults: searchResults,
+                )
+              : Container(),
         ],
       );
     });
@@ -200,7 +213,8 @@ class _SearchState extends State<Search> {
 }
 
 class SearchItemList extends StatefulWidget {
-  const SearchItemList({Key? key}) : super(key: key);
+  List serachResults;
+  SearchItemList({required this.serachResults, Key? key}) : super(key: key);
 
   @override
   _SearchItemListState createState() => _SearchItemListState();
@@ -310,11 +324,11 @@ class _SearchItemListState extends State<SearchItemList> {
               margin: EdgeInsets.only(top: 10),
               color: Colors.white,
               child: ListView.builder(
-                  itemCount: 15,
+                  itemCount: widget.serachResults.length,
+                  scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
                     return SearchListItemtile(
-                      index: index,
-                    );
+                        index: index, data: widget.serachResults[index]);
                   })),
         ],
       ),
@@ -324,11 +338,9 @@ class _SearchItemListState extends State<SearchItemList> {
 
 class SearchListItemtile extends StatelessWidget {
   final index;
-
-  const SearchListItemtile({
-    Key? key,
-    this.index,
-  }) : super(key: key);
+  Map<String, dynamic> data;
+  SearchListItemtile({Key? key, required this.index, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -345,7 +357,7 @@ class SearchListItemtile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'RC IceCream',
+              data['Name'],
               style: TextStyle(
                 fontSize: 16,
                 // color: Colors.grey.shade700,
