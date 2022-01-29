@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/MainScreenFolder/AppBar/points.dart';
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/location_functions.dart';
+import 'package:foodistan/providers/restaurant_list_provider.dart';
 import 'package:foodistan/providers/user_location_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -132,64 +133,58 @@ class _PointsState extends State<Points> {
 class Search extends StatelessWidget {
   final _searchController = TextEditingController();
 
-  searchQuery(String query) async {
-    final _firestore = FirebaseFirestore.instance;
-
-    await _firestore
-        .collection('DummyData')
-        .where(
-          'search',
-          isGreaterThanOrEqualTo: query.toLowerCase(),
-        )
-        .get()
-        .then((value) {
-      QuerySnapshot<Map<String, dynamic>> v = value;
-      for (var item in v.docs) {
-        print(item.data());
+  searchQuery(String query, List items) async {
+    for (var item in items) {
+      RegExp regExp = new RegExp(query, caseSensitive: false);
+      bool containe = regExp.hasMatch(item['search']);
+      if (containe) {
+        print(item['Name']);
       }
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 15,
-      ),
-      child: SizedBox(
-        height: h1 * 0.05,
-        child: TextFormField(
-          controller: _searchController,
-          onChanged: (v) async {
-            await searchQuery(_searchController.text);
-          },
-          textAlign: TextAlign.start,
-          obscureText: false,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(0),
-              hintText: 'Search Cuisines',
-              hintStyle: TextStyle(color: Colors.grey),
-              prefixIcon: Icon(
-                Icons.search,
-                color: Color(0xFFFAB84C),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFFAB84C), width: 1),
-                  borderRadius: BorderRadius.all(Radius.circular(11))),
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(11),
-                ),
-                borderSide: BorderSide(
-                  color: Color(0xFFFAB84C),
-                  width: 1,
-                ),
-              )),
+    return Consumer<RestaurantListProvider>(builder: (_, value, __) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 15,
         ),
-      ),
-    );
+        child: SizedBox(
+          height: h1 * 0.05,
+          child: TextFormField(
+            controller: _searchController,
+            onChanged: (v) async {
+              await searchQuery(_searchController.text, value.items);
+            },
+            textAlign: TextAlign.start,
+            obscureText: false,
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(0),
+                hintText: 'Search Cuisines',
+                hintStyle: TextStyle(color: Colors.grey),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Color(0xFFFAB84C),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFFAB84C), width: 1),
+                    borderRadius: BorderRadius.all(Radius.circular(11))),
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(11),
+                  ),
+                  borderSide: BorderSide(
+                    color: Color(0xFFFAB84C),
+                    width: 1,
+                  ),
+                )),
+          ),
+        ),
+      );
+    });
   }
 }
 
