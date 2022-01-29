@@ -9,6 +9,7 @@ import 'package:foodistan/providers/restaurant_list_provider.dart';
 
 import 'package:foodistan/providers/total_price_provider.dart';
 import 'package:foodistan/providers/user_address_provider.dart';
+import 'package:foodistan/providers/user_data_provider.dart';
 import 'package:foodistan/providers/user_location_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         // list of all the providers
         providers: [
+          ChangeNotifierProvider<UserDataProvider>(
+              create: (_) => UserDataProvider()), //provides user data
+
           ChangeNotifierProvider<CartIdProvider>(
               create: (_) => CartIdProvider()),
           //provides cart-id for all cart functions

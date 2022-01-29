@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodistan/providers/user_data_provider.dart';
 
 import 'package:foodistan/restuarant_screens/restaurant_delivery_review.dart';
 import 'package:foodistan/restuarant_screens/restaurant_main.dart';
@@ -9,6 +10,7 @@ import 'package:foodistan/restuarant_screens/restuarant_delivery_menu.dart';
 import 'package:foodistan/restuarant_screens/testRestaurant_main.dart';
 
 import 'package:foodistan/widgets/total_bill_bottam_widget.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantDelivery extends StatefulWidget {
   static String id = 'restaurant_delivery';
@@ -27,18 +29,24 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
   bool isCartEmpty = true;
   bool isDeliverySelected = false;
   bool isOverviewSelected = false;
+  bool isBookMarked = false;
 
   @override
   void initState() {
-    super.initState();
     isDeliverySelected = true;
+    UserDataProvider().checkBookmark(widget.vendor_id).then((v) {
+      if (v == true) {
+        print('v is $v');
+        setState(() {
+          isBookMarked = true;
+        });
+      }
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var itemWidth = MediaQuery.of(context).size.width * 0.4;
-    var itemHeight = MediaQuery.of(context).size.height * 0.25;
-
     return SafeArea(
       child: Scaffold(
           backgroundColor: Color.fromRGBO(250, 250, 250, 1),
@@ -73,21 +81,25 @@ class _RestaurantDeliveryState extends State<RestaurantDelivery> {
                           //simply adds the vendor id to the bookmarks array in the user data base
                           //and then fetches restaurant id from the bookmarks array
                           //using the vendor id in the bookmarks page
-                          String? userNumber =
-                              FirebaseAuth.instance.currentUser!.phoneNumber;
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(userNumber)
-                              .update({
-                            'bookmarks':
-                                FieldValue.arrayUnion([widget.vendor_id])
+                          if (isBookMarked) return;
+
+                          await UserDataProvider()
+                              .addBookmark(widget.vendor_id)
+                              .then((v) {
+                            setState(() {
+                              isBookMarked = true;
+                            });
                           });
                         },
-                        child: Icon(
-                          Icons.bookmark_outline,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        child: isBookMarked == true
+                            ? Icon(
+                                Icons.bookmark_added_outlined,
+                                color: Colors.black,
+                              )
+                            : Icon(
+                                Icons.bookmark_outline,
+                                color: Colors.black,
+                              ),
                       )),
                 ]),
           ),

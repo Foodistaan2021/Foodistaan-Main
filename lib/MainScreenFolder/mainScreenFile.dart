@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/order_functions.dart';
 import 'package:foodistan/profile/user_profile.dart';
+import 'package:foodistan/providers/user_data_provider.dart';
 import '../scanner.dart';
 import 'HomeScreenFile.dart';
+import 'package:provider/provider.dart';
 
 //Main screen contains bottom nav bar
 //which contains all the main screens
@@ -26,6 +28,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    Provider.of<UserDataProvider>(context, listen: false).getUserData();
+
     _pageController = PageController(initialPage: widget.currentIndex);
     tabController = TabController(length: 4, vsync: this, initialIndex: 0);
   }
