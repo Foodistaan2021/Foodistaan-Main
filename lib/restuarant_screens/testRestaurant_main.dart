@@ -592,9 +592,9 @@ class _DeliverySelectedWidgetState extends State<DeliverySelectedWidget> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 11),
+            padding: EdgeInsets.symmetric(horizontal: 6.6),
             margin: EdgeInsets.only(top: 20),
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.09,
             child: TextFormField(
                 decoration: InputDecoration(
                     prefixIcon: Padding(
@@ -628,7 +628,7 @@ class _DeliverySelectedWidgetState extends State<DeliverySelectedWidget> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.03,
+                        left: MediaQuery.of(context).size.width * 0.014,
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -734,9 +734,9 @@ class _PickupSelectedWidgetState extends State<PickupSelectedWidget> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 11),
+            padding: EdgeInsets.symmetric(horizontal: 6.6),
             margin: EdgeInsets.only(top: 20),
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.09,
             child: TextFormField(
                 decoration: InputDecoration(
                     prefixIcon: Padding(
@@ -770,7 +770,7 @@ class _PickupSelectedWidgetState extends State<PickupSelectedWidget> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.03,
+                        left: MediaQuery.of(context).size.width * 0.014,
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,

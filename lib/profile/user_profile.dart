@@ -150,37 +150,41 @@ class _UserProfileState extends State<UserProfile>
                         ),
                       ],
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 35,
-                              child: Image.asset("Images/profilepic.png"),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text('Edit'),
-                            SizedBox(
-                              width: 37.5,
-                            ),
-                          ],
-                        ),
-                      ],
+                    Positioned(
+                      right: 0,
+                      top: MediaQuery.of(context).size.height * 0.04,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                radius: 35,
+                                child: Image.asset("Images/profilepic.png"),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: const [
+                              Text('Edit'),
+                              SizedBox(
+                                width: 37.5,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

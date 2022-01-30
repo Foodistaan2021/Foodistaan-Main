@@ -198,8 +198,9 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05,
-                    right: MediaQuery.of(context).size.width * 0.05),
+                    top: MediaQuery.of(context).size.width * 0.015,
+                    left: MediaQuery.of(context).size.width * 0.06,
+                    right: MediaQuery.of(context).size.width * 0.06),
                 height: MediaQuery.of(context).size.height * 0.35,
                 child: RestuarantDeliveryReview(),
               ),
@@ -301,11 +302,11 @@ class overviewBottomWidget extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.width * 0.15,
+            top: MediaQuery.of(context).size.width * 0.125,
           ),
           padding: EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width * 0.9,
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.201,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -430,7 +431,7 @@ class overViewBottomWidgetSecond extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * 0.12,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
