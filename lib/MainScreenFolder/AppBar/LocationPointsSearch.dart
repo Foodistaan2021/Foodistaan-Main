@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -138,16 +140,18 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   final _searchController = TextEditingController();
 
-  var searchResult;
+  ValueNotifier<List> searchResults = ValueNotifier([]);
 
-  searchQuery(String query, List items) async {
+  searchQuery(String query, List items) {
+    List searchResultsTemp = [];
     for (var item in items) {
       RegExp regExp = new RegExp(query, caseSensitive: false);
       bool containe = regExp.hasMatch(item['search']);
       if (containe) {
-        print(item['Name']);
+        searchResultsTemp.add(item);
       }
     }
+    searchResults.value = searchResultsTemp;
   }
 
   @override
@@ -166,10 +170,7 @@ class _SearchState extends State<Search> {
               child: TextFormField(
                 controller: _searchController,
                 onChanged: (v) async {
-                  setState(() {
-                    searchResult =
-                        searchQuery(_searchController.text, value.items);
-                  });
+                  searchQuery(_searchController.text, value.items);
                 },
                 textAlign: TextAlign.start,
                 obscureText: false,
@@ -177,6 +178,15 @@ class _SearchState extends State<Search> {
                     contentPadding: EdgeInsets.all(0),
                     hintText: 'Search Cuisines',
                     hintStyle: TextStyle(color: Colors.grey),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          _searchController.text = '';
+                          searchResults.value = [];
+                        },
+                        icon: Icon(
+                          Icons.clear_rounded,
+                          color: Colors.grey,
+                        )),
                     prefixIcon: Icon(
                       Icons.search,
                       color: Color(0xFFFAB84C),
@@ -184,10 +194,10 @@ class _SearchState extends State<Search> {
                     focusedBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFFAB84C), width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(11))),
+                        borderRadius: BorderRadius.all(Radius.circular(4))),
                     enabledBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(11),
+                        Radius.circular(4),
                       ),
                       borderSide: BorderSide(
                         color: Color(0xFFFAB84C),
@@ -197,7 +207,20 @@ class _SearchState extends State<Search> {
               ),
             ),
           ),
-          _searchController.text.isNotEmpty ? SearchItemList() : Container(),
+          //Value notifier is used to avoid set state method
+          //it automaticaly detects changes in any of the values
+          //and acts accordingly
+          //here we are listening to searchResults which is a list
+          ValueListenableBuilder<List>(
+              valueListenable: searchResults,
+              builder: (_, value, __) {
+                return value.isNotEmpty && _searchController.text.isNotEmpty
+                    ? SearchItemList(
+                        searchResults: value,
+                      )
+                    : Container();
+              })
+          // _searchController.text.isNotEmpty ? SearchItemList() : Container(),
         ],
       );
     });
@@ -205,7 +228,8 @@ class _SearchState extends State<Search> {
 }
 
 class SearchItemList extends StatefulWidget {
-  const SearchItemList({Key? key}) : super(key: key);
+  List searchResults;
+  SearchItemList({required this.searchResults, Key? key}) : super(key: key);
 
   @override
   _SearchItemListState createState() => _SearchItemListState();
@@ -329,11 +353,13 @@ class _SearchItemListState extends State<SearchItemList> {
               margin: EdgeInsets.only(top: 10),
               color: Colors.white,
               child: ListView.builder(
-                  itemCount: 8,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: widget.searchResults.length,
                   itemBuilder: (BuildContext context, int index) {
                     return SearchListItemtile(
-                      index: index,
-                    );
+                        index: index, data: widget.searchResults[index]);
                   })),
         ],
       ),
@@ -343,11 +369,10 @@ class _SearchItemListState extends State<SearchItemList> {
 
 class SearchListItemtile extends StatelessWidget {
   final index;
+  Map<String, dynamic> data;
 
-  const SearchListItemtile({
-    Key? key,
-    this.index,
-  }) : super(key: key);
+  SearchListItemtile({Key? key, required this.index, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +398,7 @@ class SearchListItemtile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'RC IceCream',
+              data['Name'],
               style: TextStyle(
                 fontSize: 14,
                 // color: Colors.grey.shade700,
@@ -384,7 +409,7 @@ class SearchListItemtile extends StatelessWidget {
               height: 4,
             ),
             Text(
-              'Icecream',
+              data['Cuisines'],
               style: TextStyle(
                 fontSize: 10,
                 color: Colors.grey.shade700,
@@ -418,9 +443,6 @@ class SearchListItemtile extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // Container(
 //         decoration: BoxDecoration(
