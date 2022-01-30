@@ -141,6 +141,7 @@ class _SearchState extends State<Search> {
   final _searchController = TextEditingController();
 
   ValueNotifier<List> searchResults = ValueNotifier([]);
+  late FocusNode myFocusNode;
 
   searchQuery(String query, List items) {
     List searchResultsTemp = [];
@@ -152,6 +153,21 @@ class _SearchState extends State<Search> {
       }
     }
     searchResults.value = searchResultsTemp;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    myFocusNode.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -172,6 +188,7 @@ class _SearchState extends State<Search> {
                 onChanged: (v) async {
                   searchQuery(_searchController.text, value.items);
                 },
+                focusNode: myFocusNode,
                 textAlign: TextAlign.start,
                 obscureText: false,
                 decoration: InputDecoration(
