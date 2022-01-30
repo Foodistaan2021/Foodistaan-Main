@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -138,21 +136,19 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final TextEditingController _searchController = TextEditingController();
+  final _searchController = TextEditingController();
 
-  searchQuery(String query, List items) {
-    List searchResults = [];
+  var searchResult;
+
+  searchQuery(String query, List items) async {
     for (var item in items) {
       RegExp regExp = new RegExp(query, caseSensitive: false);
       bool containe = regExp.hasMatch(item['search']);
       if (containe) {
-        searchResults.add(item);
+        print(item['Name']);
       }
     }
-    return searchResults;
   }
-
-  List searchResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +167,7 @@ class _SearchState extends State<Search> {
                 controller: _searchController,
                 onChanged: (v) async {
                   setState(() {
-                    searchResults =
+                    searchResult =
                         searchQuery(_searchController.text, value.items);
                   });
                 },
@@ -201,11 +197,7 @@ class _SearchState extends State<Search> {
               ),
             ),
           ),
-          _searchController.text.isNotEmpty && searchResults.isNotEmpty
-              ? SearchItemList(
-                  serachResults: searchResults,
-                )
-              : Container(),
+          _searchController.text.isNotEmpty ? SearchItemList() : Container(),
         ],
       );
     });
@@ -213,8 +205,7 @@ class _SearchState extends State<Search> {
 }
 
 class SearchItemList extends StatefulWidget {
-  List serachResults;
-  SearchItemList({required this.serachResults, Key? key}) : super(key: key);
+  const SearchItemList({Key? key}) : super(key: key);
 
   @override
   _SearchItemListState createState() => _SearchItemListState();
@@ -234,19 +225,21 @@ class _SearchItemListState extends State<SearchItemList> {
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.width * 0.08,
             ),
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.06,
             // color: Colors.grey.shade300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey.shade200,
+                  // color: Colors.red,
                   // blurRadius: 6.0,
                 ),
               ],
               color: Colors.transparent,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -265,18 +258,24 @@ class _SearchItemListState extends State<SearchItemList> {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
+                          color: isSelected == 'DELIVERY'
+                              ? Colors.grey
+                              : Colors.grey.shade200,
                           // blurRadius: 6.0,
                         ),
                       ],
-                      color: Colors.black,
+                      color: isSelected == 'DELIVERY'
+                          ? Colors.black
+                          : Colors.transparent,
                     ),
                     child: Text(
                       'DELIVERY',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: isSelected == 'DELIVERY'
+                            ? Colors.white
+                            : Colors.grey.shade700,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -299,18 +298,24 @@ class _SearchItemListState extends State<SearchItemList> {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.shade300,
+                          color: isSelected == 'DINING'
+                              ? Colors.grey
+                              : Colors.grey.shade200,
                           // blurRadius: 6.0,
                         ),
                       ],
-                      color: Colors.transparent,
+                      color: isSelected == 'DINING'
+                          ? Colors.black
+                          : Colors.transparent,
                     ),
                     child: Text(
                       'DINING',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey.shade700,
+                        color: isSelected == 'DINING'
+                            ? Colors.white
+                            : Colors.grey.shade700,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -324,11 +329,11 @@ class _SearchItemListState extends State<SearchItemList> {
               margin: EdgeInsets.only(top: 10),
               color: Colors.white,
               child: ListView.builder(
-                  itemCount: widget.serachResults.length,
-                  scrollDirection: Axis.vertical,
+                  itemCount: 8,
                   itemBuilder: (BuildContext context, int index) {
                     return SearchListItemtile(
-                        index: index, data: widget.serachResults[index]);
+                      index: index,
+                    );
                   })),
         ],
       ),
@@ -338,28 +343,39 @@ class _SearchItemListState extends State<SearchItemList> {
 
 class SearchListItemtile extends StatelessWidget {
   final index;
-  Map<String, dynamic> data;
-  SearchListItemtile({Key? key, required this.index, required this.data})
-      : super(key: key);
+
+  const SearchListItemtile({
+    Key? key,
+    this.index,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 8),
+      width: double.maxFinite,
       child: ListTile(
-        contentPadding: EdgeInsets.all(5),
-        minVerticalPadding: 5,
-        tileColor: Colors.white,
+        contentPadding: EdgeInsets.all(2),
+        // minVerticalPadding: 2,
+        // tileColor: Colors.white,
         leading: Container(
-            width: 80, child: Image.asset('assets/images/icecream.png')),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Image.asset(
+              'assets/images/icecream.png',
+              fit: BoxFit.fill,
+            )),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data['Name'],
+              'RC IceCream',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 // color: Colors.grey.shade700,
                 fontWeight: FontWeight.bold,
               ),
@@ -370,7 +386,7 @@ class SearchListItemtile extends StatelessWidget {
             Text(
               'Icecream',
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.grey.shade700,
                 // fontWeight: FontWeight.bold,
               ),
@@ -378,7 +394,7 @@ class SearchListItemtile extends StatelessWidget {
           ],
         ),
         trailing: Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(3),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: [
@@ -392,7 +408,7 @@ class SearchListItemtile extends StatelessWidget {
           child: Text(
             'Promoted',
             style: TextStyle(
-              fontSize: 10,
+              fontSize: 8,
               color: Colors.grey.shade700,
               // fontWeight: FontWeight.bold,
             ),
