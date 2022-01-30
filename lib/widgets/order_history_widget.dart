@@ -227,52 +227,7 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 11,
-                      ),
-                      Text(
-                        'You Rated',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.width * 0.011,
-                          bottom: MediaQuery.of(context).size.width * 0.011,
-                          left: MediaQuery.of(context).size.width * 0.005,
-                          right: MediaQuery.of(context).size.width * 0.005,
-                        ),
-                        // height: 20,
-                        width: MediaQuery.of(context).size.width * 0.11,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Color.fromRGBO(247, 193, 43, 1),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '4.5',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  RatingCardList(),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -311,5 +266,263 @@ class _OrderHistoryWidgetState extends State<OrderHistoryWidget> {
         ),
       ),
     );
+  }
+}
+
+class RatingCardList extends StatefulWidget {
+  const RatingCardList({Key? key}) : super(key: key);
+
+  @override
+  _RatingCardListState createState() => _RatingCardListState();
+}
+
+class _RatingCardListState extends State<RatingCardList> {
+  String rateValue = '';
+  @override
+  Widget build(BuildContext context) {
+    return rateValue.isEmpty
+        ? Container(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.005,
+              right: MediaQuery.of(context).size.width * 0.005,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 11,
+                ),
+                Text(
+                  'Rate',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color.fromRGBO(240, 54, 54, 1),
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '1',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 8,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      rateValue = '1';
+                    });
+                    print(rateValue);
+                  },
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '2',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 8,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      rateValue = '2';
+                    });
+                    print(rateValue);
+                  },
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '3',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 8,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      rateValue = '3';
+                    });
+                    print(rateValue);
+                  },
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 8,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      rateValue = '4';
+                    });
+                    print(rateValue);
+                  },
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '5',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 8,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      rateValue = '5';
+                    });
+                    print(rateValue);
+                  },
+                ),
+              ],
+            ),
+          )
+        : Container(
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: 11,
+                ),
+                Text(
+                  'You Rated',
+                  style: TextStyle(fontSize: 12),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width * 0.011,
+                    bottom: MediaQuery.of(context).size.width * 0.011,
+                    left: MediaQuery.of(context).size.width * 0.005,
+                    right: MediaQuery.of(context).size.width * 0.005,
+                  ),
+                  // height: 20,
+                  width: MediaQuery.of(context).size.width * 0.11,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color.fromRGBO(247, 193, 43, 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        rateValue,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 14,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 }
