@@ -28,7 +28,9 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05),
+                  left: MediaQuery.of(context).size.width * 0.018,
+                  right: MediaQuery.of(context).size.width * 0.018,
+                ),
                 height: MediaQuery.of(context).size.height * 0.1,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +56,7 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.5,
+                                width: MediaQuery.of(context).size.width * 0.53,
                               ),
                               Text("Direction",
                                   style: TextStyle(
@@ -91,7 +93,8 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05),
+                  left: MediaQuery.of(context).size.width * 0.018,
+                ),
                 height: MediaQuery.of(context).size.height * 0.08,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -130,7 +133,8 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05),
+                  left: MediaQuery.of(context).size.width * 0.018,
+                ),
                 height: MediaQuery.of(context).size.height * 0.08,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -164,7 +168,8 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05),
+                  left: MediaQuery.of(context).size.width * 0.018,
+                ),
                 height: MediaQuery.of(context).size.height * 0.05,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -198,16 +203,19 @@ class _TestRestaurantOverviewState extends State<TestRestaurantOverview> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.015,
-                    left: MediaQuery.of(context).size.width * 0.06,
-                    right: MediaQuery.of(context).size.width * 0.06),
+                  top: MediaQuery.of(context).size.width * 0.015,
+                  left: MediaQuery.of(context).size.width * 0.018,
+                  right: MediaQuery.of(context).size.width * 0.018,
+                ),
                 height: MediaQuery.of(context).size.height * 0.35,
                 child: RestuarantDeliveryReview(),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.05),
+                  left: MediaQuery.of(context).size.width * 0.018,
+                  // right: MediaQuery.of(context).size.width * 0.018,
+                ),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
