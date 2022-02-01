@@ -15,7 +15,7 @@ class _RestuarantDeliveryMenuSReview extends State<RestuarantDeliveryReview> {
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.06,
+          height: MediaQuery.of(context).size.height * 0.058,
           width: MediaQuery.of(context).size.width * 0.36,
           margin: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.025,
