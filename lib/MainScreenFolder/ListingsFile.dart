@@ -1,14 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodistan/providers/restaurant_list_provider.dart';
-import 'package:foodistan/providers/user_address_provider.dart';
-import 'package:foodistan/providers/user_location_provider.dart';
 import 'package:foodistan/restuarant_screens/restaurant_delivery.dart';
-import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
-import 'package:foodistan/global/global_variables.dart' as global;
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 //Lists all restaurants in the database and sorts them according to the user
