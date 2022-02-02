@@ -118,7 +118,8 @@ class _TestRestaurantMainState extends State<TestRestaurantMain> {
               ),
               Container(
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    // color: Colors.green,
+                    color: Color.fromRGBO(59, 183, 85, 1),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
@@ -232,7 +233,7 @@ class _TestRestaurantMainState extends State<TestRestaurantMain> {
                     children: [
                       CircleAvatar(
                         maxRadius: 10,
-                        backgroundColor: Colors.green,
+                        backgroundColor: Color.fromRGBO(59, 183, 85, 1),
                         child: Icon(
                           Icons.table_chart,
                           size: 12,
@@ -669,7 +670,7 @@ class _OfferTagsWidgetState extends State<OfferTagsWidget>
                 width: MediaQuery.of(context).size.width * 0.4,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Color.fromRGBO(132, 194, 37, 1),
+                  color: Color.fromRGBO(59, 183, 85, 1),
                 ),
                 child: _animation2.value <= 0.5
                     ? Container(
