@@ -187,6 +187,7 @@ class _SearchState extends State<Search> {
                 controller: _searchController,
                 onChanged: (v) async {
                   searchQuery(_searchController.text, value.items);
+                  setState(() {}); //for cross icon in searchbar
                 },
                 focusNode: myFocusNode,
                 textAlign: TextAlign.start,
@@ -194,15 +195,21 @@ class _SearchState extends State<Search> {
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(0),
                     hintText: 'Search Cuisines',
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
                     suffixIcon: IconButton(
+                        alignment: Alignment.center,
                         onPressed: () {
                           _searchController.text = '';
                           searchResults.value = [];
+                          setState(() {}); //for cross icon in searchbar
                         },
                         icon: Icon(
                           Icons.clear_rounded,
-                          color: Colors.grey,
+                          color: _searchController.text.isNotEmpty
+                              ? Colors.grey
+                              : Colors.transparent,
                         )),
                     prefixIcon: Icon(
                       Icons.search,
@@ -211,10 +218,10 @@ class _SearchState extends State<Search> {
                     focusedBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xFFFAB84C), width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(4))),
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
                     enabledBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(4),
+                        Radius.circular(8),
                       ),
                       borderSide: BorderSide(
                         color: Color(0xFFFAB84C),

@@ -15,7 +15,7 @@ class FoodCategories extends StatelessWidget {
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
     return Container(
-      height: h1 / 7,
+      height: h1 / 8,
       width: 2 * w1 / 5,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -26,7 +26,7 @@ class FoodCategories extends StatelessWidget {
             blurRadius: 5,
           ),
         ],
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: isSelected
               ? Color(0xffFAB84C)
@@ -41,7 +41,10 @@ class FoodCategories extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(ImagePath,),
+              SvgPicture.asset(
+                ImagePath,
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
               SizedBox(
                 height: 2.5,
               ),
