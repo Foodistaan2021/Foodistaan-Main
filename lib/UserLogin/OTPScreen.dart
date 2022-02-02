@@ -5,8 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:foodistan/functions/cart_functions.dart';
 import 'package:foodistan/UserLogin/user_detail_form.dart';
-import 'package:pinput/pin_put/pin_put.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPScreen extends StatefulWidget {
   String phone;
@@ -18,14 +19,21 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   bool showSpinner = false;
   String? verificationCode;
-  final _pinOTPController = TextEditingController();
-  final _pinPutFocusNode = FocusNode();
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     verifyPhoneNumber();
+  }
+
+  snackBar(String? message) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message!),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
   verifyPhoneNumber() async {
@@ -97,7 +105,7 @@ class _OTPScreenState extends State<OTPScreen> {
             verificationCode = vId;
           });
         },
-        timeout: Duration(seconds: 60));
+        timeout: const Duration(seconds: 60));
   }
 
   final BoxDecoration pinOTPCodeDecoration = BoxDecoration(
@@ -128,89 +136,110 @@ class _OTPScreenState extends State<OTPScreen> {
               fontSize: MediaQuery.of(context).size.width * 0.05),
         ),
         SizedBox(
-          height: 15,
+          height: 30,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          child: PinPut(
-            fieldsCount: 6,
-            withCursor: true,
-            textStyle: const TextStyle(
-              fontSize: 25,
-              color: Color(0xffF7C12B),
-            ),
-            eachFieldWidth: MediaQuery.of(context).size.width * 0.1,
-            eachFieldHeight: MediaQuery.of(context).size.height * 0.05,
-            onSubmit: (pin) async {
-              setState(() {
-                showSpinner = true;
-              });
-              try {
-                User? user;
-                await FirebaseAuth.instance
-                    .signInWithCredential(PhoneAuthProvider.credential(
-                        verificationId: verificationCode!, smsCode: pin))
-                    .then((value) {
-                  if (value.user != null) {
-                    user = value.user;
-                  }
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: PinCodeTextField(
+              pastedTextStyle: TextStyle(color: Colors.yellow),
+              appContext: context,
+              length: 6,
+              onChanged: (v) {},
+              onCompleted: (value) async {
+                setState(() {
+                  showSpinner = true;
                 });
-                if (user != null) {
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(widget.phone)
-                      .get()
+                try {
+                  User? user;
+                  await FirebaseAuth.instance
+                      .signInWithCredential(PhoneAuthProvider.credential(
+                          verificationId: verificationCode!, smsCode: value))
                       .then((value) {
-                    if (value.exists) {
-                      if (value.data()!.containsKey('cart-id')) {
-                        setState(() {
-                          showSpinner = false;
-                        });
-                        Navigator.pushNamed(context, 'H');
-                      } else {
-                        String uId = user!.uid;
-                        CartFunctions()
-                            .createCartFeild(uId, widget.phone)
-                            .then((value) {
+                    if (value.user != null) {
+                      user = value.user;
+                    }
+                  });
+                  if (user != null) {
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(widget.phone)
+                        .get()
+                        .then((value) {
+                      if (value.exists) {
+                        if (value.data()!.containsKey('cart-id')) {
                           setState(() {
                             showSpinner = false;
                           });
                           Navigator.pushNamed(context, 'H');
+                        } else {
+                          String uId = user!.uid;
+                          CartFunctions()
+                              .createCartFeild(uId, widget.phone)
+                              .then((value) {
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            Navigator.pushNamed(context, 'H');
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          showSpinner = false;
                         });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    UserDetail(phone_number: widget.phone)));
                       }
-                    } else {
-                      setState(() {
-                        showSpinner = false;
-                      });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  UserDetail(phone_number: widget.phone)));
-                    }
+                    });
+                  }
+                } catch (e) {
+                  setState(() {
+                    showSpinner = false;
                   });
+                  print(e.toString());
+                  FocusScope.of(context).unfocus();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(e.toString()),
+                    duration: Duration(
+                      seconds: 3,
+                    ),
+                  ));
                 }
-              } catch (e) {
-                setState(() {
-                  showSpinner = false;
-                });
-                FocusScope.of(context).unfocus();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(e.toString()),
-                  duration: Duration(
-                    seconds: 3,
-                  ),
-                ));
-              }
-            },
-            focusNode: _pinPutFocusNode,
-            controller: _pinOTPController,
-            submittedFieldDecoration: pinOTPCodeDecoration,
-            selectedFieldDecoration: pinOTPCodeDecoration,
-            followingFieldDecoration: pinOTPCodeDecoration,
-          ),
+              },
+              obscureText: false,
+              animationType: AnimationType.fade,
+              cursorColor: Colors.black,
+              keyboardType: TextInputType.number,
+              pinTheme: PinTheme(
+                  inactiveColor: Color(0xFFF7C12B),
+                  activeColor: Colors.black,
+                  selectedColor: Color(0xFFF7C12B),
+                  shape: PinCodeFieldShape.box,
+                  fieldWidth: MediaQuery.of(context).size.width * 0.1,
+                  fieldHeight: MediaQuery.of(context).size.height * 0.05),
+            )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Didn't receive the code? ",
+              style: TextStyle(color: Colors.black54, fontSize: 15),
+            ),
+            TextButton(
+                onPressed: () async {
+                  verifyPhoneNumber();
+                  snackBar('Otp Resent!');
+                },
+                child: Text(
+                  "RESEND",
+                  style: TextStyle(
+                      color: Color(0xFF91D3B3),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ))
+          ],
         ),
       ],
     );
