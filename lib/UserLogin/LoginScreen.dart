@@ -97,9 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 11,
-          ),
+          padding: const EdgeInsets.only(top: 12, left: 20, right: 20),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.07,
             width: double.infinity,

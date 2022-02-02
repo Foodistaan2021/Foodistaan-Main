@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                   CartScreenMainLogin(), // main Cart screen on home page
             },
             debugShowCheckedModeBanner: false,
-            title: 'Foodistaan',
+            title: 'Streato',
             theme: ThemeData(
               textTheme: GoogleFonts.montserratTextTheme(
                 Theme.of(context).textTheme,
