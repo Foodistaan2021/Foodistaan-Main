@@ -30,20 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Welcome To",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFF7C12B),
-                      fontSize: MediaQuery.of(context).size.width * 0.077,
-                      letterSpacing:
-                          MediaQuery.of(context).size.width * 0.0075),
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFF7C12B),
+                    fontSize: 30,
+                  ),
                 ),
                 Text(
-                  "FOODISTAAN",
+                  "STREATO",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF0F1B2B),
-                      fontSize: MediaQuery.of(context).size.width * 0.099,
-                      letterSpacing: MediaQuery.of(context).size.width * 0.01),
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF0F1B2B),
+                    fontSize: 50,
+                  ),
                 ),
               ],
             ),
@@ -94,13 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          height: 5,
+          height: 20,
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 12, left: 20, right: 20),
+        Center(
           child: Container(
             height: MediaQuery.of(context).size.height * 0.07,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.height * 0.3,
             child: ElevatedButton(
               onPressed: () async {
                 if (_phoneNumberController.text != "" &&

@@ -193,9 +193,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                     'Use Current Location',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04,
+                                      fontSize: 14,
                                     ),
                                   ),
                                   userLocationValue.hasUserLocation == true &&
@@ -212,6 +210,7 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                       : Text(
                                           'No Selected Location',
                                           style: TextStyle(
+                                            fontSize: 14,
                                             color: Colors.grey,
                                           ),
                                         ),
@@ -294,14 +293,15 @@ class _LocationBottomSheetWidgetState extends State<LocationBottomSheetWidget> {
                                     'Saved Addresses',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           SavedAddressWidget(),
                           SizedBox(
@@ -394,8 +394,8 @@ class _SavedAddressWidgetState extends State<SavedAddressWidget> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              width: 11,
+                            SizedBox(
+                              width: 15,
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
