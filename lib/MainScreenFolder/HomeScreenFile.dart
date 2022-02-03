@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(h1 * 0.15), // here the desired height
+        preferredSize: Size.fromHeight(h1 * 0.085), // here the desired height
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -73,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen>
                             onTap: () async {
                               //modal bottom sheet for select location option on top left of the mains screen
                               //basicaly shows a pop-up for selecting user location
-
                               showBarModalBottomSheet(
                                   duration: Duration(milliseconds: 300),
                                   bounce: true,
@@ -97,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
-              Search(),
             ],
           ),
         ),
@@ -107,6 +105,10 @@ class _HomeScreenState extends State<HomeScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Search(), //search widget moved down here
+            SizedBox(
+              height: 10,
+            ),
             OfferSlider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

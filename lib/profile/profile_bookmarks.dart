@@ -31,7 +31,7 @@ class _BookmarksState extends State<Bookmarks> {
       if (value.data()!.containsKey('bookmarks')) {
         bookMarks = value.data()!['bookmarks'];
         hasBookMarks =
-            true; //stores bookmarks list in the array for fetching data later
+            true; //stores bookmarks list(String of restaurnat ID) in the array for fetching data later
       } else {
         hasBookMarks = false;
       }

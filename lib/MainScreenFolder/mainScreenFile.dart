@@ -97,55 +97,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //     currentIndex: widget.currentIndex,
-      //     onTap: (index) => setState(() {
-      //           widget.currentIndex = index;
-      //           _pageController.jumpToPage(widget.currentIndex);
-      //         }),
-      //     type: BottomNavigationBarType.fixed,
-      //     iconSize: 16,
-      //     unselectedItemColor: unselected,
-      //     selectedItemColor: selected,
-      //     backgroundColor: Colors.white,
-      //     showUnselectedLabels: true,
-      //     showSelectedLabels: true,
-      //     elevation: 2,
-      //     items: <BottomNavigationBarItem>[
-      //       BottomNavigationBarItem(
-      //         label: 'Home',
-      //         icon: Column(children: [
-      //           Divider(
-      //             color: Colors.red,
-      //           ),
-      //           SvgPicture.asset(
-      //             'Images/bottomhome.svg',
-      //             color: widget.currentIndex == 0 ? selected : unselected,
-      //           ),
-      //         ]),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: 'Cart',
-      //         icon: SvgPicture.asset(
-      //           'Images/bottomcart.svg',
-      //           color: widget.currentIndex == 1 ? selected : unselected,
-      //         ),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: 'Scan',
-      //         icon: SvgPicture.asset(
-      //           'Images/bottomscan.svg',
-      //           color: widget.currentIndex == 2 ? selected : unselected,
-      //         ),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: 'Profile',
-      //         icon: SvgPicture.asset(
-      //           'Images/bottomprofile.svg',
-      //           color: widget.currentIndex == 3 ? selected : unselected,
-      //         ),
-      //       ),
-      //     ]),
       body: Stack(
         children: [
           PageView(
