@@ -123,42 +123,138 @@ class CartFunctions {
                         val = value;
                       });
                       if (val != '') {
-                        Alert(
+                        // Alert(
+                        //   context: context,
+                        //   type: AlertType.info,
+                        //   title: "Replace Cart Item",
+                        //   desc:
+                        //       "Your Cart containes dishes from $val. Discard It?",
+                        //   buttons: [
+                        //     DialogButton(
+                        //       child: Text(
+                        //         "Yes",
+                        //         style: TextStyle(
+                        //             color: Colors.white, fontSize: 20),
+                        //       ),
+                        // onPressed: () async {
+                        //   await discardCart(
+                        //           vendorId, cartId, menuItem, vendorName)
+                        //       .then((value) {
+                        //     Navigator.pop(context);
+                        //   });
+                        // },
+                        //       color: Color.fromRGBO(0, 179, 134, 1.0),
+                        //     ),
+                        //     DialogButton(
+                        //       child: Text(
+                        //         "NO",
+                        //         style: TextStyle(
+                        //             color: Colors.white, fontSize: 20),
+                        //       ),
+                        //       onPressed: () => Navigator.pop(context),
+                        // gradient: LinearGradient(colors: [
+                        //   Color.fromRGBO(116, 116, 191, 1.0),
+                        //   Color.fromRGBO(52, 138, 199, 1.0)
+                        // ]),
+                        //     )
+                        //   ],
+                        // ).show();
+
+                        showDialog(
                           context: context,
-                          type: AlertType.info,
-                          title: "Replace Cart Item",
-                          desc:
-                              "Your Cart containes dishes from $val. Discard It?",
-                          buttons: [
-                            DialogButton(
-                              child: Text(
-                                "Yes",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                              ),
-                              onPressed: () async {
-                                await discardCart(
-                                        vendorId, cartId, menuItem, vendorName)
-                                    .then((value) {
-                                  Navigator.pop(context);
-                                });
-                              },
-                              color: Color.fromRGBO(0, 179, 134, 1.0),
+                          builder: (ctx) => AlertDialog(
+                            alignment: Alignment.center,
+                            contentPadding:
+                                EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
+                            insetPadding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.15,
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.3,
                             ),
-                            DialogButton(
-                              child: Text(
-                                "NO",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                            actionsAlignment: MainAxisAlignment.spaceEvenly,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            title: Column(
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 50,
+                                  color: Color.fromRGBO(59, 183, 85, 1),
+                                ),
+                                Text(
+                                  'Replace Cart Item',
+                                  // textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                            titleTextStyle: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black,
+                            ),
+                            content: Text(
+                              'Your Cart containes dishes from $val. Discard It?',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
                               ),
-                              onPressed: () => Navigator.pop(context),
-                              gradient: LinearGradient(colors: [
-                                Color.fromRGBO(116, 116, 191, 1.0),
-                                Color.fromRGBO(52, 138, 199, 1.0)
-                              ]),
-                            )
-                          ],
-                        ).show();
+                            ),
+                            actions: <Widget>[
+                              InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    color: Color.fromRGBO(59, 183, 85, 1),
+                                  ),
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () async {
+                                  await discardCart(vendorId, cartId, menuItem,
+                                          vendorName)
+                                      .then((value) {
+                                    Navigator.of(ctx).pop(true);
+                                  });
+                                },
+                              ),
+                              InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    gradient: LinearGradient(colors: [
+                                      Color.fromRGBO(116, 116, 191, 1.0),
+                                      Color.fromRGBO(52, 138, 199, 1.0)
+                                    ]),
+                                  ),
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.of(ctx).pop(false);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
                       } else {
                         await CartFunctions()
                             .addItemToCart(
