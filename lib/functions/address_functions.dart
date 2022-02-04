@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:foodistan/MainScreenFolder/AppBar/LocationPointsSearch.dart';
-import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserAddress {
   final _firestore = FirebaseFirestore.instance;

@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:foodistan/MainScreenFolder/mainScreenFile.dart';
 import 'package:geocoding/geocoding.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -58,7 +56,7 @@ class LocationFunctions {
 
   Future<List<PlaceSearch>> getAutocomplete(searchQuery, sessionToken) async {
     var url =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchQuery&language=en&types=geocode&key=$API_KEY&sessiontoken=$sessionToken';
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchQuery&language=en&types=geocode&key=$API_KEY&types=sublocality';
 
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);

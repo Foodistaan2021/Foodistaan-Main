@@ -9,6 +9,7 @@ import 'package:foodistan/cart_screens/login_pay_cart_screen_main.dart';
 import 'package:foodistan/functions/address_from_placeId_model.dart';
 import 'package:foodistan/functions/address_functions.dart';
 import 'package:foodistan/functions/location_functions.dart';
+import 'package:foodistan/providers/user_address_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:foodistan/global/global_variables.dart';
@@ -69,7 +70,7 @@ class _AddressScreenState extends State<AddressScreen> {
   _asyncFunctions() async {
     var userLocationTemp = await LocationFunctions().getUserLocation();
     if (userLocationTemp != null) {
-      await setLocation(userLocationTemp).then(() {
+      await setLocation(userLocationTemp).then((v) {
         pointToLocation(userLocationTemp);
         setState(() {
           userLocation = userLocationTemp;
@@ -449,22 +450,21 @@ class _AddressScreenState extends State<AddressScreen> {
                 padding: const EdgeInsets.all(15),
                 child: GestureDetector(
                   onTap: () async {
-                    await UserAddress()
-                        .addUserAddress(
+                    await UserAddress().addUserAddress(
                       houseFeildController.text,
                       streetFeildController.text,
                       categorySelected,
                       userLocation,
-                    )
-                        .then({
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MainScreen(
-                                    currentIndex: 1,
-                                  )),
-                          (route) => false)
-                    });
+                    );
+                    await UserAddressProvider()
+                        .checkDefaultDeliveryAddress(); //
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainScreen(
+                                  currentIndex: 1,
+                                )),
+                        (route) => false);
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.066,
