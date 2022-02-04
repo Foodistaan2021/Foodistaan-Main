@@ -652,8 +652,9 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                                 fontWeight: FontWeight.w400),
                                             children: <InlineSpan>[
                                               TextSpan(
-                                                text:
-                                                    '${userAddressValue.addressData['category']}',
+                                                text: userAddressValue
+                                                    .addressData['category']
+                                                    .toString(),
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight:
@@ -661,8 +662,14 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                               ),
                                               TextSpan(text: '\n'),
                                               TextSpan(
-                                                text:
-                                                    '${userAddressValue.addressData['house-feild']}  ${userAddressValue.addressData['street-feild']}',
+                                                text: userAddressValue
+                                                        .addressData[
+                                                            'house-feild']
+                                                        .toString() +
+                                                    userAddressValue
+                                                        .addressData[
+                                                            'street-feild']
+                                                        .toString(),
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,
