@@ -549,12 +549,22 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
     );
   }
 
+  //defining this value to update the discount applied feild with the applied discount value
+
+  ValueNotifier<double> discountApplied = ValueNotifier<double>(0);
+
   int calculateCouponDiscount(totalPrice, couponPercentage, maxDiscount) {
     double discount = ((couponPercentage / 100) * totalPrice);
 
-    return discount < maxDiscount
-        ? (totalPrice.toDouble() - discount).ceil()
-        : totalPrice - maxDiscount;
+    if (discount < maxDiscount) {
+      discountApplied.value = discount;
+      return (totalPrice.toDouble() - discount).ceil();
+    } else {
+      String dis = maxDiscount.toString();
+
+      discountApplied.value = double.parse(dis);
+      return totalPrice - maxDiscount;
+    }
   }
 
   @override
@@ -665,7 +675,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                                 text: userAddressValue
                                                         .addressData[
                                                             'house-feild']
-                                                        .toString() + 
+                                                        .toString() +
                                                     userAddressValue
                                                         .addressData[
                                                             'street-feild']
@@ -963,51 +973,60 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Tax & Charges',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      '₹ 0',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                //listens to changes in the discountApplied variable
+                                //used value listner to avoid setState method
+                                ValueListenableBuilder(
+                                    valueListenable: discountApplied,
+                                    builder: (_, discountAppliedValue, __) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Discount Applied',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          Text(
+                                            '₹ ' +
+                                                discountApplied.value
+                                                    .toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }),
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Delivery Charges',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      '₹ 0',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   crossAxisAlignment: CrossAxisAlignment.center,
+                                //   children: [
+                                //     Text(
+                                //       'Delivery Charges',
+                                //       style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontSize: 14,
+                                //       ),
+                                //     ),
+                                //     Text(
+                                //       '₹ 0',
+                                //       style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontSize: 14,
+                                //       ),
+                                //     )
+                                //   ],
+                                // ),
                                 SizedBox(
                                   height: 5,
                                 ),
