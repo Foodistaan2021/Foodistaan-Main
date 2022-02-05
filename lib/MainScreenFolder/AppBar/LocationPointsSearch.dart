@@ -89,14 +89,14 @@ class _PointsState extends State<Points> {
   Widget build(BuildContext context) {
     var h1 = MediaQuery.of(context).size.height;
     // var w1 = MediaQuery.of(context).size.width;
-    return FittedBox(
-      alignment: Alignment.bottomRight,
-      fit: BoxFit.contain,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FsPoints()));
-        },
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FsPoints()));
+      },
+      child: FittedBox(
+        alignment: Alignment.bottomRight,
+        fit: BoxFit.contain,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -104,6 +104,7 @@ class _PointsState extends State<Points> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
                 Container(
                     height: 45,
                     child: Image.asset(
@@ -116,6 +117,15 @@ class _PointsState extends State<Points> {
                 //     fontSize: h1 * 0.033,
                 //   ),
                 // ),
+
+                Text(
+                  '0',
+                  style: TextStyle(
+                    color: Color(0xFFFAB84C),
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
+
                 Text(
                   'Points',
                   style: TextStyle(
@@ -127,6 +137,10 @@ class _PointsState extends State<Points> {
             ),
             SizedBox(
               width: 11,
+            ),
+            SvgPicture.asset(
+              'Images/fs_points.svg',
+              height: h1 * 0.055,
             ),
           ],
         ),
