@@ -104,6 +104,20 @@ class _PointsState extends State<Points> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
+                Container(
+                    height: 45,
+                    child: Image.asset(
+                      'assets/images/token 1.png',
+                    )),
+                // Text(
+                //   '0',
+                //   style: TextStyle(
+                //     color: Color(0xFFFAB84C),
+                //     fontSize: h1 * 0.033,
+                //   ),
+                // ),
+
                 Text(
                   '0',
                   style: TextStyle(
@@ -111,6 +125,7 @@ class _PointsState extends State<Points> {
                     fontSize: h1 * 0.033,
                   ),
                 ),
+
                 Text(
                   'Points',
                   style: TextStyle(
