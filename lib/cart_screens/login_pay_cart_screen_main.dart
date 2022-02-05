@@ -458,7 +458,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
 
   couponWidget(bool hasCoupon, couponCode, minCouponValue, totalPrice, cartId) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.12,
+      height: MediaQuery.of(context).size.height * 0.09,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
@@ -467,7 +467,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
       ),
       child: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.1,
+          height: MediaQuery.of(context).size.height * 0.07,
           width: double.infinity,
           color: Color.fromRGBO(255, 252, 222, 1),
           child: Center(
@@ -1195,7 +1195,11 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                           }));
                     }),
                     SizedBox(
-                      height: 50,
+                      height: 30,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 20,
                     ),
                     Container(
                       // height: 100,

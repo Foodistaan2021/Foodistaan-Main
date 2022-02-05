@@ -43,7 +43,7 @@ class FoodCategories extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 ImagePath,
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.018,
               ),
               SizedBox(
                 height: 2.5,
@@ -51,7 +51,7 @@ class FoodCategories extends StatelessWidget {
               Text(
                 Caption,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.black, fontSize: 8,
                   // color: Color(0xFF1E2019),
                 ),
               ),
