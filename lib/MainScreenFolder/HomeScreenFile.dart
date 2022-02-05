@@ -49,10 +49,10 @@ class _HomeScreenState extends State<HomeScreen>
     var h1 = MediaQuery.of(context).size.height;
     var w1 = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(h1 * 0.085), // here the desired height
-        child: SafeArea(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(h1 * 0.085), // here the desired height
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -99,102 +99,102 @@ class _HomeScreenState extends State<HomeScreen>
             ],
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Search(), //search widget moved down here
-            SizedBox(
-              height: 10,
-            ),
-            OfferSlider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Search(), //search widget moved down here
+              SizedBox(
+                height: 10,
+              ),
+              OfferSlider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 11,
+                        right: 5.5,
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          selectStreetStyle = true;
+                          selectTiffinServices = false;
+                          setState(() {});
+                        },
+                        child: FoodCategories(
+                          ImagePath: 'Images/food-trolley.svg',
+                          Caption: 'Street Style',
+                          isSelected: selectStreetStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 5.5,
+                        right: 11,
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          selectStreetStyle = false;
+                          selectTiffinServices = true;
+                          setState(() {});
+                        },
+                        child: FoodCategories(
+                          ImagePath: 'Images/tiffin.svg',
+                          Caption: 'Tiffin Services',
+                          isSelected: selectTiffinServices,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 11,
                       left: 11,
-                      right: 5.5,
-                      top: 15,
-                      bottom: 15,
                     ),
-                    child: GestureDetector(
-                      onTap: () async {
-                        selectStreetStyle = true;
-                        selectTiffinServices = false;
-                        setState(() {});
-                      },
-                      child: FoodCategories(
-                        ImagePath: 'Images/food-trolley.svg',
-                        Caption: 'Street Style',
-                        isSelected: selectStreetStyle,
+                    child: Text(
+                      'Order by Cuisines',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: h1 / 33,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 5.5,
-                      right: 11,
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    child: GestureDetector(
-                      onTap: () async {
-                        selectStreetStyle = false;
-                        selectTiffinServices = true;
-                        setState(() {});
-                      },
-                      child: FoodCategories(
-                        ImagePath: 'Images/tiffin.svg',
-                        Caption: 'Tiffin Services',
-                        isSelected: selectTiffinServices,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 11,
-                    left: 11,
-                  ),
-                  child: Text(
-                    'Order by Cuisines',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: h1 / 33,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            CuisineTileList(),
+                ],
+              ),
+              CuisineTileList(),
 
-            //builds the list of all the in the database
-            //takes user location as a reuired parameter
-            //to sort the rest. Data according to user location
-            Listings(
-              userLocation: userLocation,
-            ),
-            SizedBox(
-              height: 33,
-            ),
-          ],
+              //builds the list of all the in the database
+              //takes user location as a reuired parameter
+              //to sort the rest. Data according to user location
+              Listings(
+                userLocation: userLocation,
+              ),
+              SizedBox(
+                height: 33,
+              ),
+            ],
+          ),
         ),
       ),
     );
