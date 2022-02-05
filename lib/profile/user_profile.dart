@@ -236,9 +236,8 @@ class _UserProfileState extends State<UserProfile>
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) {
-                            return const Offers();
-                          }),
+                          MaterialPageRoute(
+                              builder: (context) => const Offers()),
                         );
                       },
                       child: Column(
@@ -309,7 +308,7 @@ class _UserProfileState extends State<UserProfile>
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) {
-                            return const Payments();
+                            return const Orders();
                           }),
                         );
                       },
@@ -318,7 +317,7 @@ class _UserProfileState extends State<UserProfile>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.payment_outlined,
+                            Icons.history,
                             color: Colors.black,
                             size: 23,
                           ),
@@ -326,7 +325,7 @@ class _UserProfileState extends State<UserProfile>
                             height: 10,
                           ),
                           Text(
-                            'Payments',
+                            'Order History',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize:
@@ -340,52 +339,52 @@ class _UserProfileState extends State<UserProfile>
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 11),
-                child: Divider(
-                  color: Colors.grey.shade200,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) {
-                      return const Orders();
-                    }),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 11,
-                    ),
-                    Icon(
-                      Icons.history,
-                      color: Colors.black,
-                      size: 17,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Order History',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width * 0.044,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 11),
+              //   child: Divider(
+              //     color: Colors.grey.shade200,
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (_) {
+              //         return const Orders();
+              //       }),
+              //     );
+              //   },
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         width: 11,
+              //       ),
+              //       Icon(
+              //         Icons.history,
+              //         color: Colors.black,
+              //         size: 17,
+              //       ),
+              //       SizedBox(
+              //         width: 10,
+              //       ),
+              //       Text(
+              //         'Order History',
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: MediaQuery.of(context).size.width * 0.044,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(
                 height: 5,
               ),

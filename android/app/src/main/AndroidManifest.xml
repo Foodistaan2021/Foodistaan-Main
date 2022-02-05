@@ -3,7 +3,7 @@
    <application
 
         android:requestLegacyExternalStorage="true"
-        android:label="foodistaan"
+        android:label="Streato"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
