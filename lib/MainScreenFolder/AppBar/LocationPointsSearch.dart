@@ -105,9 +105,10 @@ class _PointsState extends State<Points> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                    height: 45,
                     child: Image.asset(
-                  'assets/images/token 1.png',
-                )),
+                      'assets/images/token 1.png',
+                    )),
                 // Text(
                 //   '0',
                 //   style: TextStyle(
@@ -115,22 +116,18 @@ class _PointsState extends State<Points> {
                 //     fontSize: h1 * 0.033,
                 //   ),
                 // ),
-                // Text(
-                //   'Points',
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: h1 * 0.033,
-                //   ),
-                // ),
+                Text(
+                  'Points',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: h1 * 0.033,
+                  ),
+                ),
               ],
             ),
             SizedBox(
               width: 11,
             ),
-            // SvgPicture.asset(
-            //   'Images/fs_points.svg',
-            //   height: h1 * 0.055,
-            // ),
           ],
         ),
       ),

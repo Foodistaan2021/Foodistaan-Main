@@ -665,7 +665,8 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                                 text: userAddressValue
                                                         .addressData[
                                                             'house-feild']
-                                                        .toString() +' '+
+                                                        .toString() +
+                                                    ' ' +
                                                     userAddressValue
                                                         .addressData[
                                                             'street-feild']
@@ -976,7 +977,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                       ),
                                     ),
                                     Text(
-                                      '₹ 27',
+                                      '₹ 0',
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 14,
@@ -1000,7 +1001,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                       ),
                                     ),
                                     Text(
-                                      '₹ 50',
+                                      '₹ 0',
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 14,
@@ -1194,7 +1195,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                           }));
                     }),
                     SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     Container(
                       // height: 100,
@@ -1272,7 +1273,7 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                   width: 10,
                                 ),
                                 Text(
-                                  'Help us avoiding food watage.',
+                                  'Help us avoiding food wastage.',
                                   style: TextStyle(
                                     color: Color.fromRGBO(153, 153, 153, 1),
                                     fontWeight: FontWeight.w400,
