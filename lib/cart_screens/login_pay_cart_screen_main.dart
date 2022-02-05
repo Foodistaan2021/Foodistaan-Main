@@ -816,108 +816,124 @@ class _CartItemsWidgetState extends State<CartItemsWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.start,
                                         children: [
-                                          InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  14, 7, 14, 7),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: Color.fromRGBO(
-                                                        153, 153, 153, 1)),
-                                              ),
-                                              child: Text(
-                                                '₹20',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  14, 7, 14, 7),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: Color.fromRGBO(
-                                                        153, 153, 153, 1)),
-                                              ),
-                                              child: Text(
-                                                '₹30',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              InkWell(
-                                                onTap: () {},
-                                                child: Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      14, 7, 14, 7),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: Color.fromRGBO(
-                                                            153, 153, 153, 1)),
-                                                  ),
-                                                  child: Text(
-                                                    '₹50',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: InkWell(
+                                              onTap: () {},
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    14, 7, 14, 7),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Color.fromRGBO(
+                                                          153, 153, 153, 1)),
+                                                ),
+                                                child: Text(
+                                                  '₹20',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                'Most tipped',
-                                                style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        153, 153, 153, 1),
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                          InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  14, 7, 14, 7),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: Color.fromRGBO(
-                                                        153, 153, 153, 1)),
-                                              ),
-                                              child: Text(
-                                                'Other',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w400),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: InkWell(
+                                              onTap: () {},
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    14, 7, 14, 7),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Color.fromRGBO(
+                                                          153, 153, 153, 1)),
+                                                ),
+                                                child: Text(
+                                                  '₹30',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
                                               ),
                                             ),
                                           ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {},
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            14, 7, 14, 7),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Color.fromRGBO(
+                                                              153,
+                                                              153,
+                                                              153,
+                                                              1)),
+                                                    ),
+                                                    child: Text(
+                                                      '₹50',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  'Most tipped',
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          153, 153, 153, 1),
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          // InkWell(
+                                          //   onTap: () {},
+                                          //   child: Container(
+                                          //     padding: EdgeInsets.fromLTRB(
+                                          //         14, 7, 14, 7),
+                                          //     decoration: BoxDecoration(
+                                          //       border: Border.all(
+                                          //           width: 1,
+                                          //           color: Color.fromRGBO(
+                                          //               153, 153, 153, 1)),
+                                          //     ),
+                                          //     child: Text(
+                                          //       'Other',
+                                          //       style: TextStyle(
+                                          //           color: Colors.black,
+                                          //           fontSize: 14,
+                                          //           fontWeight:
+                                          //               FontWeight.w400),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       )
                                     ],
