@@ -68,7 +68,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                           FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text('${widget.menuItem['title']}',
-                                maxLines: 3,
+
                                 // address.length > 25
                                 //   ? address.substring(0, 25) + '...'
                                 //   : address,
@@ -85,7 +85,7 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.07,
                     child: Text("${widget.menuItem['description']}",
-                        maxLines: 3,
+                        maxLines: 2,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500)),
                   ),
@@ -115,7 +115,6 @@ class _MyFoodItemWidgetState extends State<MyFoodItemWidget> {
                     children: [
                       Container(
                         child: Text("₹ ${widget.menuItem['price']}",
-                            maxLines: 3,
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w700)),
                       ),
